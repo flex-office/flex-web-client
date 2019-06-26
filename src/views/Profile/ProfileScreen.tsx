@@ -9,7 +9,6 @@ import socketIOClient from "socket.io-client";
 import HeaderCard from "../../components/Profile/HeaderCard"
 import LeaveButton from "../../components/Profile/LeaveButton"
 import ManualInsertionCard from "../../components/Profile/ManualInsertionCard"
-import QRCodeComponent from "../../components/Profile/QRCodeComponent"
 
 type ProfileScreenState = {
     name: string,
@@ -23,8 +22,7 @@ type ProfileScreenState = {
 };
 
 interface ProfileScreenProps {
-    history: any,
-    location: any
+    history: any
 }
 
 class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenState> {
@@ -94,17 +92,11 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             } else this.setState({ isWrongFormatPlace: true });
         }
 
-        const onSuccess = objectRead => {
-            const placeText = objectRead.data;
-            insertPlace(placeText);
-        };
-
         return (
             <div style={{ flex: 1 }}>
                 <div style={styles.view}>
                     <HeaderCard fname={fname} name={name} id={id} />
                     <div>
-                        {this.props.location.isActive ? <QRCodeComponent onRead={onSuccess} /> : <div />}
                         <ManualInsertionCard
                             onChangeText={e => this.setState({placeInput: e.target.value.toUpperCase().trim()})}
                             onSubmitEditing={() => insertPlace(this.state.placeInput)}
@@ -164,7 +156,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                     this.setState({
                         place: ""
                     });
-                    localStorage.setItem("USER", JSON.stringify(this.state));
+                    localStorage.setItem("USER", JSON.stringify(omit(["socket"], this.state)))
                     this.state.socket.emit('leaveRoom', place);
                 }
                 else if (res.status === 400) {

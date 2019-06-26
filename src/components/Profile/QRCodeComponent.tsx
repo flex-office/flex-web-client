@@ -38,6 +38,10 @@ class QRCodeComponent extends React.Component<Props> {
         </p>
         <QrReader
           onScan={onRead}
+          onError={err => {
+            console.log(err)
+          }}
+          // style={{width: '100%'}}
         />
       </div>
     );
