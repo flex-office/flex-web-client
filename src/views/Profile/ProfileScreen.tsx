@@ -1,5 +1,6 @@
 import React from "react"
 import { withRouter } from "react-router-dom"
+import { omit } from "ramda"
 import config from "../../config/api.json";
 import server from "../../config/server.json";
 import regex from "../../config/regex.json";
@@ -82,7 +83,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                                 isWrongFormatPlace: false
                             });
                             this.state.socket.emit('joinRoom', placeText);
-                            localStorage.setItem("USER", JSON.stringify(this.state))
+                            localStorage.setItem("USER", JSON.stringify(omit(["socket"], this.state)))
                         }
                         else if (res.status === 500) {
                             res.json().then(user => {
