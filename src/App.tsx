@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react"
+import NavigationApp from "./navigation/NavigationApp"
+// import config from "../config/api.json"
+// import server from "../config/server.json"
+// import { pushNotifications } from "./utils/services/index"
+import "./App.css"
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// pushNotifications.configure()
+
+export default class App extends React.Component {
+  // componentWillMount() {
+  //   const payload = {
+  //     email: config.email,
+  //     password: config.password
+  //   };
+
+  //   fetch(`${server.address}login`, {
+  //     method: "POST",
+  //     body: JSON.stringify(payload),
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     }
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       config.token = data.token;
+  //       fetch(`${server.address}me`, {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "authorization": `Bearer ${config.token}`
+  //         }
+  //       })
+  //         .then(res => res.json())
+  //         .then(data => {
+  //           config._id = data._id;
+  //         });
+  //     });
+  // }
+
+  render() {
+    return <NavigationApp/>
+  }
 }
-
-export default App;
