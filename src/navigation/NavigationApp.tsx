@@ -14,10 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from "react";
-// import {
-//   TouchableHighlight,
-//   AsyncStorage
-// } from "react-native";
 import {
   Navbar,
   Nav,
@@ -25,184 +21,96 @@ import {
 } from 'reactstrap'
 
 import { Route, Link } from 'react-router-dom'
-import ProfileScreen from "../views/Profile/ProfileScreen"
-import PlacesScreen from "../views/Places/PlacesScreen"
-import UsersScreen from "../views/Users/UsersScreen"
-import SettingsScreen from "../views/Settings/SettingsScreen"
 
-// import { createStore } from "redux";
-// import { Provider } from "react-redux";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import { withRouter } from "react-router-dom"
 
-// import devToolsEnhancer from "remote-redux-devtools";
+import devToolsEnhancer from "remote-redux-devtools";
 
-// import { createStackNavigator, createBottomTabNavigator } from "react-navigation";
-// import LinearGradient from "react-native-linear-gradient";
-// import Icon from "react-native-vector-icons/FontAwesome";
 // import SplashScreen from "../views/Splash/SplashScreen";
-// import LoginScreen from "../views/Login/LoginScreen";
-// import ProfileScreen from "../views/Profile/ProfileScreen";
-// import SettingsScreen from "../views/Settings/SettingsScreen";
-// import PlacesScreen from "../views/Places/PlacesScreen";
-// import UsersScreen from "../views/Users/UsersScreen";
+import ProfileScreen from "../views/Profile/ProfileScreen";
+import SettingsScreen from "../views/Settings/SettingsScreen";
+import PlacesScreen from "../views/Places/PlacesScreen";
+import UsersScreen from "../views/Users/UsersScreen";
 // import OfflineNotice from "../utils/OfflineNotice";
-// import logo from "../assets/logo.png";
-// import ProfileImage from "./components/ProfileImage";
+import logo from "../assets/logo.png";
+import ProfileImage from "../components/Navigation/ProfileImage";
 
-// import reducer, { fetchPhoto } from "./components/reducer";
+import reducer, { fetchPhoto } from "../components/Navigation/reducer";
 
-// const store = createStore(reducer, devToolsEnhancer());
+const store = createStore(reducer, devToolsEnhancer());
 
-// const fetchUserPhoto = async () => {
-//   const userPhoto = await localStorage.getItem("USER")
-//   if (!userPhoto) return
+const fetchUserPhoto = async () => {
+  const userPhoto = await localStorage.getItem("USER")
+  if (!userPhoto) return
 
-//   fetchPhoto(userPhoto);
+  fetchPhoto(userPhoto);
 
-//   return JSON.parse(userPhoto).photo;
-// };
+  return JSON.parse(userPhoto).photo;
+};
 
-// export const headerBar = (navigation, goBack = false, rightElement = true) => (
-//   <div
-//     style={
-//         {
-//           backgroundColor: "white",
-//           height: 80
-//         }
-//     }
-//   >
-//     <div
-//       style={{
-//         flex: 1,
-//         flexDirection: "row",
-//         alignItems: "center",
-//         justifyContent: "space-between"
-//       }}
-//     >
-//       {/* Header Left */}
-//       {goBack ? withRouter(({history}) =>
-//         <TouchableHighlight
-//           activeOpacity={0.1}
-//           onPress={() => history.goBack()}
-//         >
-//           <Icon
-//             style={{ marginLeft: 20 }}
-//             name="angle-left"
-//             size={35}
-//             color="#2E89AD"
-//           />
-//         </TouchableHighlight>
-//       ) : (
-//         <img
-//           src={logo}
-//           style={{
-//             width: 30,
-//             height: 30,
-//             margin: 10,
-//             resizeMode: "contain"
-//           }}
-//         />
-//       )}
+interface HeaderBarProps {
+  history: any
+}
 
-//       <p
-//         style={{
-//           color: "black",
-//           fontWeight: "bold",
-//           fontSize: 20,
-//           fontFamily: "Raleway"
-//         }}
-//       >
-//         Flex-Office
-//       </p>
+export class HeaderBar extends React.Component<HeaderBarProps> {
+  render() {
+    return (
+      <div
+        style={
+            {
+              backgroundColor: "white",
+              height: 80
+            }
+        }
+      >
+        <div
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between"
+          }}
+        >
+          {/* Header Left */}
+          <img
+            src={logo}
+            alt="logo"
+            style={{
+              width: 30,
+              height: 30,
+              margin: 10,
+            }}
+          />
+          <p
+            style={{
+              color: "black",
+              fontWeight: "bold",
+              fontSize: 20,
+              fontFamily: "Raleway"
+            }}
+          >
+            Flex-Office
+          </p>
 
-//       {/* Header Right */}
-//       {withRouter(({history}) =>
-//         <TouchableHighlight
-//           activeOpacity={0.1}
-//           onPress={() => {
-//             if (rightElement) {
-//               history.push('/settings')
-//               fetchUserPhoto();
-//             }
-//           }}
-//         >
-//           <ProfileImage />
-//         </TouchableHighlight>
-//       )}
-//     </div>
-//     <LinearGradient
-//       start={{ x: 0, y: 0 }}
-//       end={{ x: 1, y: 0 }}
-//       colors={["#58C0D0", "#468BB6", "#3662A0"]}
-//       style={{ width: "100%", height: 7 }}
-//     />
-//   </div>
-// );
+          {/* Header Right */}
+          <div
+            onClick={() => {
+              this.props.history.push('/settings')
+              fetchUserPhoto();
+            }}
+          >
+            <ProfileImage />
+          </div>
+          )
+        </div>
+      </div>
+    )
+  }
+};
 
-// const NavigationApp = createStackNavigator({
-//   Splash: {
-//     screen: SplashScreen,
-//     navigationOptions: () => ({
-//       header: null
-//     })
-//   },
-//   Login: { screen: LoginScreen },
-//   Profile: {
-//     screen: createBottomTabNavigator(
-//       {
-//         ProfileScreen,
-//         PlacesScreen,
-//         UsersScreen
-//       },
-//       {
-//         title: "Places",
-//         tabBarPosition: "bottom",
-//         swipeEnabled: true,
-//         tabBarOptions: {
-//           labelStyle: {
-//             fontSize: 13,
-//             margin: 0,
-//             padding: 0,
-//             fontFamily: "Raleway"
-//           },
-//           showLabel: true,
-//           showIcon: true,
-//           inactiveTintColor: "#3662A0",
-//           activeTintColor: "#58C0D0",
-//           backgroundColor: "white",
-//           style: {
-//             backgroundColor: "white",
-//             height: 50
-//           },
-//           indicatorStyle: {
-//             backgroundColor: "white"
-//           }
-//         }
-//       }
-//     ),
-//     navigationOptions: ({ navigation }) => ({
-//       /* Custom header */
-//       header: headerBar(navigation)
-//     })
-//   },
-//   SettingsScreen: {
-//     screen: SettingsScreen,
-//     navigationOptions: ({ navigation }) => ({
-//       /* Custom header */
-//       header: headerBar(navigation, true)
-//     })
-//   }
-// });
-
-// const NetInfoWrapper = () => (
-//   <Provider store={store}>
-//     <div style={{ flex: 1 }}>
-//       <OfflineNotice />
-//       <NavigationApp />
-//     </div>
-//   </Provider>
-// );
-
-// export default NetInfoWrapper;
+export const HeaderBarWithRouter = withRouter(HeaderBar)
 
 interface NavLinkProps {
   to: string
@@ -239,11 +147,11 @@ export class NavBar extends React.Component {
   }
 }
 
-export default class NavigationApp extends React.Component {
+export class NavigationApp extends React.Component {
   render() {
     return (
       <div style={{flex: 1, flexDirection: "column"}}>
-        <p>Navigation</p>
+        <HeaderBarWithRouter/>
         <Route exact path="/" component={ProfileScreen}/>
         <Route path="/places" component={PlacesScreen}/>
         <Route path="/users" component={UsersScreen}/>
@@ -253,3 +161,13 @@ export default class NavigationApp extends React.Component {
     )
   }
 }
+
+const NetInfoWrapper = () => (
+  <Provider store={store}>
+    <div style={{ flex: 1 }}>
+      <NavigationApp />
+    </div>
+  </Provider>
+);
+
+export default NetInfoWrapper;

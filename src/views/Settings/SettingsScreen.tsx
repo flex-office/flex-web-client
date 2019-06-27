@@ -379,4 +379,8 @@ const mapDispatchToProps = {
   logOut
 };
 
-export default withRouter(SettingsScreen);
+// export default withRouter(SettingsScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(SettingsScreen));

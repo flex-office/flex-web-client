@@ -4,6 +4,8 @@ import NavigationApp from "./navigation/NavigationApp"
 // import server from "../config/server.json"
 // import { pushNotifications } from "./utils/services/index"
 import "./App.css"
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import LoginScreen from "./views/Login/LoginScreen"
 
 // pushNotifications.configure()
 
@@ -39,6 +41,15 @@ export default class App extends React.Component {
   // }
 
   render() {
-    return <NavigationApp/>
+    return (
+      <Router>
+        <Switch>
+          <Route path="/login" component={LoginScreen}/>
+          <Route path="/">
+            <NavigationApp/>
+          </Route>
+        </Switch>
+      </Router>
+    )
   }
 }
