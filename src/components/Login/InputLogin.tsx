@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from "react";
+import Input from "../General/Input"
 
 const InputLogin = (props: {
   onSubmitEditing: any,
@@ -23,24 +24,29 @@ const InputLogin = (props: {
 }) => {
   const { onSubmitEditing, onChangeText, onChangeText1, onChangeText2 } = props;
   return (
-    <form onSubmit={onSubmitEditing}>
-      <input
-        type="text"
-        placeholder="Nom"
+    <div style={{
+      flex: 1,
+      flexDirection: "column",
+      display: "flex"
+    }}>
+      <Input
         onChange={onChangeText}
+        onSubmit={onSubmitEditing}
+        placeholder="Nom"
       />
 
-      <input
-        type="text"
-        placeholder="Prénom"
+      <Input
         onChange={onChangeText1}
+        onSubmit={onSubmitEditing}
+        placeholder="Prénom"
       />
 
-      <input
-        placeholder="ID"
+      <Input
         onChange={onChangeText2}
+        onSubmit={onSubmitEditing}
+        placeholder="ID"
       />
-    </form>
+    </div>
   );
 };
 

@@ -20,17 +20,17 @@ export default {
     fontSize: 18,
     padding: 32,
     color: "#777",
-    fontFamily: "Raleway"
+    fontFamily: "Roboto"
   },
   textBold: {
     fontWeight: "500",
     color: "#000",
-    fontFamily: "Raleway"
+    fontFamily: "Roboto"
   },
   buttonText: {
     fontSize: 21,
     color: "rgb(0,122,255)",
-    fontFamily: "Raleway"
+    fontFamily: "Roboto"
   },
   buttonTouchable: {
     padding: 16
@@ -84,17 +84,17 @@ export default {
   },
   remoteText: {
     margin: 10,
-    fontFamily: "Raleway"
+    fontFamily: "Roboto"
   },
   semiFlexText: {
     margin: 10,
     marginBottom: 0,
-    fontFamily: "Raleway"
+    fontFamily: "Roboto"
   },
   regularText: {
     margin: 10,
     marginBottom: 0,
-    fontFamily: "Raleway"
+    fontFamily: "Roboto"
   },
   input: {
     height: 40,

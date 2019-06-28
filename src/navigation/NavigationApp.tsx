@@ -24,7 +24,6 @@ import { Route, Link } from 'react-router-dom'
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import { withRouter } from "react-router-dom"
 
 import devToolsEnhancer from "remote-redux-devtools";
 
@@ -34,83 +33,11 @@ import SettingsScreen from "../views/Settings/SettingsScreen";
 import PlacesScreen from "../views/Places/PlacesScreen";
 import UsersScreen from "../views/Users/UsersScreen";
 // import OfflineNotice from "../utils/OfflineNotice";
-import logo from "../assets/logo.png";
-import ProfileImage from "../components/Navigation/ProfileImage";
 
-import reducer, { fetchPhoto } from "../components/Navigation/reducer";
+import reducer from "../components/Navigation/reducer";
+import HeaderBar from "../components/Navigation/HeaderBar";
 
 const store = createStore(reducer, devToolsEnhancer());
-
-const fetchUserPhoto = async () => {
-  const userPhoto = await localStorage.getItem("USER")
-  if (!userPhoto) return
-
-  fetchPhoto(userPhoto);
-
-  return JSON.parse(userPhoto).photo;
-};
-
-interface HeaderBarProps {
-  history: any
-}
-
-export class HeaderBar extends React.Component<HeaderBarProps> {
-  render() {
-    return (
-      <div
-        style={
-            {
-              backgroundColor: "white",
-              height: 80
-            }
-        }
-      >
-        <div
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between"
-          }}
-        >
-          {/* Header Left */}
-          <img
-            src={logo}
-            alt="logo"
-            style={{
-              width: 30,
-              height: 30,
-              margin: 10,
-            }}
-          />
-          <p
-            style={{
-              color: "black",
-              fontWeight: "bold",
-              fontSize: 20,
-              fontFamily: "Raleway"
-            }}
-          >
-            Flex-Office
-          </p>
-
-          {/* Header Right */}
-          <div
-            onClick={() => {
-              this.props.history.push('/settings')
-              fetchUserPhoto();
-            }}
-          >
-            <ProfileImage />
-          </div>
-          )
-        </div>
-      </div>
-    )
-  }
-};
-
-export const HeaderBarWithRouter = withRouter(HeaderBar)
 
 interface NavLinkProps {
   to: string
@@ -151,7 +78,7 @@ export class NavigationApp extends React.Component {
   render() {
     return (
       <div style={{flex: 1, flexDirection: "column"}}>
-        <HeaderBarWithRouter/>
+        <HeaderBar/>
         <Route exact path="/" component={ProfileScreen}/>
         <Route path="/places" component={PlacesScreen}/>
         <Route path="/users" component={UsersScreen}/>

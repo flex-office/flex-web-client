@@ -18,11 +18,38 @@ import React from "react";
 const LoginButton = (props: { onPress: () => void }) => {
   const { onPress } = props;
   return (
-    <div>
+    <div style={{
+      alignItems: "center",
+      flex: 1,
+      display: "flex",
+      flexDirection: "column"
+    }}>
       <button
-        title="S'identifier"
+        style={{
+          padding: 10,
+          paddingLeft: 30,
+          paddingRight: 30,
+          borderRadius: 15,
+          borderWidth: 1,
+          borderColor: "#2E89AD",
+          marginTop: 30,
+          marginLeft: 15,
+          marginRight: 15,
+          backgroundColor: "white"
+        }}
         onClick={onPress}
-      />
+      >
+        <div
+          style={{
+            fontWeight: "bold",
+            fontFamily: "Roboto",
+            color: "#2E89AD",
+            textTransform: "uppercase"
+          }}
+        >
+          S'identifier
+        </div>
+      </button>
     </div>
   );
 };

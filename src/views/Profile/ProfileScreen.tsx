@@ -1,4 +1,5 @@
 import React from "react"
+import QrReader from "react-qr-reader"
 import { withRouter } from "react-router-dom"
 import { omit } from "ramda"
 import config from "../../config/api.json";
@@ -92,20 +93,41 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             } else this.setState({ isWrongFormatPlace: true });
         }
 
+        const onRead = data => {
+            if (data) {
+                insertPlace(data);
+            }
+        };
+
         return (
-            <div style={{ flex: 1 }}>
-                <div style={styles.view}>
+            <div style={{
+                flex: 1,
+                flexDirection: "column",
+                backgroundColor: "white",
+                alignItems: "center",
+                display: "flex"
+            }}>
+                <div style={{
+                    flex: 1,
+                    maxWidth: "1000px",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    display: "flex"
+                }}>
                     <HeaderCard fname={fname} name={name} id={id} />
-                    <div>
-                        <ManualInsertionCard
-                            onChangeText={e => this.setState({placeInput: e.target.value.toUpperCase().trim()})}
-                            onSubmitEditing={() => insertPlace(this.state.placeInput)}
-                            onPress={() => insertPlace(this.state.placeInput)}
-                        />
-                        {isWrongFormatPlace ? (
-                            <p style={styles.debug}>Mauvais format de place</p>
-                        ) : null}
-                    </div>
+                    <QrReader
+                        onError={err => console.log(err)}
+                        onScan={onRead}
+                        style={{width: "100%"}}
+                    />
+                    <ManualInsertionCard
+                        onChangeText={e => this.setState({placeInput: e.target.value.toUpperCase().trim()})}
+                        onSubmitEditing={() => insertPlace(this.state.placeInput)}
+                        onPress={() => insertPlace(this.state.placeInput)}
+                    />
+                    {isWrongFormatPlace ? (
+                        <p style={styles.debug}>Mauvais format de place</p>
+                    ) : null}
                 </div>
             </div>
         );

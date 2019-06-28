@@ -19,6 +19,7 @@ export default {
     flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
-    margin: 15
+    margin: 15,
+    display: "flex"
   }
 }

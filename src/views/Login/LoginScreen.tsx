@@ -6,6 +6,8 @@ import regex from "../../config/regex.json";
 import styles from "./LoginScreenStyles";
 import LoginButton from "../../components/Login/LoginButton";
 import InputLogin from "../../components/Login/InputLogin";
+import logo from "../../assets/logo.png";
+import HeaderBar from "../../components/Navigation/HeaderBar";
 
 interface LoginScreenState {
     debugField: string
@@ -90,18 +92,29 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
         const { debugField } = this.state;
         return (
             <div>
-                <img src="../../assets/logo.png" alt="logo" />
-                <div style={styles.view_second}>
-                    <InputLogin
-                        onSubmitEditing={() => this.logIn()}
-                        onChangeText={e => this.setState({name: this.capitalizeFirstLetter(e.target.value).trim()})}
-                        onChangeText1={e => this.setState({fname: this.capitalizeFirstLetter(e.target.value).trim()})}
-                        onChangeText2={e => this.setState({id: e.target.value.toUpperCase().trim()})}
-                    />
-                    <LoginButton onPress={() => this.logIn()} />
-                    <p>{debugField}</p>
+                <HeaderBar showLogo={false} showProfilePic={false}/>
+                <div style={{
+                    flex: 1,
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    backgroundColor: "white",
+                    display: "flex",
+                    marginTop: 30
+                }}>
+                    <img src={logo} style={{width: "8%"}} alt="logo" />
+                    <div style={styles.view_second}>
+                        <InputLogin
+                            onSubmitEditing={() => this.logIn()}
+                            onChangeText={e => this.setState({name: this.capitalizeFirstLetter(e.target.value).trim()})}
+                            onChangeText1={e => this.setState({fname: this.capitalizeFirstLetter(e.target.value).trim()})}
+                            onChangeText2={e => this.setState({id: e.target.value.toUpperCase().trim()})}
+                        />
+                        <LoginButton onPress={() => this.logIn()} />
+                        <p>{debugField}</p>
+                    </div>
+                    {/* <p style={styles.version}>{DeviceInfo.getVersion()}</p> */}
                 </div>
-                {/* <p style={styles.version}>{DeviceInfo.getVersion()}</p> */}
             </div>
         );
     }

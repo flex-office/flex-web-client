@@ -71,15 +71,15 @@ export const ProfileDescription = (props: { name: any, fname: any, id: any }) =>
   const { name, fname, id } = props;
   return (
     <div style={{ marginLeft: 20 }}>
-      <div style={{ fontFamily: "Raleway" }}>
+      <div style={{ fontFamily: "Roboto" }}>
         <p style={{ fontWeight: "bold" }}>Nom : </p>
         {name}
       </div>
-      <div style={{ fontFamily: "Raleway" }}>
+      <div style={{ fontFamily: "Roboto" }}>
         <p style={{ fontWeight: "bold" }}>Prenom : </p>
         {fname}
       </div>
-      <div style={{ fontFamily: "Raleway" }}>
+      <div style={{ fontFamily: "Roboto" }}>
         <p style={{ fontWeight: "bold" }}>ID : </p>
         {id}
       </div>

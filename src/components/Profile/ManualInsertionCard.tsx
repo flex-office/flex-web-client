@@ -15,6 +15,7 @@ limitations under the License.
 */
 import React from "react";
 import styles from "./styles/ManualInsertionCardStyle";
+import Input from "../General/Input"
 
 const ManualInsertionCard = (props: {
   onChangeText: any,
@@ -24,22 +25,27 @@ const ManualInsertionCard = (props: {
   const { onSubmitEditing, onChangeText, onPress } = props;
   return (
     <div style={styles.view}>
-      <form onSubmit={onSubmitEditing}>
-        <input
-          style={{ fontFamily: "Raleway", fontSize: 16, paddingBottom: 2, paddingLeft: 0 }}
-          placeholder="Place"
-          onChange={onChangeText}
-        />
-      </form>
+      <Input
+        placeholder="Place"
+        onChange={onChangeText}
+        onSubmit={onSubmitEditing}
+      />
       <button
         style={{
           width: 100,
           borderRadius: 15,
           backgroundColor: "#fff",
         }}
-        title="Réserver"
         onClick={onPress}
-      />
+      >
+        <div style={{
+          fontWeight: "bold",
+          fontFamily: "Roboto",
+          color: "#2E89AD"
+        }}>
+          Réserver
+        </div>
+      </button>
     </div>
   );
 };
