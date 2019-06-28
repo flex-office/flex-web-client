@@ -15,17 +15,18 @@ limitations under the License.
 */
 import React from "react";
 import {
-  Navbar,
   Nav,
   NavItem
 } from 'reactstrap'
 
-import { Route, Link } from 'react-router-dom'
+import { Route, NavLink } from 'react-router-dom'
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 
 import devToolsEnhancer from "remote-redux-devtools";
+
+import FontAwesome from "react-fontawesome"
 
 // import SplashScreen from "../views/Splash/SplashScreen";
 import ProfileScreen from "../views/Profile/ProfileScreen";
@@ -39,17 +40,37 @@ import HeaderBar from "../components/Navigation/HeaderBar";
 
 const store = createStore(reducer, devToolsEnhancer());
 
-interface NavLinkProps {
+interface NavElemProps {
   to: string
   icon: string
 }
 
-export class NavLink extends React.Component<NavLinkProps> {
+export class NavElem extends React.Component<NavElemProps> {
   render() {
     return (
-      <Link to={this.props.to}>
+      <NavLink to={this.props.to}
+        exact
+        style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          height: "100%",
+          color: "#3662A0"
+        }}
+        activeStyle={{
+          color: "#58C0D0"
+        }}
+      >
+        <FontAwesome
+          name={this.props.icon}
+          style={{
+            fontSize: 23,
+          }}
+        />
         {this.props.children}
-      </Link>
+      </NavLink>
     )
   }
 }
@@ -57,19 +78,19 @@ export class NavLink extends React.Component<NavLinkProps> {
 export class NavBar extends React.Component {
   render() {
     return (
-      <Navbar style={{flex: 1, alignSelf: "flex-end", position: "fixed", bottom: 0, width: "100%"}} color="light" light expand="md">
-        <Nav style={{flex: 1, justifyContent: "space-around"}} navbar justify="true">
+      <div style={{flex: 1, alignSelf: "flex-end", position: "fixed", bottom: 0, width: "100%", display: "flex", borderTopWidth: 1, borderTopColor: "lightgrey", borderTopStyle: "solid"}}>
+        <Nav style={{marginTop: 5, flex: 1, justifyContent: "space-around", flexDirection: "row"}} navbar justify="true">
           <NavItem>
-            <NavLink to="/" icon="qrcode">Ma Place</NavLink>
+            <NavElem to="/" icon="qrcode">Ma Place</NavElem>
           </NavItem>
           <NavItem>
-            <NavLink to="/places" icon="search">Places</NavLink>
+            <NavElem to="/places" icon="search">Places</NavElem>
           </NavItem>
           <NavItem>
-            <NavLink to="/users" icon="users">Utilisateurs</NavLink>
+            <NavElem to="/users" icon="users">Utilisateurs</NavElem>
           </NavItem>
         </Nav>
-      </Navbar>
+      </div>
     )
   }
 }

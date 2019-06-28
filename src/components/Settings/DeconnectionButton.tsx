@@ -15,6 +15,7 @@ limitations under the License.
 */
 import React from 'react'
 import styles from './styles/DeconnectionButtonStyle'
+import FontAwesome from "react-fontawesome"
 
 const DeconnectionButton = (props: { onPress: () => any }) => {
   const { onPress } = props;
@@ -22,7 +23,6 @@ const DeconnectionButton = (props: { onPress: () => any }) => {
     style={styles.view}
   >
     <button
-      title="ME DÉCONNECTER"
       onClick={onPress}
       style={{
         backgroundColor: '#fff',
@@ -31,9 +31,28 @@ const DeconnectionButton = (props: { onPress: () => any }) => {
         marginTop: 10,
         borderRadius: 5,
         borderWidth: 1,
-        borderColor: '#2E89AD'
+        borderColor: '#2E89AD',
+        flex: 1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-around"
       }}
-    />
+    >
+      <FontAwesome
+        name="power-off"
+        style={{
+          size: 15,
+          color: '#2E89AD'
+        }}
+      />
+      <div style={{
+        fontWeight: 700,
+        fontFamily: 'Roboto',
+        color: '#2E89AD'
+      }}>
+        ME DÉCONNECTER
+      </div>
+    </button>
   </div>
 }
 

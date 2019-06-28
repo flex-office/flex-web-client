@@ -35,6 +35,7 @@ const ManualInsertionCard = (props: {
           width: 100,
           borderRadius: 15,
           backgroundColor: "#fff",
+          // boxShadow: "1px 1px 1px 1px rgba(0, 0, 0, 0.2)"
         }}
         onClick={onPress}
       >

@@ -44,8 +44,6 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
         if (!result) {
             this.props.history.push("/login")
         } else {
-            console.log("coucou")
-            console.log(result)
             const { remoteDay, historical, arrayOfFriends, id } = JSON.parse(result);
             const userName = JSON.parse(result).name;
             const userFName = JSON.parse(result).fname;

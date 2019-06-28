@@ -37,7 +37,9 @@ export default {
   },
   scrollViewContainer: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: "white",
+    display: "flex",
+    flexDirection: "column"
   },
   viewContainer: {
     backgroundColor: "#fff",
@@ -51,7 +53,10 @@ export default {
     alignItems: "center",
     margin: 20,
     height: 100,
-    borderRadius: 5
+    borderRadius: 5,
+    display: "flex",
+    padding: 10,
+    boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.4)"
   },
   viewContainerRemote: {
     backgroundColor: "#fff",
@@ -65,7 +70,9 @@ export default {
     alignItems: "center",
     margin: 20,
     height: 100,
-    borderRadius: 5
+    borderRadius: 5,
+    display: "flex",
+    boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.4)"
   },
   viewContainerSemiFlex: {
     backgroundColor: "#fff",
@@ -80,11 +87,13 @@ export default {
     margin: 20,
     marginBottom: 0,
     height: 100,
-    borderRadius: 5
+    borderRadius: 5,
+    boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.4)"
   },
   remoteText: {
     margin: 10,
-    fontFamily: "Roboto"
+    fontFamily: "Roboto",
+    color: "#7E7E7E"
   },
   semiFlexText: {
     margin: 10,
@@ -100,5 +109,16 @@ export default {
     height: 40,
     borderWidth: 0,
     margin: 0
+  },
+  button: {
+    borderColor: "#E4E4E4",
+    minWidth: "20%",
+    flex: 1,
+    display: "flex",
+    justifyContent: "center"
+  },
+  buttonSelected: {
+    color: "#2E89AD",
+    fontWeight: "bold"
   }
 }

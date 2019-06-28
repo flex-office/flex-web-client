@@ -16,7 +16,7 @@ limitations under the License.
 // @flow
 /* eslint-disable */
 import React, { Component } from "react";
-import { ButtonGroup, Modal } from "reactstrap"
+import { Button, ButtonGroup, Modal } from "reactstrap"
 import { Spinner } from "react-activity"
 import { withRouter } from "react-router-dom"
 
@@ -34,6 +34,8 @@ import styles from "./SettingsScreenStyles";
 import DeconnectionButton from "../../components/Settings/DeconnectionButton";
 
 import { fetchPhoto, logOut } from "../../components/Navigation/reducer";
+
+import defaultProfile from "../../assets/profile.png"
 
 const WEEK_DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
 
@@ -67,20 +69,32 @@ interface SettingsScreenProps {
   logOut: any
 }
 
+const profileStyles = {
+  row: {
+    fontFamily: "Roboto",
+    display: "flex",
+    alignItems: "center",
+    color: "#7E7E7E"
+  },
+  text: {
+    marginRight: 5,
+  }
+}
+
 export const ProfileDescription = (props: { name: any, fname: any, id: any }) => {
   const { name, fname, id } = props;
   return (
-    <div style={{ marginLeft: 20 }}>
-      <div style={{ fontFamily: "Roboto" }}>
-        <p style={{ fontWeight: "bold" }}>Nom : </p>
+    <div style={{ maxWidth: "1000px" }}>
+      <div style={profileStyles.row}>
+        <div style={Object.assign({ fontWeight: "bold" }, profileStyles.text)}>Nom : </div>
         {name}
       </div>
-      <div style={{ fontFamily: "Roboto" }}>
-        <p style={{ fontWeight: "bold" }}>Prenom : </p>
+      <div style={profileStyles.row}>
+        <div style={Object.assign({ fontWeight: "bold" }, profileStyles.text)}>Prénom : </div>
         {fname}
       </div>
-      <div style={{ fontFamily: "Roboto" }}>
-        <p style={{ fontWeight: "bold" }}>ID : </p>
+      <div style={profileStyles.row}>
+        <div style={Object.assign({ fontWeight: "bold" }, profileStyles.text)}>ID : </div>
         {id}
       </div>
     </div>
@@ -100,8 +114,8 @@ export class FilePicker extends React.Component<FilePickerProps> {
   }
   render() {
     return (
-      <div onClick={() => this.inputRef.current.click()}>
-        <input onClick={this.props.onClick} ref={this.inputRef} style={{display: "none"}} type="file" accept={this.props.type}/>
+      <div style={{cursor: "pointer"}} onClick={() => this.inputRef.current.click()}>
+        <input onClick={this.props.onClick} ref={this.inputRef} style={{ display: "none" }} type="file" accept={this.props.type} />
         {this.props.children}
       </div>
     )
@@ -136,7 +150,7 @@ export const ModalComponent = (props: { visible: any, ctx: any }) => {
           source={require("../../assets/loading.json")}
           progress={ctx.state.progress}
         /> */}
-        <Spinner/>
+        <Spinner />
       </div>
     </Modal>
   );
@@ -225,7 +239,8 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
   }
 
   updateIndex = selectedIndex => {
-    this.setState({ selectedIndex, remoteDay: WEEK_DAYS[selectedIndex] });
+    this.saveRemote();
+    return this.setState({ selectedIndex, remoteDay: WEEK_DAYS[selectedIndex] });
   };
 
   saveRemote = async () => {
@@ -285,7 +300,13 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
     const { selectedIndex, name, fname, id, photo, loadingSave, userPlace, startDate, endDate } = this.state;
 
     return (
-      <div style={styles.scrollViewContainer}>
+      <div style={{
+        flex: 1,
+        backgroundColor: "white",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+      }}>
         <div style={styles.viewContainer}>
           <ModalComponent visible={loadingSave} ctx={this} />
           <ProfileDescription name={name} fname={fname} id={id} />
@@ -302,35 +323,38 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
               style={
                 photo
                   ? {
-                      width: 70,
-                      height: 70,
-                      borderRadius: 35,
-                    }
+                    width: 70,
+                    height: 70,
+                    borderRadius: 35,
+                  }
                   : {
-                      width: 70,
-                      height: 70,
-                    }
+                    width: 70,
+                    height: 70,
+                  }
               }
-              src={ photo ? { uri: photo } : require("../../assets/profile.png") }
+              src={photo ? photo : defaultProfile}
             />
           </FilePicker>
         </div>
-        <div style={styles.viewContainerRemote}>
-          <p style={styles.remoteText}>Jour de télétravail </p>
+        <div style={Object.assign({flexDirection: "column"}, styles.viewContainerRemote)}>
+          <div style={Object.assign({fontWeight: "bold"}, styles.remoteText)}>Jour de télétravail </div>
           <ButtonGroup
-            onClick={async event => {
-              await this.updateIndex(event);
-              this.saveRemote();
+            style={{
+              margin: 10,
+              alignItems: "center",
+              display: "flex",
+              flexDirection: "row",
+              flex: 1
             }}
-            // selectedIndex={selectedIndex}
-            buttons={WEEK_DAYS}
-          />
+          >
+            {WEEK_DAYS.map((day, i) => <Button onClick={() => this.updateIndex(i)} key={i} outline style={Object.assign({...styles.button}, (i === selectedIndex) ? styles.buttonSelected : {})}>{day}</Button>)}
+          </ButtonGroup>
         </div>
 
-        { userPlace ? (
+        {userPlace ? (
           <div style={styles.viewContainerSemiFlex}>
             <p style={styles.semiFlexText}>Je suis absent.e entre</p>
-            <div style={{flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'flex-start'}}>
+            <div style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
               <input
                 style={styles.input}
                 onChange={e => this.setState({ startDate: e.target.value })}
@@ -350,7 +374,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
               <p style={{ alignSelf: 'center', color: 'white', fontWeight: 'bold' }}>Confirmer</p>
             </div>
           </div>
-        ) : null }
+        ) : null}
 
         {/* For future purpose */}
         {/* <Calendar /> */}
