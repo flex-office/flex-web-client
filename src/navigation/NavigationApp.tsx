@@ -26,7 +26,7 @@ import { Provider } from "react-redux";
 
 import devToolsEnhancer from "remote-redux-devtools";
 
-import FontAwesome from "react-fontawesome"
+import Icon from "react-fontawesome"
 
 // import SplashScreen from "../views/Splash/SplashScreen";
 import ProfileScreen from "../views/Profile/ProfileScreen";
@@ -63,7 +63,7 @@ export class NavElem extends React.Component<NavElemProps> {
           color: "#58C0D0"
         }}
       >
-        <FontAwesome
+        <Icon
           name={this.props.icon}
           style={{
             fontSize: 23,

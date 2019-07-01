@@ -4,6 +4,11 @@ import { withRouter } from "react-router-dom"
 import config from "../../config/api.json";
 import server from "../../config/server.json";
 import placesConfig from "../../config/places.json";
+import PlacesList from "../../components/Places/PlacesList"
+import PlacesSelector from "../../components/Places/PlacesSelector"
+import FetchPlacesButton from "../../components/Places/FetchPlacesButton"
+import { Spinner } from "reactstrap"
+import styles from "./PlacesScreenStyle"
 
 type PlacesScreenState = {
     places: Array<any>,
@@ -82,12 +87,52 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
     };
 
     render() {
+        const {
+            loading,
+            selectedFloorIndex,
+            selectedZoneIndex,
+            selectedSideIndex
+        } = this.state;
+
         return (
-            <div>
-                <p>Places Screen</p>
-                <ul>
-                    {this.state.places.map(place => <li key={place.id}>{place.id}</li>)}
-                </ul>
+            <div style={{ backgroundColor: "white", flex: 1, alignItems: "center", display: "flex", flexDirection: "column" }}>
+                <div style={styles.selectorContainer}>
+
+                    <div style={styles.label}>Places disponibles</div>
+
+                    {/* Floor selector */}
+                    <PlacesSelector
+                        buttons={placesConfig.floorIndex}
+                        onPress={this.updateFloorIndex}
+                        selectedIndex={selectedFloorIndex}
+                    />
+
+                    {/* Zone selector */}
+                    <PlacesSelector
+                        buttons={placesConfig.zoneIndex}
+                        onPress={this.updateZoneIndex}
+                        selectedIndex={selectedZoneIndex}
+                    />
+
+                    {/* Side selector */}
+                    <PlacesSelector
+                        buttons={placesConfig.sideIndex}
+                        onPress={this.updateSideIndex}
+                        selectedIndex={selectedSideIndex}
+                    />
+
+                    <FetchPlacesButton
+                        onPress={() => this.getPlaces()}
+                    />
+                </div>
+                {!loading ? (
+                    <PlacesList places={this.filterPlaces()} />
+                ) : (
+                    <Spinner
+                        style={{ marginTop: 20, color: "#2E89AD" }}
+                        size="large"
+                    />
+                )}
             </div>
         )
     }

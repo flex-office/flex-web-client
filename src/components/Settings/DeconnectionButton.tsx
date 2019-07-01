@@ -15,7 +15,7 @@ limitations under the License.
 */
 import React from 'react'
 import styles from './styles/DeconnectionButtonStyle'
-import FontAwesome from "react-fontawesome"
+import Icon from "react-fontawesome"
 
 const DeconnectionButton = (props: { onPress: () => any }) => {
   const { onPress } = props;
@@ -38,7 +38,7 @@ const DeconnectionButton = (props: { onPress: () => any }) => {
         justifyContent: "space-around"
       }}
     >
-      <FontAwesome
+      <Icon
         name="power-off"
         style={{
           size: 15,

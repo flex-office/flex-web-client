@@ -111,7 +111,7 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
                             onChangeText2={e => this.setState({id: e.target.value.toUpperCase().trim()})}
                         />
                         <LoginButton onPress={() => this.logIn()} />
-                        <p>{debugField}</p>
+                        <p style={styles.debug}>{debugField}</p>
                     </div>
                     {/* <p style={styles.version}>{DeviceInfo.getVersion()}</p> */}
                 </div>

@@ -347,7 +347,15 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
               flex: 1
             }}
           >
-            {WEEK_DAYS.map((day, i) => <Button onClick={() => this.updateIndex(i)} key={i} outline style={Object.assign({...styles.button}, (i === selectedIndex) ? styles.buttonSelected : {})}>{day}</Button>)}
+            {WEEK_DAYS.map((day, i) =>
+              <Button
+                onClick={() => this.updateIndex(i)}
+                key={i}
+                outline
+                style={Object.assign({...styles.button}, (i === selectedIndex) ? styles.buttonSelected : {})}
+              >
+                {day}
+              </Button>)}
           </ButtonGroup>
         </div>
 

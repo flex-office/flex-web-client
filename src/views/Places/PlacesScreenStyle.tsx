@@ -15,26 +15,29 @@ limitations under the License.
 */
 
 export default {
-  view: {
+  selectorContainer: {
+    elevation: 2,
+    padding: 15,
+    margin: 20,
+    marginBottom: 0,
+    borderRadius: 10,
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    shadowColor: "#3662A0",
+    shadowOffset: { height: 1, width: 0 },
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    backgroundColor: "white"
-  },
-  view_second: {
-    width: "60%",
-    marginTop: "10%"
-  },
-  debug: {
     display: "flex",
+    alignItems: "center",
     justifyContent: "center",
-    color: "#5167A4",
-    margin: 10
-  },
-  version: {
-    position: "absolute",
-    bottom: 0,
-    marginBottom: 5
-  }
-};
+    flexDirection: "column" as "column",
+    boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.4)"
+	},
+	label: {
+		textAlign: "center" as "center",
+		fontSize: 18,
+		fontFamily: "Roboto",
+		color: "black",
+    marginBottom: 10,
+    fontWeight: "bold" as "bold"
+	}
+}
