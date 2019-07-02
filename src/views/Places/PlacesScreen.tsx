@@ -126,7 +126,9 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
                     />
                 </div>
                 {!loading ? (
-                    <PlacesList places={this.filterPlaces()} />
+                    <div style={{marginTop: 10}}>
+                        <PlacesList places={this.filterPlaces()} />
+                    </div>
                 ) : (
                     <Spinner
                         style={{ marginTop: 20, color: "#2E89AD" }}

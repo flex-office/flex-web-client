@@ -31,9 +31,6 @@ class PlaceItem extends React.Component<PlaceItemProps> {
 					justifyContent: "center",
 					alignItems: "center",
 					display: "flex",
-					flexBasis: "50%",
-					flexGrow: 1,
-					flex: "1 1 50%",
 					padding: 10,
 					boxShadow: "1px 1px 1px 1px rgba(0, 0, 0, 0.2)"
 				}}

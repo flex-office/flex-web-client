@@ -32,11 +32,16 @@ class PlacesList extends React.Component<PlaceListProps> {
 					alignItems: "center",
 					marginBottom: 20,
 					display: "flex",
-					flexDirection: "column"
+					flexDirection: "row",
+					flexWrap: "wrap",
+					maxWidth: "600px"
 				}}
 			>
 				{(places.length > 0) ?
-					places.map(place => <PlaceItem key={place.id} place={place} />)
+					places.map(place =>
+					<div key={place.id} style={{margin: 10}}>
+						<PlaceItem place={place} />
+					</div>)
 					: <EmptyResult />
 				}
 			</div>
