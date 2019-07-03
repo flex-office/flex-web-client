@@ -17,7 +17,7 @@ limitations under the License.
 export default {
   view: {
     flex: 1,
-    // flexDirection: "column",
+    flexDirection: "column" as "column",
     backgroundColor: "white"
   },
   view_third: {
@@ -60,6 +60,8 @@ export default {
   leave_button: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    display: "flex",
+    height: "100%"
   }
 };

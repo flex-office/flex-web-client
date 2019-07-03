@@ -3,6 +3,12 @@ import { append, filter } from "ramda";
 import { withRouter } from "react-router-dom"
 import config from "../../config/api.json";
 import server from "../../config/server.json";
+import Icon from "react-fontawesome"
+import { Spinner } from "reactstrap"
+import Input from "../../components/General/Input"
+import ListPlaces from "../../components/Users/ListPlaces"
+import ListItem from "../../components/Users/ListItem"
+import profileDefaultPic from "../../assets/profile.png";
 
 type UsersScreenState = {
     users: Array<any>
@@ -218,14 +224,109 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
     };
 
     render() {
+        const { users, loading, userName } = this.state;
+
         return (
-            <div>
-                <p>Users Screen</p>
-                <ul>
-                    {this.state.users.map(user => <li key={user.id}>{user.name} / {user.fname}</li>)}
-                </ul>
+            <div
+                style={{
+                    marginLeft: 40,
+                    marginRight: 40,
+                    flex: 1,
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column"
+                }}>
+                <div
+                    style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        justifyContent: "space-around",
+                        alignItems: "center",
+                        marginBottom: 10,
+                        display: "flex"
+                    }}
+                >
+                    <Input
+                        onChange={e => this._handleSearch(e.target.value)}
+                        onSubmit={() => this.getUsers()}
+                        placeholder="Recherche   ex: Prénom NOM"
+                    />
+                    <div
+                        onClick={() => this.getUsers()}
+                        style={{
+                            boxShadow: "2px 2px 2px 2px rgba(54, 98, 160, 0.4)",
+                            backgroundColor: "#fff",
+                            borderRadius: 17.5,
+                            flex: 1,
+                            height: 35,
+                            alignItems: "center",
+                            justifyContent: "center",
+                            display: "flex",
+                            paddingLeft: 20,
+                            paddingRight: 20,
+                            cursor: "pointer"
+                        }}
+                    >
+                        <Icon name="arrow-right" style={{ fontSize: 15, color: "#2E89AD" }} />
+                    </div>
+                </div>
+                {/* <FindPlacesCard users={() => this.getUsers()} /> */}
+                {!loading ? (
+                    <div>
+                        {users !== [] && users.length > 0 ? (
+                            <ListPlaces
+                                handleList={this._handleList()}
+                                build={item =>
+                                    item && `${item.name}/${item.fname}` !== userName ? (
+                                        <div
+                                            key={item.id}
+                                            onClick={() => item.isFriend ? this.removeFriend(item) : this.addFriend(item)}
+                                            style={{cursor: "pointer"}}
+                                        >
+                                            {/* <Card containerStyle={{ borderRadius: 10 }}> */}
+                                            <ListItem
+                                                title={`${item.name} / ${item.fname}`}
+                                                subtitle={item.id_place}
+                                                containerStyle={{ margin: 0, padding: 5 }}
+                                                titleStyle={{ fontFamily: "Roboto" }}
+                                                rightIcon={{
+                                                    name: "star",
+                                                    fa: item.isFriend,
+                                                    color: "#2E89AD"
+                                                }}
+                                                leftAvatar={{
+                                                    source: item.photo ? item.photo : profileDefaultPic,
+                                                    imageStyle: {
+                                                        resizeMode: "contain",
+                                                        backgroundColor: "white"
+                                                    },
+                                                    rounded: false
+                                                }}
+                                                bottomDivider={true}
+                                            />
+                                            {/* </Card> */}
+                                        </div>
+                                    ) : null
+                                }
+                            />
+                        ) : null}
+                    </div>
+                ) : (
+                        <div
+                            style={{
+                                backgroundColor: "white",
+                                flex: 1,
+                                justifyContent: "center",
+                                alignItems: "center"
+                            }}
+                        >
+                            <Spinner
+                                style={{ marginTop: 40, color: "#2E89AD" }}
+                            />
+                        </div>
+                    )}
             </div>
-        )
+        );
     }
 }
 

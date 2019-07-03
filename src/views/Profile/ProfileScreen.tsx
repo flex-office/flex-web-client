@@ -142,7 +142,9 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                     backgroundColor: "white",
                     flex: 1,
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
+                    display: "flex",
+                    height: "100%"
                 }}
             >
                 <LeaveButton place={place} onPress={() => this.leavePlace()} />

@@ -36,6 +36,7 @@ import DeconnectionButton from "../../components/Settings/DeconnectionButton";
 import { fetchPhoto, logOut } from "../../components/Navigation/reducer";
 
 import defaultProfile from "../../assets/profile.png"
+import { read } from "fs";
 
 const WEEK_DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
 
@@ -103,19 +104,28 @@ export const ProfileDescription = (props: { name: any, fname: any, id: any }) =>
 
 interface FilePickerProps {
   type: string
-  onClick: any
+  onChange: any
 }
 
 export class FilePicker extends React.Component<FilePickerProps> {
   inputRef: any
+
   constructor(props) {
     super(props)
     this.inputRef = React.createRef()
   }
+
+  handleChange = async (e) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(e.target.files[0])
+    reader.onload = () => this.props.onChange(reader.result)
+    reader.onerror = err => console.error(err)
+  }
+
   render() {
     return (
       <div style={{cursor: "pointer"}} onClick={() => this.inputRef.current.click()}>
-        <input onClick={this.props.onClick} ref={this.inputRef} style={{ display: "none" }} type="file" accept={this.props.type} />
+        <input onChange={this.handleChange} ref={this.inputRef} style={{ display: "none" }} type="file" accept={this.props.type} />
         {this.props.children}
       </div>
     )
@@ -266,7 +276,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
       .then(res => res.json())
       .then(data => {
         console.log(data);
-      });
+      })
 
     // Wait until the photo is uploaded to Cloudinary and the link is provided to perform request
     setTimeout(async () => {
@@ -312,9 +322,9 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
           <ProfileDescription name={name} fname={fname} id={id} />
           <FilePicker
             type="image/*"
-            onClick={image => {
+            onChange={async image => {
               if (image) {
-                this.setState({ photo: image });
+                await this.setState({ photo: image });
                 this.saveRemote();
               }
             }}

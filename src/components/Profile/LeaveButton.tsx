@@ -28,10 +28,21 @@ const LeaveButton = (props: { place: any, onPress: () => void }) => {
           borderWidth: 1,
           borderColor: "#3662A0",
           backgroundColor: "#fff",
+          verticalAlign: "middle"
         }}
-        title={`Libérer la place\n${place}`}
         onClick={onPress}
-      />
+      >
+        <div
+          style={{
+            fontWeight: "bold",
+            fontFamily: "Roboto",
+            color: "#468BB6"
+          }}
+        >
+          <div>Libérer la place</div>
+          <div>{place}</div>
+        </div>
+      </button>
     </div>
   );
 };
