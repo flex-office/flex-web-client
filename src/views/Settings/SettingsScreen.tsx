@@ -259,7 +259,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
 
     const payload = {
       id_user: id,
-      photo,
+      photo: photo.substring(23),
       remoteDay,
       startDate,
       endDate
@@ -321,7 +321,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
           <ModalComponent visible={loadingSave} ctx={this} />
           <ProfileDescription name={name} fname={fname} id={id} />
           <FilePicker
-            type="image/*"
+            type="image/jpeg"
             onChange={async image => {
               if (image) {
                 await this.setState({ photo: image });

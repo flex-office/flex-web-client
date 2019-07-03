@@ -20,6 +20,7 @@ type ProfileScreenState = {
     isWrongFormatPlace: boolean
     placeInput: string
     socket: any
+    isScanning: boolean
 };
 
 interface ProfileScreenProps {
@@ -36,7 +37,8 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             fname: "",
             id: "",
             place: "",
-            isWrongFormatPlace: false
+            isWrongFormatPlace: false,
+            isScanning: false
         };
         this.state.socket.on('leavePlace', () => this.leavePlace());
     }
@@ -62,11 +64,13 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
 
         const insertPlace = (placeText) => {
             if (placeText !== "" && placeText.match(regex.placeRegex) !== null) {
+                if (this.state.isScanning) return
                 const payload = {
                     id_user: id,
                     id_place: placeText
                 };
 
+                this.setState({ isScanning: true })
                 fetch(`${server.address}take_place`, {
                     method: "POST",
                     headers: {
@@ -89,6 +93,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                                 alert(`Impossible, Place déjà utilisée par : ${user.fname} ${user.name}`);
                             })
                         }
+                        this.setState({ isScanning: false })
                     });
             } else this.setState({ isWrongFormatPlace: true });
         }

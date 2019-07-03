@@ -8411,6 +8411,11 @@ react@^16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
+reactive-qr@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/reactive-qr/-/reactive-qr-0.1.7.tgz#6543eac7303c30109a054e2d65f3fa1b23b52412"
+  integrity sha512-6ETa4UkVXgFCNtAggaqv+FQePbF8UZyhr9w594Kp4W8gnHVfolcJNL82mi25Lp7MjgeZWKhUuWJBWfM4zCyCQQ==
+
 reactstrap@^8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/reactstrap/-/reactstrap-8.0.0.tgz#db24d0127e58db89baa743dc660b65f611fe9b84"

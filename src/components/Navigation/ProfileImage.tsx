@@ -16,6 +16,7 @@ limitations under the License.
 /* eslint-disable */
 
 import React, { Component } from "react";
+import picProfile from "../../assets/profile.png";
 
 import { fetchPhoto } from "./reducer";
 import { connect } from "react-redux";
@@ -48,10 +49,8 @@ class ProfileImage extends Component<ProfileImageProps> {
       <img
         src={
           photo === ""
-            ? require("../../assets/profile.png")
-            : {
-                uri: photo
-              }
+            ? picProfile
+            : photo
         }
         style={
           photo === ""
