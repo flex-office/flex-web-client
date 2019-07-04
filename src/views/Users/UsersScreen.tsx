@@ -239,11 +239,11 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                 }}>
                 <div
                     style={{
-                        flex: 1,
                         flexDirection: "row",
                         justifyContent: "space-around",
                         alignItems: "center",
                         marginBottom: 10,
+                        marginTop: 10,
                         display: "flex"
                     }}
                 >
@@ -252,7 +252,7 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                         onSubmit={() => this.getUsers()}
                         placeholder="Recherche   ex: Prénom NOM"
                     />
-                    <div
+                    <button
                         onClick={() => this.getUsers()}
                         style={{
                             boxShadow: "2px 2px 2px 2px rgba(54, 98, 160, 0.4)",
@@ -265,53 +265,52 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                             display: "flex",
                             paddingLeft: 20,
                             paddingRight: 20,
-                            cursor: "pointer"
                         }}
                     >
                         <Icon name="arrow-right" style={{ fontSize: 15, color: "#2E89AD" }} />
-                    </div>
+                    </button>
                 </div>
                 {/* <FindPlacesCard users={() => this.getUsers()} /> */}
                 {!loading ? (
-                    <div>
-                        {users !== [] && users.length > 0 ? (
-                            <ListPlaces
-                                handleList={this._handleList()}
-                                build={item =>
-                                    item && `${item.name}/${item.fname}` !== userName ? (
-                                        <div
-                                            key={item.id}
-                                            onClick={() => item.isFriend ? this.removeFriend(item) : this.addFriend(item)}
-                                            style={{cursor: "pointer"}}
-                                        >
-                                            {/* <Card containerStyle={{ borderRadius: 10 }}> */}
-                                            <ListItem
-                                                title={`${item.name} / ${item.fname}`}
-                                                subtitle={item.id_place}
-                                                containerStyle={{ margin: 0, padding: 5 }}
-                                                titleStyle={{ fontFamily: "Roboto" }}
-                                                rightIcon={{
-                                                    name: "star",
-                                                    fa: item.isFriend,
-                                                    color: "#2E89AD"
-                                                }}
-                                                leftAvatar={{
-                                                    source: item.photo ? item.photo : profileDefaultPic,
-                                                    imageStyle: {
-                                                        resizeMode: "contain",
-                                                        backgroundColor: "white"
-                                                    },
-                                                    rounded: false
-                                                }}
-                                                bottomDivider={true}
-                                            />
-                                            {/* </Card> */}
-                                        </div>
-                                    ) : null
-                                }
-                            />
-                        ) : null}
-                    </div>
+                <div>
+                    {users !== [] && users.length > 0 ? (
+                    <ListPlaces
+                        handleList={this._handleList()}
+                        build={item =>
+                            item && `${item.name}/${item.fname}` !== userName ? (
+                            <div
+                                key={item.id}
+                                onClick={() => item.isFriend ? this.removeFriend(item) : this.addFriend(item)}
+                                style={{cursor: "pointer"}}
+                            >
+                                {/* <Card containerStyle={{ borderRadius: 10 }}> */}
+                                <ListItem
+                                    title={`${item.name} / ${item.fname}`}
+                                    subtitle={item.id_place}
+                                    containerStyle={{ margin: 0, padding: 5 }}
+                                    titleStyle={{ fontFamily: "Roboto" }}
+                                    rightIcon={{
+                                        name: "star",
+                                        fa: item.isFriend,
+                                        color: "#2E89AD"
+                                    }}
+                                    leftAvatar={{
+                                        source: item.photo ? item.photo : profileDefaultPic,
+                                        imageStyle: {
+                                            resizeMode: "contain",
+                                            backgroundColor: "white"
+                                        },
+                                        rounded: false
+                                    }}
+                                    bottomDivider={true}
+                                />
+                                {/* </Card> */}
+                            </div>
+                            ) : null
+                        }
+                    />
+                    ) : null}
+                </div>
                 ) : (
                         <div
                             style={{
