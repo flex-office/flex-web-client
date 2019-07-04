@@ -22,26 +22,29 @@ type Props = {
 };
 
 class QRCodeComponent extends React.Component<Props> {
-  reactivateOnce = false;
-
   render() {
     const { onRead } = this.props;
     return (
-      <div>
-        <p
+      <div style={{
+        flex: 1,
+        display: "flex",
+        width: "100%",
+        alignItems: "center",
+        flexDirection: "column"
+      }}>
+        <div
           style={{
             marginBottom: 15,
-            fontFamily: "Roboto"
+            fontFamily: "Roboto",
+            color: "grey"
           }}
         >
           Scannez le QR code
-        </p>
+        </div>
         <QrReader
+          onError={err => console.log(err)}
           onScan={onRead}
-          onError={err => {
-            console.log(err)
-          }}
-          // style={{width: '100%'}}
+          style={{width: "100%", maxWidth: "40rem"}}
         />
       </div>
     );

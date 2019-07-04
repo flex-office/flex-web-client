@@ -255,7 +255,9 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                     <button
                         onClick={() => this.getUsers()}
                         style={{
-                            boxShadow: "2px 2px 2px 2px rgba(54, 98, 160, 0.4)",
+                            // boxShadow: "2px 2px 2px 2px rgba(54, 98, 160, 0.4)",
+                            boxShadow: "1px 1px 1px 1px rgba(0, 0, 00, 0.2)",
+                            borderWidth: 0,
                             backgroundColor: "#fff",
                             borderRadius: 17.5,
                             flex: 1,

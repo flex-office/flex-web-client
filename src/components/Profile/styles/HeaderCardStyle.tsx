@@ -20,6 +20,6 @@ export default {
   text_first: {
     color: "black",
     margin: 2,
-    fontFamily: "Roboto"
+    fontFamily: "Roboto",
   }
 }

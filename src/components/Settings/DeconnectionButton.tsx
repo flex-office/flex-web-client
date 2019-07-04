@@ -30,7 +30,7 @@ const DeconnectionButton = (props: { onPress: () => any }) => {
         height: 45,
         marginTop: 10,
         borderRadius: 5,
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: '#2E89AD',
         flex: 1,
         display: "flex",

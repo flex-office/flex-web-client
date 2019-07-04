@@ -1,5 +1,4 @@
 import React from "react"
-import QrReader from "react-qr-reader"
 import { withRouter } from "react-router-dom"
 import { omit } from "ramda"
 import config from "../../config/api.json";
@@ -10,6 +9,7 @@ import socketIOClient from "socket.io-client";
 import HeaderCard from "../../components/Profile/HeaderCard"
 import LeaveButton from "../../components/Profile/LeaveButton"
 import ManualInsertionCard from "../../components/Profile/ManualInsertionCard"
+import QRCodeComponent from "../../components/Profile/QRCodeComponent";
 
 type ProfileScreenState = {
     name: string,
@@ -114,11 +114,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                 width: "100%",
             }}>
                 <HeaderCard fname={fname} name={name} id={id} />
-                <QrReader
-                    onError={err => console.log(err)}
-                    onScan={onRead}
-                    style={{width: "100%", maxWidth: "45rem"}}
-                />
+                <QRCodeComponent onRead={onRead}/>
                 <ManualInsertionCard
                     onChangeText={e => this.setState({placeInput: e.target.value.toUpperCase().trim()})}
                     onSubmitEditing={() => insertPlace(this.state.placeInput)}

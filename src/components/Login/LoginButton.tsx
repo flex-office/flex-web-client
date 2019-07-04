@@ -30,12 +30,12 @@ const LoginButton = (props: { onPress: () => void }) => {
           paddingLeft: 30,
           paddingRight: 30,
           borderRadius: 15,
-          borderWidth: 1,
+          borderWidth: 2,
           borderColor: "#2E89AD",
           marginTop: 30,
           marginLeft: 15,
           marginRight: 15,
-          backgroundColor: "white"
+          backgroundColor: "white",
         }}
         onClick={onPress}
       >

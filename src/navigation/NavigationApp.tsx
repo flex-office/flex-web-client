@@ -121,8 +121,7 @@ export class NavigationApp extends React.Component {
             alignItems: "center",
             flexDirection: "column",
             backgroundColor: "white",
-            height: "calc(100% - 132px)",
-            // paddingBottom: 47
+            minHeight: "calc(100% - 132px)",
           }}
         >
           <Route exact path="/" component={ProfileScreen}/>
