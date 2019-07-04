@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 const styles = {
     container: {
         alignItems: "center",
+        alignSelf: "flex-start",
         backgroundColor: "white",
         borderBottomStyle: "solid" as "solid",
         borderBottomWidth: 7,
@@ -17,6 +18,11 @@ const styles = {
         flexDirection: "row" as "row",
         height: 80,
         justifyContent: "space-between",
+        overflow: "hidden",
+        position: "fixed" as "fixed",
+        top: 0,
+        width: "100%",
+        zIndex: 100,
     },
     text: {
         color: "black",
@@ -49,30 +55,32 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
     render() {
         const { showLogo, showProfilePic } = this.props
         return (
-            <div style={styles.container}>
-                {/* Header Left */}
-                {(showLogo) ?
-                <img
-                    src={logo}
-                    alt="logo"
-                    style={{
-                        height: 30,
-                        margin: 10,
-                    }}
-                /> : <div />}
-                <div style={styles.text}>
-                    Flex-Office
-                </div>
+            <div style={{height: 80}}>
+                <div style={styles.container}>
+                    {/* Header Left */}
+                    {(showLogo) ?
+                    <img
+                        src={logo}
+                        alt="logo"
+                        style={{
+                            height: 30,
+                            margin: 10,
+                        }}
+                    /> : <div />}
+                    <div style={styles.text}>
+                        Flex-Office
+                    </div>
 
-                {/* Header Right */}
-                {(showProfilePic) ?
-                <Link to="/settings"
-                    onClick={() => {
-                        fetchUserPhoto();
-                    }}
-                >
-                    <ProfileImage />
-                </Link> : <div />}
+                    {/* Header Right */}
+                    {(showProfilePic) ?
+                    <Link to="/settings"
+                        onClick={() => {
+                            fetchUserPhoto();
+                        }}
+                    >
+                        <ProfileImage />
+                    </Link> : <div />}
+                </div>
             </div>
         )
     }

@@ -70,18 +70,20 @@ export class NavElem extends React.Component<NavElemProps> {
 export class NavBar extends React.Component {
   render() {
     return (
-      <div style={styles.navBar}>
-        <Nav style={styles.nav} navbar justify="true">
-          <NavItem>
-            <NavElem to="/" icon="qrcode">Ma Place</NavElem>
-          </NavItem>
-          <NavItem>
-            <NavElem to="/places" icon="search">Places</NavElem>
-          </NavItem>
-          <NavItem>
-            <NavElem to="/users" icon="users">Utilisateurs</NavElem>
-          </NavItem>
-        </Nav>
+      <div style={{height: 52}}>
+        <div style={styles.navBar}>
+          <Nav style={styles.nav} navbar justify="true">
+            <NavItem>
+              <NavElem to="/" icon="qrcode">Ma Place</NavElem>
+            </NavItem>
+            <NavItem>
+              <NavElem to="/places" icon="search">Places</NavElem>
+            </NavItem>
+            <NavItem>
+              <NavElem to="/users" icon="users">Utilisateurs</NavElem>
+            </NavItem>
+          </Nav>
+        </div>
       </div>
     )
   }
