@@ -15,37 +15,43 @@ limitations under the License.
 */
 import React from "react";
 
+const styles = {
+  container: {
+    alignItems: "center",
+    flex: 1,
+    display: "flex",
+    flexDirection: "column" as "column",
+  },
+  button: {
+    backgroundColor: "white",
+    borderColor: "#2E89AD",
+    borderRadius: 15,
+    borderWidth: 2,
+    marginLeft: 15,
+    marginRight: 15,
+    marginTop: 30,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+  },
+  text: {
+    color: "#2E89AD",
+    fontFamily: "Roboto",
+    fontWeight: "bold" as "bold",
+    textTransform: "uppercase" as "uppercase",
+  },
+}
+
 const LoginButton = (props: { onPress: () => void }) => {
   const { onPress } = props;
   return (
-    <div style={{
-      alignItems: "center",
-      flex: 1,
-      display: "flex",
-      flexDirection: "column"
-    }}>
+    <div style={styles.container}>
       <button
-        style={{
-          padding: 10,
-          paddingLeft: 30,
-          paddingRight: 30,
-          borderRadius: 15,
-          borderWidth: 2,
-          borderColor: "#2E89AD",
-          marginTop: 30,
-          marginLeft: 15,
-          marginRight: 15,
-          backgroundColor: "white",
-        }}
+        style={styles.button}
         onClick={onPress}
       >
         <div
-          style={{
-            fontWeight: "bold",
-            fontFamily: "Roboto",
-            color: "#2E89AD",
-            textTransform: "uppercase"
-          }}
+          style={styles.text}
         >
           S'identifier
         </div>

@@ -20,5 +20,19 @@ export default {
     justifyContent: "space-between",
     margin: 15,
     display: "flex"
-  }
+  },
+  button: {
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    borderWidth: 0,
+    boxShadow: "1px 1px 1px 1px rgba(0, 0, 00, 0.2)",
+    paddingBottom: "0.5rem",
+    paddingTop: "0.5rem",
+    width: 100,
+  },
+  text: {
+    color: "#2E89AD",
+    fontFamily: "Roboto",
+    fontWeight: "bold" as "bold",
+  },
 }

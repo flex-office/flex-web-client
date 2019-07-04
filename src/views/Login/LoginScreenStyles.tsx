@@ -17,10 +17,12 @@ limitations under the License.
 export default {
   view: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-around",
     alignItems: "center",
-    flexDirection: "column",
-    backgroundColor: "white"
+    flexDirection: "column" as "column",
+    backgroundColor: "white",
+    display: "flex",
+    marginTop: 30
   },
   view_second: {
     width: "60%",

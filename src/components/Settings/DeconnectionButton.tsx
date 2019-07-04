@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from 'react'
-import styles from './styles/DeconnectionButtonStyle'
+import styles from './styles/DeconnectionButtonStyles'
 import Icon from "react-fontawesome"
 
 const DeconnectionButton = (props: { onPress: () => any }) => {

@@ -38,6 +38,8 @@ import UsersScreen from "../views/Users/UsersScreen";
 import reducer from "../components/Navigation/reducer";
 import HeaderBar from "../components/Navigation/HeaderBar";
 
+import styles from "./NavigationAppStyles"
+
 const store = createStore(reducer, devToolsEnhancer());
 
 interface NavElemProps {
@@ -50,24 +52,14 @@ export class NavElem extends React.Component<NavElemProps> {
     return (
       <NavLink to={this.props.to}
         exact
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-          height: "100%",
-          color: "#3662A0"
-        }}
+        style={styles.navLink}
         activeStyle={{
           color: "#58C0D0"
         }}
       >
         <Icon
           name={this.props.icon}
-          style={{
-            fontSize: 23,
-          }}
+          style={{ fontSize: 23 }}
         />
         {this.props.children}
       </NavLink>
@@ -78,23 +70,8 @@ export class NavElem extends React.Component<NavElemProps> {
 export class NavBar extends React.Component {
   render() {
     return (
-      <div
-        style={{
-          flex: 1,
-          alignSelf: "flex-end",
-          position: "fixed",
-          bottom: 0,
-          width: "100%",
-          overflow: "hidden",
-          display: "flex",
-          borderTopWidth: 1,
-          borderTopColor: "lightgrey",
-          borderTopStyle: "solid",
-          backgroundColor: "white",
-          zIndex: 100,
-        }}
-      >
-        <Nav style={{marginTop: 5, flex: 1, justifyContent: "space-around", flexDirection: "row"}} navbar justify="true">
+      <div style={styles.navBar}>
+        <Nav style={styles.nav} navbar justify="true">
           <NavItem>
             <NavElem to="/" icon="qrcode">Ma Place</NavElem>
           </NavItem>
@@ -113,17 +90,9 @@ export class NavBar extends React.Component {
 export class NavigationApp extends React.Component {
   render() {
     return (
-      <div style={{flex: 1, flexDirection: "column", height: "100%"}}>
+      <div style={styles.navApp}>
         <HeaderBar/>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "column",
-            backgroundColor: "white",
-            minHeight: "calc(100% - 132px)",
-          }}
-        >
+        <div style={styles.pageContainer}>
           <Route exact path="/" component={ProfileScreen}/>
           <Route path="/places" component={PlacesScreen}/>
           <Route path="/users" component={UsersScreen}/>

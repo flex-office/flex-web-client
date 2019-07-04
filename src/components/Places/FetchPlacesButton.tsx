@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from "react";
-import styles from "./styles/FetchPlacesButtonStyle";
+import styles from "./styles/FetchPlacesButtonStyles";
 import Icon from "react-fontawesome"
 
 const FetchPlacesButton = (props: { onPress: () => void }) => {

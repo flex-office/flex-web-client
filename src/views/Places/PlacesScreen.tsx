@@ -8,7 +8,7 @@ import PlacesList from "../../components/Places/PlacesList"
 import PlacesSelector from "../../components/Places/PlacesSelector"
 import FetchPlacesButton from "../../components/Places/FetchPlacesButton"
 import { Spinner } from "reactstrap"
-import styles from "./PlacesScreenStyle"
+import styles from "./PlacesScreenStyles"
 
 type PlacesScreenState = {
     places: Array<any>,
@@ -95,7 +95,7 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
         } = this.state;
 
         return (
-            <div style={{ backgroundColor: "white", flex: 1, alignItems: "center", display: "flex", flexDirection: "column" }}>
+            <div style={styles.view}>
                 <div style={styles.selectorContainer}>
 
                     <div style={styles.label}>Places disponibles</div>

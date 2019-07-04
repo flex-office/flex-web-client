@@ -15,7 +15,7 @@ limitations under the License.
 */
 import React from "react";
 import { Button, ButtonGroup } from "reactstrap";
-import styles from "./styles/PlacesSelectorStyle"
+import styles from "./styles/PlacesSelectorStyles"
 
 interface PlacesSelectorProps {
   onPress: any

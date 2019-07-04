@@ -35,7 +35,13 @@ class PlaceItem extends React.Component<PlaceItemProps> {
 					boxShadow: "1px 1px 1px 1px rgba(0, 0, 0, 0.2)"
 				}}
 			>
-				<div style={{ marginBottom: 0, marginRight: 10, fontFamily: "Roboto" }}>{place.id}</div>
+				<div style={{
+					marginBottom: 0,
+					marginRight: 10,
+					fontFamily: "Roboto"
+				}}>
+					{place.id}
+				</div>
 				<Icon
 					name="circle"
 					style={{

@@ -372,8 +372,8 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
 
         {userPlace ? (
           <div style={styles.viewContainerSemiFlex}>
-            <p style={styles.semiFlexText}>Je suis absent.e entre</p>
-            <div style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
+            <div style={styles.semiFlexText}>Je suis absent.e entre</div>
+            <div style={styles.semiFlexRow}>
               <input
                 style={styles.input}
                 onChange={e => this.setState({ startDate: e.target.value })}
@@ -386,12 +386,12 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
                 value={endDate}
               />
             </div>
-            <div
-              style={{ maxHeight: 40, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center', backgroundColor: '#1094F6', marginRight: 50, marginLeft: 50, marginTop: 0, marginBottom: 2, borderRadius: 5, flex: 1 }}
+            <button
+              style={styles.semiFlexButton}
               onClick={() => this.saveRemote()}
             >
-              <p style={{ alignSelf: 'center', color: 'white', fontWeight: 'bold' }}>Confirmer</p>
-            </div>
+              <div style={styles.semiFlexButtonText}>Confirmer</div>
+            </button>
           </div>
         ) : null}
 

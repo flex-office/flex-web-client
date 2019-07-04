@@ -105,14 +105,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         };
 
         return (
-            <div style={{
-                flex: 1,
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "flex-start",
-                display: "flex",
-                width: "100%",
-            }}>
+            <div style={styles.view}>
                 <HeaderCard fname={fname} name={name} id={id} />
                 <QRCodeComponent onRead={onRead}/>
                 <ManualInsertionCard
@@ -131,16 +124,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         const { place } = this.state;
 
         return (
-            <div
-                style={{
-                    backgroundColor: "white",
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    display: "flex",
-                    height: "100%"
-                }}
-            >
+            <div style={styles.leave_button}>
                 <LeaveButton place={place} onPress={() => this.leavePlace()} />
             </div>
         );

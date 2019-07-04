@@ -117,5 +117,28 @@ export default {
   buttonSelected: {
     color: "#2E89AD",
     fontWeight: "bold"
-  }
+  },
+  semiFlexRow: {
+    alignItems: "flex-start",
+    flexDirection: "row" as "row",
+    justifyContent: "flex-end",
+  },
+  semiFlexButton: {
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    backgroundColor: '#1094F6',
+    borderRadius: 5,
+    flex: 1,
+    justifyContent: 'center',
+    marginBottom: 2,
+    marginLeft: 50,
+    marginRight: 50,
+    marginTop: 0,
+    maxHeight: 40,
+  },
+  semiFlexButtonText: {
+    alignSelf: "center",
+    color: "white",
+    fontWeight: "bold" as "bold",
+  },
 }

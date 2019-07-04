@@ -15,6 +15,13 @@ limitations under the License.
 */
 
 export default {
+  view: {
+    alignItems: "center",
+    backgroundColor: "white",
+    display: "flex",
+    flex: 1,
+    flexDirection: "column" as "column",
+  },
   selectorContainer: {
     elevation: 2,
     padding: 15,

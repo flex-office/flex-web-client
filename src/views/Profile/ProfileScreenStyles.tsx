@@ -16,9 +16,13 @@ limitations under the License.
 
 export default {
   view: {
+    alignItems: "center",
+    backgroundColor: "white",
+    display: "flex",
     flex: 1,
     flexDirection: "column" as "column",
-    backgroundColor: "white"
+    justifyContent: "flex-start",
+    width: "100%",
   },
   view_third: {
     borderRadius: 4,
@@ -58,10 +62,11 @@ export default {
     fontFamily: "Roboto",
   },
   leave_button: {
-    flex: 1,
-    justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "white",
     display: "flex",
-    height: "100%"
-  }
+    flex: 1,
+    height: "100%",
+    justifyContent: "center",
+  },
 };

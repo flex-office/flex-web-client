@@ -4,6 +4,28 @@ import ProfileImage from "./ProfileImage";
 import { fetchPhoto } from "./reducer";
 import { Link } from 'react-router-dom'
 
+const styles = {
+    container: {
+        alignItems: "center",
+        backgroundColor: "white",
+        borderBottomStyle: "solid" as "solid",
+        borderBottomWidth: 7,
+        borderImage: "linear-gradient(to right, #58C0D0, #468BB6, #3662A0)",
+        borderImageSlice: 1,
+        display: "flex",
+        flex: 1,
+        flexDirection: "row" as "row",
+        height: 80,
+        justifyContent: "space-between",
+    },
+    text: {
+        color: "black",
+        fontFamily: "Roboto",
+        fontSize: 20,
+        fontWeight: "bold" as "bold",
+    }
+}
+
 const fetchUserPhoto = async () => {
     const userPhoto = await localStorage.getItem("USER")
     if (!userPhoto) return
@@ -27,23 +49,10 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
     render() {
         const { showLogo, showProfilePic } = this.props
         return (
-            <div
-                style={{
-                    flex: 1,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    display: "flex",
-                    backgroundColor: "white",
-                    height: 80,
-                    borderBottomWidth: 7,
-                    borderBottomStyle: "solid",
-                    borderImage: "linear-gradient(to right, #58C0D0, #468BB6, #3662A0)",
-                    borderImageSlice: 1
-                }}
-            >
+            <div style={styles.container}>
                 {/* Header Left */}
-                {(showLogo) ? <img
+                {(showLogo) ?
+                <img
                     src={logo}
                     alt="logo"
                     style={{
@@ -51,19 +60,13 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
                         margin: 10,
                     }}
                 /> : <div />}
-                <div
-                    style={{
-                        color: "black",
-                        fontWeight: "bold",
-                        fontSize: 20,
-                        fontFamily: "Roboto"
-                    }}
-                >
+                <div style={styles.text}>
                     Flex-Office
                 </div>
 
                 {/* Header Right */}
-                {(showProfilePic) ? <Link to="/settings"
+                {(showProfilePic) ?
+                <Link to="/settings"
                     onClick={() => {
                         fetchUserPhoto();
                     }}

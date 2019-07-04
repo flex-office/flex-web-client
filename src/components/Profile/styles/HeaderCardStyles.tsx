@@ -19,7 +19,8 @@ export default {
   },
   text_first: {
     color: "black",
-    margin: 2,
     fontFamily: "Roboto",
+    fontWeight: "bold" as "bold",
+    margin: 2,
   }
 }

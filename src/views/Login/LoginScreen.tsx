@@ -93,15 +93,7 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
         return (
             <div>
                 <HeaderBar showLogo={false} showProfilePic={false}/>
-                <div style={{
-                    flex: 1,
-                    justifyContent: "space-around",
-                    alignItems: "center",
-                    flexDirection: "column",
-                    backgroundColor: "white",
-                    display: "flex",
-                    marginTop: 30
-                }}>
+                <div style={styles.view}>
                     <img src={logo} style={{width: "8%"}} alt="logo" />
                     <div style={styles.view_second}>
                         <InputLogin

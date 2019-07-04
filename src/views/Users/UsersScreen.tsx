@@ -9,6 +9,7 @@ import Input from "../../components/General/Input"
 import ListPlaces from "../../components/Users/ListPlaces"
 import ListItem from "../../components/Users/ListItem"
 import profileDefaultPic from "../../assets/profile.png";
+import styles from "./UsersScreenStyles"
 
 type UsersScreenState = {
     users: Array<any>
@@ -227,26 +228,8 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
         const { users, loading, userName } = this.state;
 
         return (
-            <div
-                style={{
-                    marginLeft: 40,
-                    marginRight: 40,
-                    flex: 1,
-                    display: "flex",
-                    alignItems: "center",
-                    flexDirection: "column",
-                    justifyContent: "flex-start"
-                }}>
-                <div
-                    style={{
-                        flexDirection: "row",
-                        justifyContent: "space-around",
-                        alignItems: "center",
-                        marginBottom: 10,
-                        marginTop: 10,
-                        display: "flex"
-                    }}
-                >
+            <div style={styles.view}>
+                <div style={styles.search}>
                     <Input
                         onChange={e => this._handleSearch(e.target.value)}
                         onSubmit={() => this.getUsers()}
@@ -254,20 +237,7 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                     />
                     <button
                         onClick={() => this.getUsers()}
-                        style={{
-                            // boxShadow: "2px 2px 2px 2px rgba(54, 98, 160, 0.4)",
-                            boxShadow: "1px 1px 1px 1px rgba(0, 0, 00, 0.2)",
-                            borderWidth: 0,
-                            backgroundColor: "#fff",
-                            borderRadius: 17.5,
-                            flex: 1,
-                            height: 35,
-                            alignItems: "center",
-                            justifyContent: "center",
-                            display: "flex",
-                            paddingLeft: 20,
-                            paddingRight: 20,
-                        }}
+                        style={styles.searchButton}
                     >
                         <Icon name="arrow-right" style={{ fontSize: 15, color: "#2E89AD" }} />
                     </button>
@@ -314,19 +284,10 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                     ) : null}
                 </div>
                 ) : (
-                        <div
-                            style={{
-                                backgroundColor: "white",
-                                flex: 1,
-                                justifyContent: "center",
-                                alignItems: "center"
-                            }}
-                        >
-                            <Spinner
-                                style={{ marginTop: 40, color: "#2E89AD" }}
-                            />
-                        </div>
-                    )}
+                <div style={styles.spinner}>
+                    <Spinner style={{ marginTop: 40, color: "#2E89AD" }}/>
+                </div>
+                )}
             </div>
         );
     }

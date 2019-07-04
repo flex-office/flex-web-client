@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from "react";
-import styles from "./styles/HeaderCardStyle";
+import styles from "./styles/HeaderCardStyles";
 
 const HeaderCard = (props: { fname: string, name: string, id: string }) => {
   const { fname, name, id } = props;
