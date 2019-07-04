@@ -55,7 +55,7 @@ export default {
     // textAlign: "center",
     color: "#2E89AD",
     margin: 10,
-    fontFamily: "Roboto"
+    fontFamily: "Roboto",
   },
   leave_button: {
     flex: 1,

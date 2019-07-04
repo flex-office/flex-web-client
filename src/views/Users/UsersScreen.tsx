@@ -234,7 +234,8 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                     flex: 1,
                     display: "flex",
                     alignItems: "center",
-                    flexDirection: "column"
+                    flexDirection: "column",
+                    justifyContent: "flex-start"
                 }}>
                 <div
                     style={{

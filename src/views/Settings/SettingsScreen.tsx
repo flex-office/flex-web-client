@@ -315,7 +315,8 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
         backgroundColor: "white",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center"
+        justifyContent: "flex-start",
+        alignItems: "stretch",
       }}>
         <div style={styles.viewContainer}>
           <ModalComponent visible={loadingSave} ctx={this} />
@@ -397,14 +398,16 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
         {/* For future purpose */}
         {/* <Calendar /> */}
 
-        <DeconnectionButton
-          onPress={() => {
-            // LogOut current user
-            this.props.logOut("");
-            localStorage.removeItem("USER");
-            this.props.history.push("/login")
-          }}
-        />
+        <div style={{flex: 1, alignSelf: "center"}}>
+          <DeconnectionButton
+            onPress={() => {
+              // LogOut current user
+              this.props.logOut("");
+              localStorage.removeItem("USER");
+              this.props.history.push("/login")
+            }}
+          />
+        </div>
       </div>
     );
   }

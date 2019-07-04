@@ -16,7 +16,6 @@ limitations under the License.
 
 export default {
   view: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
     margin: 15,

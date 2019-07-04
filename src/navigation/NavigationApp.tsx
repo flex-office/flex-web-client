@@ -78,7 +78,22 @@ export class NavElem extends React.Component<NavElemProps> {
 export class NavBar extends React.Component {
   render() {
     return (
-      <div style={{flex: 1, alignSelf: "flex-end", position: "fixed", bottom: 0, width: "100%", display: "flex", borderTopWidth: 1, borderTopColor: "lightgrey", borderTopStyle: "solid"}}>
+      <div
+        style={{
+          flex: 1,
+          alignSelf: "flex-end",
+          position: "fixed",
+          bottom: 0,
+          width: "100%",
+          overflow: "hidden",
+          display: "flex",
+          borderTopWidth: 1,
+          borderTopColor: "lightgrey",
+          borderTopStyle: "solid",
+          backgroundColor: "white",
+          zIndex: 100,
+        }}
+      >
         <Nav style={{marginTop: 5, flex: 1, justifyContent: "space-around", flexDirection: "row"}} navbar justify="true">
           <NavItem>
             <NavElem to="/" icon="qrcode">Ma Place</NavElem>
@@ -98,12 +113,23 @@ export class NavBar extends React.Component {
 export class NavigationApp extends React.Component {
   render() {
     return (
-      <div style={{flex: 1, flexDirection: "column"}}>
+      <div style={{flex: 1, flexDirection: "column", height: "100%"}}>
         <HeaderBar/>
-        <Route exact path="/" component={ProfileScreen}/>
-        <Route path="/places" component={PlacesScreen}/>
-        <Route path="/users" component={UsersScreen}/>
-        <Route path="/settings" component={SettingsScreen}/>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            backgroundColor: "white",
+            height: "calc(100% - 132px)",
+            // paddingBottom: 47
+          }}
+        >
+          <Route exact path="/" component={ProfileScreen}/>
+          <Route path="/places" component={PlacesScreen}/>
+          <Route path="/users" component={UsersScreen}/>
+          <Route path="/settings" component={SettingsScreen}/>
+        </div>
         <NavBar/>
       </div>
     )
@@ -112,7 +138,7 @@ export class NavigationApp extends React.Component {
 
 const NetInfoWrapper = () => (
   <Provider store={store}>
-    <div style={{ flex: 1 }}>
+    <div style={{ flex: 1, height: "100%" }}>
       <NavigationApp />
     </div>
   </Provider>

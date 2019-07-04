@@ -108,32 +108,25 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             <div style={{
                 flex: 1,
                 flexDirection: "column",
-                backgroundColor: "white",
                 alignItems: "center",
-                display: "flex"
+                justifyContent: "flex-start",
+                display: "flex",
+                width: "100%",
             }}>
-                <div style={{
-                    flex: 1,
-                    maxWidth: "1000px",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    display: "flex"
-                }}>
-                    <HeaderCard fname={fname} name={name} id={id} />
-                    <QrReader
-                        onError={err => console.log(err)}
-                        onScan={onRead}
-                        style={{width: "100%"}}
-                    />
-                    <ManualInsertionCard
-                        onChangeText={e => this.setState({placeInput: e.target.value.toUpperCase().trim()})}
-                        onSubmitEditing={() => insertPlace(this.state.placeInput)}
-                        onPress={() => insertPlace(this.state.placeInput)}
-                    />
-                    {isWrongFormatPlace ? (
-                        <p style={styles.debug}>Mauvais format de place</p>
-                    ) : null}
-                </div>
+                <HeaderCard fname={fname} name={name} id={id} />
+                <QrReader
+                    onError={err => console.log(err)}
+                    onScan={onRead}
+                    style={{width: "100%", maxWidth: "45rem"}}
+                />
+                <ManualInsertionCard
+                    onChangeText={e => this.setState({placeInput: e.target.value.toUpperCase().trim()})}
+                    onSubmitEditing={() => insertPlace(this.state.placeInput)}
+                    onPress={() => insertPlace(this.state.placeInput)}
+                />
+                {isWrongFormatPlace ? (
+                    <p style={styles.debug}>Mauvais format de place</p>
+                ) : null}
             </div>
         );
     };

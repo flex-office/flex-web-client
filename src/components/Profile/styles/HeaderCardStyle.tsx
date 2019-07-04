@@ -15,7 +15,7 @@ limitations under the License.
 */
 export default {
   view_second: {
-    margin: 10
+    margin: 10,
   },
   text_first: {
     color: "black",

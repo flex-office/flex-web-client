@@ -25,7 +25,6 @@ export default {
     shadowRadius: 2,
     shadowColor: "#3662A0",
     shadowOffset: { height: 1, width: 0 },
-    flex: 1,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
