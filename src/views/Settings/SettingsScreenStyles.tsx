@@ -42,20 +42,20 @@ export default {
     flexDirection: "column"
   },
   viewContainer: {
+    alignItems: "center",
     backgroundColor: "#fff",
+    borderRadius: 5,
+    boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.4)",
+    display: "flex",
     elevation: 2,
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
+    height: 100,
+    justifyContent: "space-between",
+    margin: 20,
+    padding: 10,
     shadowColor: "#3662A0",
     shadowOffset: { height: 1, width: 0 },
-    justifyContent: "space-between",
-    alignItems: "center",
-    margin: 20,
-    height: 100,
-    borderRadius: 5,
-    display: "flex",
-    padding: 10,
-    boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.4)"
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
   viewContainerRemote: {
     backgroundColor: "#fff",
@@ -88,9 +88,10 @@ export default {
     boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.4)"
   },
   remoteText: {
-    margin: 10,
+    color: "#7E7E7E",
     fontFamily: "Roboto",
-    color: "#7E7E7E"
+    fontWeight: "bold" as "bold",
+    margin: 10,
   },
   semiFlexText: {
     margin: 10,

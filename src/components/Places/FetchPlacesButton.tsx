@@ -21,7 +21,7 @@ const FetchPlacesButton = (props: { onPress: () => void }) => {
   const { onPress } = props;
   return (
     <div style={styles.view}>
-      <div onClick={onPress} style={Object.assign({flexDirection: "row"}, styles.container)}>
+      <div onClick={onPress} style={styles.container}>
         <div
           style={{
             color: "#2E89AD",

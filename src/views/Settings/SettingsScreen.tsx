@@ -78,8 +78,9 @@ const profileStyles = {
     color: "#7E7E7E"
   },
   text: {
+    fontWeight: "bold" as "bold",
     marginRight: 5,
-  }
+  },
 }
 
 export const ProfileDescription = (props: { name: any, fname: any, id: any }) => {
@@ -87,15 +88,15 @@ export const ProfileDescription = (props: { name: any, fname: any, id: any }) =>
   return (
     <div style={{ maxWidth: "1000px" }}>
       <div style={profileStyles.row}>
-        <div style={Object.assign({ fontWeight: "bold" }, profileStyles.text)}>Nom : </div>
+        <div style={profileStyles.text}>Nom : </div>
         {name}
       </div>
       <div style={profileStyles.row}>
-        <div style={Object.assign({ fontWeight: "bold" }, profileStyles.text)}>Prénom : </div>
+        <div style={profileStyles.text}>Prénom : </div>
         {fname}
       </div>
       <div style={profileStyles.row}>
-        <div style={Object.assign({ fontWeight: "bold" }, profileStyles.text)}>ID : </div>
+        <div style={profileStyles.text}>ID : </div>
         {id}
       </div>
     </div>
@@ -347,8 +348,8 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
             />
           </FilePicker>
         </div>
-        <div style={Object.assign({flexDirection: "column"}, styles.viewContainerRemote)}>
-          <div style={Object.assign({fontWeight: "bold"}, styles.remoteText)}>Jour de télétravail </div>
+        <div style={styles.viewContainerRemote}>
+          <div style={styles.remoteText}>Jour de télétravail </div>
           <ButtonGroup
             style={{
               margin: 10,

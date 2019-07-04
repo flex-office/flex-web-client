@@ -24,19 +24,20 @@ export default {
     justifyContent: "center"
   },
   container: {
-    elevation: 2,
+    alignItems: "center",
     backgroundColor: "#fff",
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
+    borderRadius: 17.5,
+    boxShadow: "1px 1px 1px 1px rgba(0, 0, 0, 0.2)",
+    cursor: "pointer",
+    display: "flex",
+    elevation: 2,
+    flex: 1,
+    flexDirection: "row" as "row",
+    justifyContent: "space-between",
+    padding: 10,
     shadowColor: "#3662A0",
     shadowOffset: { height: 1, width: 0 },
-    borderRadius: 17.5,
-    padding: 10,
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "space-between",
-    display: "flex",
-    cursor: "pointer",
-    boxShadow: "1px 1px 1px 1px rgba(0, 0, 0, 0.2)"
-  }
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+  },
 }
