@@ -48,7 +48,7 @@ export default {
     boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.4)",
     display: "flex",
     elevation: 2,
-    height: 100,
+    // height: 100,
     justifyContent: "space-between",
     margin: 20,
     padding: 10,
@@ -68,6 +68,8 @@ export default {
     height: 100,
     justifyContent: "space-between",
     margin: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
     shadowColor: "#3662A0",
     shadowOffset: { height: 1, width: 0 },
     shadowOpacity: 0.4,
@@ -111,10 +113,11 @@ export default {
   },
   button: {
     borderColor: "#E4E4E4",
-    minWidth: "20%",
+    width: "20%",
     flex: 1,
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    fontSize: "0.9rem",
   },
   buttonSelected: {
     color: "#2E89AD",

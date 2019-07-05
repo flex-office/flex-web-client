@@ -20,7 +20,8 @@ const styles = {
         flex: 1,
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        alignSelf: "stretch",
     },
     image: {
         width: 50,

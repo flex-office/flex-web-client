@@ -21,7 +21,8 @@ export default {
     marginRight: 50,
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    alignSelf: "center",
   },
   container: {
     alignItems: "center",
@@ -33,7 +34,7 @@ export default {
     elevation: 2,
     flex: 1,
     flexDirection: "row" as "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     padding: 10,
     shadowColor: "#3662A0",
     shadowOffset: { height: 1, width: 0 },

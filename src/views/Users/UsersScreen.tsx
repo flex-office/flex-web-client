@@ -244,7 +244,7 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                 </div>
                 {/* <FindPlacesCard users={() => this.getUsers()} /> */}
                 {!loading ? (
-                <div>
+                <div style={{ alignSelf: "stretch" }}>
                     {users !== [] && users.length > 0 ? (
                     <ListPlaces
                         handleList={this._handleList()}
@@ -253,7 +253,7 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                             <div
                                 key={item.id}
                                 onClick={() => item.isFriend ? this.removeFriend(item) : this.addFriend(item)}
-                                style={{cursor: "pointer"}}
+                                style={{cursor: "pointer", alignSelf: "stretch" }}
                             >
                                 {/* <Card containerStyle={{ borderRadius: 10 }}> */}
                                 <ListItem

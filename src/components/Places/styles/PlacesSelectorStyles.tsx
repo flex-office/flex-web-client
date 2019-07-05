@@ -45,10 +45,10 @@ export default {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 0
+    padding: 0,
   },
   buttonSelected: {
     color: "#2E89AD",
-    fontWeight: "bold"
+    // fontWeight: 500,
   }
 }

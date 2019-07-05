@@ -28,7 +28,7 @@ const styles = {
         color: "black",
         fontFamily: "Roboto",
         fontSize: 20,
-        fontWeight: "bold" as "bold",
+        fontWeight: 500,
     }
 }
 

@@ -18,7 +18,7 @@ import React from "react";
 const ListPlaces = (props: { handleList: any, build: any }) => {
   const { handleList, build } = props;
   return (
-    <div style={{ marginBottom: 20 }}>{handleList.map(build)}</div>
+    <div style={{ marginBottom: 20, alignSelf: "stretch" }}>{handleList.map(build)}</div>
   );
 };
 

@@ -33,7 +33,6 @@ class PlacesSelector extends React.Component<PlacesSelectorProps> {
           display: "flex",
           flexDirection: "row",
           flex: 1,
-          width: 400,
           margin: 10
         }}
       >

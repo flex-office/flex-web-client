@@ -78,7 +78,7 @@ const profileStyles = {
     color: "#7E7E7E"
   },
   text: {
-    fontWeight: "bold" as "bold",
+    fontWeight: 600,
     marginRight: 5,
   },
 }
@@ -318,6 +318,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
         flexDirection: "column",
         justifyContent: "flex-start",
         alignItems: "stretch",
+        maxWidth: "100%",
       }}>
         <div style={styles.viewContainer}>
           <ModalComponent visible={loadingSave} ctx={this} />
@@ -356,7 +357,8 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
               alignItems: "center",
               display: "flex",
               flexDirection: "row",
-              flex: 1
+              flex: 1,
+              maxWidth: "100%",
             }}
           >
             {WEEK_DAYS.map((day, i) =>

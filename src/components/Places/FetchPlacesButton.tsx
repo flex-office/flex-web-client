@@ -26,7 +26,7 @@ const FetchPlacesButton = (props: { onPress: () => void }) => {
           style={{
             color: "#2E89AD",
             fontFamily: "Roboto",
-            fontWeight: "bold",
+            // fontWeight: 500,
             marginRight: 10
           }}
         >
