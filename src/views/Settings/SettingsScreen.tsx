@@ -33,6 +33,8 @@ import styles from "./SettingsScreenStyles";
 // import { Calendar } from "react-native-calendars";
 import DeconnectionButton from "../../components/Settings/DeconnectionButton";
 
+import Input from "../../components/General/Input";
+
 import { fetchPhoto, logOut } from "../../components/Navigation/reducer";
 
 import defaultProfile from "../../assets/profile.png"
@@ -237,8 +239,6 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
     })
       .then(res => res.json()) // transform data to json
       .then(data => {
-        console.log("data")
-        console.log(data)
         if (data) {
           this.setState({
             userPlace: data,
@@ -377,16 +377,16 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
           <div style={styles.viewContainerSemiFlex}>
             <div style={styles.semiFlexText}>Je suis absent.e entre</div>
             <div style={styles.semiFlexRow}>
-              <input
-                style={styles.input}
+              <Input
                 onChange={e => this.setState({ startDate: e.target.value })}
-                value={startDate}
+                onSubmit={() => this.saveRemote()}
+                placeholder={startDate}
               />
-              <p style={styles.regularText}>et</p>
-              <input
-                style={styles.input}
+              <div style={styles.regularText}>et</div>
+              <Input
                 onChange={e => this.setState({ endDate: e.target.value })}
-                value={endDate}
+                onSubmit={() => this.saveRemote()}
+                placeholder={endDate}
               />
             </div>
             <button

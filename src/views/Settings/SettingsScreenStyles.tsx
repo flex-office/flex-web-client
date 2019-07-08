@@ -86,9 +86,12 @@ export default {
     alignItems: "center",
     margin: 20,
     marginBottom: 0,
-    height: 100,
+    // height: 100,
     borderRadius: 5,
-    boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.4)"
+    boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.4)",
+    flexDirection: "column" as "column",
+    display: "flex",
+    padding: 10,
   },
   remoteText: {
     color: "#7E7E7E",
@@ -99,12 +102,15 @@ export default {
   semiFlexText: {
     margin: 10,
     marginBottom: 0,
-    fontFamily: "Roboto"
+    fontFamily: "Roboto",
+    color: "grey",
+    fontWeight: 600,
   },
   regularText: {
     margin: 10,
     marginBottom: 0,
-    fontFamily: "Roboto"
+    fontFamily: "Roboto",
+    color: "grey",
   },
   input: {
     height: 40,
@@ -127,10 +133,12 @@ export default {
     alignItems: "flex-start",
     flexDirection: "row" as "row",
     justifyContent: "flex-end",
+    display: "flex",
+    flex: 1,
   },
   semiFlexButton: {
     alignItems: 'center',
-    alignSelf: 'stretch',
+    // alignSelf: 'stretch',
     backgroundColor: '#1094F6',
     borderRadius: 5,
     flex: 1,
@@ -140,9 +148,11 @@ export default {
     marginRight: 50,
     marginTop: 0,
     maxHeight: 40,
+    padding: 5,
+    border: 0,
   },
   semiFlexButtonText: {
-    alignSelf: "center",
+    flex: 1,
     color: "white",
     fontWeight: "bold" as "bold",
   },

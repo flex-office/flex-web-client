@@ -10,9 +10,10 @@ const styles = {
 }
 
 interface InputProps {
-    onChange: any,
-    onSubmit: any,
+    onChange: any
+    onSubmit: any
     placeholder: string
+    ariaLabel?: string
 }
 
 export default class Input extends React.Component<InputProps> {
@@ -23,10 +24,12 @@ export default class Input extends React.Component<InputProps> {
     }
 
     render() {
-        const { onChange, placeholder } = this.props
+        const { onChange, onSubmit, placeholder, ariaLabel } = this.props
         return (
             <input
+                aria-label={ariaLabel || "An input"}
                 onKeyPress={this.handleEnterPress}
+                onSubmit={onSubmit}
                 style={styles.input}
                 type="text"
                 placeholder={placeholder}
