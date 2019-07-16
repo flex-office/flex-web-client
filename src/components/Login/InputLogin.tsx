@@ -18,11 +18,14 @@ import Input from "../General/Input"
 
 const InputLogin = (props: {
   onSubmitEditing: any,
-  onChangeText: any,
-  onChangeText1: any,
-  onChangeText2: any
+  onChangeID: any,
+  onChangeSurname: any,
+  onChangeName: any,
+  id: any,
+  surname: any,
+  name: any,
 }) => {
-  const { onSubmitEditing, onChangeText, onChangeText1, onChangeText2 } = props;
+  const { onSubmitEditing, onChangeID, onChangeSurname, onChangeName, id, surname, name } = props;
   return (
     <div style={{
       flex: 1,
@@ -30,21 +33,26 @@ const InputLogin = (props: {
       display: "flex"
     }}>
       <Input
-        onChange={onChangeText}
+        onChange={onChangeID}
+        onSubmit={onSubmitEditing}
+        placeholder="ID format: XX00000"
+        value={id}
+      />
+
+      <Input
+        onChange={onChangeSurname}
         onSubmit={onSubmitEditing}
         placeholder="Nom"
+        value={surname}
+        // disabled
       />
 
       <Input
-        onChange={onChangeText1}
+        onChange={onChangeName}
         onSubmit={onSubmitEditing}
         placeholder="Prénom"
-      />
-
-      <Input
-        onChange={onChangeText2}
-        onSubmit={onSubmitEditing}
-        placeholder="ID"
+        value={name}
+        // disabled
       />
     </div>
   );

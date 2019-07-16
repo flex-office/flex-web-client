@@ -3,13 +3,13 @@ import { withRouter } from "react-router-dom"
 import { omit } from "ramda"
 import config from "../../config/api.json";
 import server from "../../config/server.json";
-import regex from "../../config/regex.json";
 import styles from "./ProfileScreenStyles";
 import socketIOClient from "socket.io-client";
 import HeaderCard from "../../components/Profile/HeaderCard"
 import LeaveButton from "../../components/Profile/LeaveButton"
 import ManualInsertionCard from "../../components/Profile/ManualInsertionCard"
 import QRCodeComponent from "../../components/Profile/QRCodeComponent";
+import takePlace from "../../utils/takePlace";
 
 type ProfileScreenState = {
     name: string,
@@ -25,6 +25,7 @@ type ProfileScreenState = {
 
 interface ProfileScreenProps {
     history: any
+    location: any
 }
 
 class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenState> {
@@ -43,16 +44,44 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         this.state.socket.on('leavePlace', () => this.leavePlace());
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
         const user = localStorage.getItem("USER")
         if (!user) this.props.history.push("/login")
         else {
             const result = JSON.parse(user);
             if (result.place || result.pool)
                 this.state.socket.emit('checkPlace', result.id, result.place, config._id);
-            this.setState(result);
+            await this.setState(result);
+            const cond = (place, location) => !place && location.state && location.state.place && place !== location.state.place
+            if (cond(this.state.place, this.props.location)) {
+                this.insertPlace(this.props.location.state.place)
+            }
         }
     };
+
+    insertPlace = async (placeText) => {
+        if (this.state.isScanning) return
+        this.setState({ isScanning: true })
+        try {
+            await takePlace(this.state.id, placeText)
+            this.setState({
+                place: placeText,
+                isWrongFormatPlace: false
+            });
+            this.state.socket.emit('joinRoom', placeText);
+            localStorage.setItem("USER", JSON.stringify(omit(["socket", "isWronngFormatPlace", "isScanning"], this.state)))
+        } catch (err) {
+            switch(err.message) {
+                case "WrongFormatPlace":
+                    this.setState({ isWrongFormatPlace: true }); break
+                case "AlreadyUsed":
+                    alert(`Impossible, Place déjà utilisée par : ${err.user.fname} ${err.user.name}`); break
+                default:
+                    alert("Erreur inconnu"); break
+            }
+        }
+        this.setState({ isScanning: false })
+    }
 
     DefaultComponent = () => {
         const {
@@ -62,45 +91,9 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             isWrongFormatPlace,
         } = this.state;
 
-        const insertPlace = (placeText) => {
-            if (placeText !== "" && placeText.match(regex.placeRegex) !== null) {
-                if (this.state.isScanning) return
-                const payload = {
-                    id_user: id,
-                    id_place: placeText
-                };
-
-                this.setState({ isScanning: true })
-                fetch(`${server.address}take_place`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "authorization": `Bearer ${config.token}`
-                    },
-                    body: JSON.stringify(payload)
-                })
-                    .then(res => {
-                        if (res.status === 200) {
-                            this.setState({
-                                place: placeText,
-                                isWrongFormatPlace: false
-                            });
-                            this.state.socket.emit('joinRoom', placeText);
-                            localStorage.setItem("USER", JSON.stringify(omit(["socket"], this.state)))
-                        }
-                        else if (res.status === 500) {
-                            res.json().then(user => {
-                                alert(`Impossible, Place déjà utilisée par : ${user.fname} ${user.name}`);
-                            })
-                        }
-                        this.setState({ isScanning: false })
-                    });
-            } else this.setState({ isWrongFormatPlace: true });
-        }
-
         const onRead = data => {
             if (data) {
-                insertPlace(data);
+                this.insertPlace(data);
             }
         };
 
@@ -110,8 +103,8 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                 <QRCodeComponent onRead={onRead}/>
                 <ManualInsertionCard
                     onChangeText={e => this.setState({placeInput: e.target.value.toUpperCase().trim()})}
-                    onSubmitEditing={() => insertPlace(this.state.placeInput)}
-                    onPress={() => insertPlace(this.state.placeInput)}
+                    onSubmitEditing={() => this.insertPlace(this.state.placeInput)}
+                    onPress={() => this.insertPlace(this.state.placeInput)}
                 />
                 {isWrongFormatPlace ? (
                     <p style={styles.debug}>Mauvais format de place</p>

@@ -86,6 +86,10 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
         return places.filter(place => place.id[0] === floor && place.id[2] === zoneCode && place.id.slice(4, -2) === side);
     };
 
+    handleOnClickItem = place => {
+        this.props.history.push("/", {place})
+    }
+
     render() {
         const {
             loading,
@@ -94,6 +98,7 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
             selectedSideIndex
         } = this.state;
 
+        const filteredPlaces = this.filterPlaces()
         return (
             <div style={styles.view}>
                 <div style={styles.selectorContainer}>
@@ -127,7 +132,8 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
                 </div>
                 {!loading ? (
                     <div style={{marginTop: 10}}>
-                        <PlacesList places={this.filterPlaces()} />
+                        <div style={styles.label}>Nombre de places : {filteredPlaces.length}</div>
+                        <PlacesList places={filteredPlaces} onClickItem={x => this.handleOnClickItem(x)} />
                     </div>
                 ) : (
                     <Spinner

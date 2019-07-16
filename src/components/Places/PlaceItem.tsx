@@ -18,11 +18,12 @@ import Icon from "react-fontawesome";
 
 interface PlaceItemProps {
 	place: any
+	onClick: any
 }
 
 class PlaceItem extends React.Component<PlaceItemProps> {
 	render() {
-		const { place } = this.props;
+		const { place, onClick } = this.props;
 		return (
 			<div
 				style={{
@@ -32,8 +33,10 @@ class PlaceItem extends React.Component<PlaceItemProps> {
 					alignItems: "center",
 					display: "flex",
 					padding: 10,
-					boxShadow: "1px 1px 1px 1px rgba(0, 0, 0, 0.2)"
+					boxShadow: "1px 1px 1px 1px rgba(0, 0, 0, 0.2)",
+					cursor: "pointer"
 				}}
+				onClick={() => onClick(place.id)}
 			>
 				<div style={{
 					marginBottom: 0,

@@ -19,11 +19,12 @@ import EmptyResult from "./EmptyResult";
 
 interface PlaceListProps {
 	places: any
+	onClickItem: any
 }
 
 class PlacesList extends React.Component<PlaceListProps> {
 	render() {
-		const { places } = this.props;
+		const { places, onClickItem } = this.props;
 		return (
 			<div
 				style={{
@@ -40,7 +41,7 @@ class PlacesList extends React.Component<PlaceListProps> {
 				{(places.length > 0) ?
 					places.map(place =>
 					<div key={place.id} style={{margin: 10}}>
-						<PlaceItem place={place} />
+						<PlaceItem place={place} onClick={onClickItem} />
 					</div>)
 					: <EmptyResult />
 				}

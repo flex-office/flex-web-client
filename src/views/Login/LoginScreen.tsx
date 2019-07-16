@@ -84,7 +84,26 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
                 })
         }
         else {
-            this.setState({ debugField: "Problème d'authentification" });
+            this.setState({ debugField: "Erreur de saisie" });
+        }
+    }
+
+    onChangeID(text: string) {
+        const x = text.toUpperCase().trim()
+        this.setState({id: x})
+        if (x.match(regex.idRegex) !== null) {
+            fetch(`${server.address}users/${x}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${config.token}`,
+                }
+            })
+            .then(res => res.json())
+            .then(user => {
+                this.setState({name: user.name, fname: user.fname})
+            })
+            .catch(() => {})
         }
     }
 
@@ -98,9 +117,12 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
                     <div style={styles.view_second}>
                         <InputLogin
                             onSubmitEditing={() => this.logIn()}
-                            onChangeText={e => this.setState({name: this.capitalizeFirstLetter(e.target.value).trim()})}
-                            onChangeText1={e => this.setState({fname: this.capitalizeFirstLetter(e.target.value).trim()})}
-                            onChangeText2={e => this.setState({id: e.target.value.toUpperCase().trim()})}
+                            onChangeID={e => this.onChangeID(e.target.value)}
+                            onChangeSurname={e => this.setState({name: this.capitalizeFirstLetter(e.target.value).trim()})}
+                            onChangeName={e => this.setState({fname: this.capitalizeFirstLetter(e.target.value).trim()})}
+                            id={this.state.id}
+                            surname={this.state.name}
+                            name={this.state.fname}
                         />
                         <LoginButton onPress={() => this.logIn()} />
                         <p style={styles.debug}>{debugField}</p>

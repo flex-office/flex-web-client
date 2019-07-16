@@ -118,6 +118,8 @@ export default {
     margin: 0
   },
   button: {
+    backgroundColor: "white",
+    color: "grey",
     borderColor: "#E4E4E4",
     width: "20%",
     flex: 1,

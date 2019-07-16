@@ -1,4 +1,4 @@
-import React from "react"
+import React, { InputHTMLAttributes } from "react"
 
 const styles = {
     input: {
@@ -9,10 +9,9 @@ const styles = {
     }
 }
 
-interface InputProps {
-    onChange: any
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     onSubmit: any
-    placeholder: string
+    type?: string
     ariaLabel?: string
 }
 
@@ -24,16 +23,15 @@ export default class Input extends React.Component<InputProps> {
     }
 
     render() {
-        const { onChange, onSubmit, placeholder, ariaLabel } = this.props
+        const { onSubmit, ariaLabel, type, ...rest } = this.props
         return (
             <input
+                {...rest}
                 aria-label={ariaLabel || "An input"}
+                type={type || "text"}
                 onKeyPress={this.handleEnterPress}
                 onSubmit={onSubmit}
                 style={styles.input}
-                type="text"
-                placeholder={placeholder}
-                onChange={onChange}
             />
         )
     }

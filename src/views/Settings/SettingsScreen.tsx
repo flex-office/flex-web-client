@@ -38,7 +38,6 @@ import Input from "../../components/General/Input";
 import { fetchPhoto, logOut } from "../../components/Navigation/reducer";
 
 import defaultProfile from "../../assets/profile.png"
-import { read } from "fs";
 
 const WEEK_DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
 
