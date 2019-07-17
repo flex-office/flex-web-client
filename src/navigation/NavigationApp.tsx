@@ -19,14 +19,12 @@ import {
   NavItem
 } from 'reactstrap'
 
-import { Route, NavLink } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 
 import devToolsEnhancer from "remote-redux-devtools";
-
-import Icon from "react-fontawesome"
 
 // import SplashScreen from "../views/Splash/SplashScreen";
 import ProfileScreen from "../views/Profile/ProfileScreen";
@@ -37,35 +35,11 @@ import UsersScreen from "../views/Users/UsersScreen";
 
 import reducer from "../components/Navigation/reducer";
 import HeaderBar from "../components/Navigation/HeaderBar";
+import NavElem from "../components/Navigation/NavElem";
 
 import styles from "./NavigationAppStyles"
 
 const store = createStore(reducer, devToolsEnhancer());
-
-interface NavElemProps {
-  to: string
-  icon: string
-}
-
-export class NavElem extends React.Component<NavElemProps> {
-  render() {
-    return (
-      <NavLink to={this.props.to}
-        exact
-        style={styles.navLink}
-        activeStyle={{
-          color: "#58C0D0"
-        }}
-      >
-        <Icon
-          name={this.props.icon}
-          style={{ fontSize: 23 }}
-        />
-        {this.props.children}
-      </NavLink>
-    )
-  }
-}
 
 export class NavBar extends React.Component {
   render() {
@@ -74,7 +48,7 @@ export class NavBar extends React.Component {
         <div style={styles.navBar}>
           <Nav style={styles.nav} navbar justify="true">
             <NavItem>
-              <NavElem to="/" icon="qrcode">Ma Place</NavElem>
+              <NavElem exact to="/" icon="qrcode">Ma Place</NavElem>
             </NavItem>
             <NavItem>
               <NavElem to="/places" icon="search">Places</NavElem>

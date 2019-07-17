@@ -10,7 +10,7 @@ const styles = {
 }
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-    onSubmit: any
+    onSubmit?: any
     type?: string
     ariaLabel?: string
 }
@@ -30,7 +30,7 @@ export default class Input extends React.Component<InputProps> {
                 aria-label={ariaLabel || "An input"}
                 type={type || "text"}
                 onKeyPress={this.handleEnterPress}
-                onSubmit={onSubmit}
+                onSubmit={onSubmit || (() => true)}
                 style={styles.input}
             />
         )

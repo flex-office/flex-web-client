@@ -3,17 +3,13 @@ import { append, filter } from "ramda";
 import { withRouter } from "react-router-dom"
 import config from "../../config/api.json";
 import server from "../../config/server.json";
-import Icon from "react-fontawesome"
-import { Spinner } from "reactstrap"
-import Input from "../../components/General/Input"
-import ListPlaces from "../../components/Users/ListPlaces"
-import ListItem from "../../components/Users/ListItem"
-import profileDefaultPic from "../../assets/profile.png";
-import styles from "./UsersScreenStyles"
+import UsersScreenSearch from "../../components/Users/UsersScreenSearch"
+import UsersScreenFavorites from "../../components/Users/UsersScreenFavorites"
+import NavElem from "../../components/Navigation/NavElem"
+import { Route } from 'react-router-dom'
 
 type UsersScreenState = {
     users: Array<any>
-    search: string
     userName: string
     loading: boolean
     friendLoading: boolean
@@ -25,6 +21,7 @@ type UsersScreenState = {
     photo?: string
     place?: string
     historical?: Array<any>
+    tabIndex?: number
 };
 
 interface UsersScreenProps {
@@ -38,12 +35,20 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
         super(undefined);
         this.state = {
             users: [],
-            search: "",
             userName: null,
             loading: false,
             friendLoading: false,
-            arrayOfFriends: []
+            arrayOfFriends: [],
+            tabIndex: 1,
         };
+    }
+
+    redirect(x) {
+        if (!x || x.length === 0) {
+            this.props.history.push("/users/search")
+        } else {
+            this.props.history.push("/users/favorites")
+        }
     }
 
     getAsyncStorageUser = async () => {
@@ -56,6 +61,7 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
             const userFName = JSON.parse(result).fname;
             const place = JSON.parse(result).place;
             const photo = JSON.parse(result).photo;
+            this.redirect(arrayOfFriends)
 
             await this.setState({
                 userName: `${userName}/${userFName}`,
@@ -167,30 +173,6 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
             });
     };
 
-    _handleSearch = search => {
-        this.setState({ search });
-        // if (search.length >= 3) this.getUsers();
-    };
-
-    sortUsers = (a, b) => {
-        const comp = b.isFriend - a.isFriend
-
-        if (comp)
-            return comp
-        return a.name.localeCompare(b.name)
-    }
-
-    _handleList = () => {
-        const { users, search } = this.state;
-
-        if (users === [])
-            return users
-        users.sort(this.sortUsers);
-        if (search === "")
-            return users
-        return users.filter(e => e.name.includes(search) || e.fname.includes(search))
-    };
-
     removeFriend = friendToBeRemoved => {
         const { id, arrayOfFriends, users, friendLoading } = this.state;
         const isNotRemovedUser = userFriend => userFriend.id !== friendToBeRemoved.id;
@@ -225,71 +207,39 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
     };
 
     render() {
-        const { users, loading, userName } = this.state;
-
+        const { users, userName, arrayOfFriends, loading } = this.state
         return (
-            <div style={styles.view}>
-                <div style={styles.search}>
-                    <Input
-                        onChange={e => this._handleSearch(e.target.value)}
-                        onSubmit={() => this.getUsers()}
-                        placeholder="Recherche   ex: Prénom NOM"
+            <div>
+                <div style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    marginTop: 10,
+                    justifyContent: "center",
+                }}>
+                    <NavElem to="/users/favorites" icon="star">Mes Favoris</NavElem>
+                    <NavElem to="/users/search" icon="search">Rechercher</NavElem>
+                </div>
+                <Route path="/users/favorites" render={ () =>
+                    <UsersScreenFavorites
+                        users={arrayOfFriends}
+                        removeFriend={this.removeFriend}
+                        loading={loading}
                     />
-                    <button
-                        onClick={() => this.getUsers()}
-                        style={styles.searchButton}
-                    >
-                        <Icon name="arrow-right" style={{ fontSize: 15, color: "#2E89AD" }} />
-                    </button>
-                </div>
-                {/* <FindPlacesCard users={() => this.getUsers()} /> */}
-                {!loading ? (
-                <div style={{ alignSelf: "stretch" }}>
-                    {users !== [] && users.length > 0 ? (
-                    <ListPlaces
-                        handleList={this._handleList()}
-                        build={item =>
-                            item && `${item.name}/${item.fname}` !== userName ? (
-                            <div
-                                key={item.id}
-                                onClick={() => item.isFriend ? this.removeFriend(item) : this.addFriend(item)}
-                                style={{cursor: "pointer", alignSelf: "stretch" }}
-                            >
-                                {/* <Card containerStyle={{ borderRadius: 10 }}> */}
-                                <ListItem
-                                    title={`${item.name} / ${item.fname}`}
-                                    subtitle={item.id_place}
-                                    containerStyle={{ margin: 0, padding: 5 }}
-                                    titleStyle={{ fontFamily: "Roboto" }}
-                                    rightIcon={{
-                                        name: "star",
-                                        fa: item.isFriend,
-                                        color: "#2E89AD"
-                                    }}
-                                    leftAvatar={{
-                                        source: item.photo ? item.photo : profileDefaultPic,
-                                        imageStyle: {
-                                            resizeMode: "contain",
-                                            backgroundColor: "white"
-                                        },
-                                        rounded: false
-                                    }}
-                                    bottomDivider={true}
-                                />
-                                {/* </Card> */}
-                            </div>
-                            ) : null
-                        }
+                }
+                />
+                <Route path="/users/search" render={ () =>
+                    <UsersScreenSearch
+                        users={users}
+                        loading={loading}
+                        userName={userName}
+                        getUsers={this.getUsers}
+                        removeFriend={this.removeFriend}
+                        addFriend={this.addFriend}
                     />
-                    ) : null}
-                </div>
-                ) : (
-                <div style={styles.spinner}>
-                    <Spinner style={{ marginTop: 40, color: "#2E89AD" }}/>
-                </div>
-                )}
+                }
+                />
             </div>
-        );
+        )
     }
 }
 

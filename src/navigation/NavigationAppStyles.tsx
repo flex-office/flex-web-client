@@ -1,13 +1,4 @@
 export default {
-    navLink: {
-        alignItems: "center",
-        color: "#3662A0",
-        display: "flex",
-        flex: 1,
-        flexDirection: "column",
-        height: "100%",
-        justifyContent: "center",
-    },
     navBar: {
         alignSelf: "flex-end",
         backgroundColor: "white",
