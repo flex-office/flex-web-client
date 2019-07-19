@@ -27,7 +27,11 @@ export default class UsersScreenFavorites extends React.Component<UsersScreenFav
         const { search } = this.state
 
         return (
-            <div>
+            <div style={{
+                display: "flex",
+                flexDirection: "column" as "column",
+                alignItems: "center"
+            }}>
                 <Input
                     onChange={e => this.setState({ search: e.target.value })}
                     placeholder="Recherche   ex: Prénom NOM"

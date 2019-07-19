@@ -43,7 +43,20 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
         }
     };
 
-    placeIsAllowed = place => place.start_date && place.end_date && moment().isBetween(place.start_date, place.end_date)
+    placeIsAllowed = async place => {
+        try {
+            const user = await fetch(`${server.address}users/${place.id_owner}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "authorization": `Bearer ${config.token}`
+                }
+            }).then(res => res.json()) // transform data to json
+            return user.start_date && user.end_date && moment().isBetween(user.start_date, user.end_date)
+        } catch (_) {
+            return false
+        }
+    }
 
     getPlaces = () => {
         this.setState({ loading: true });
@@ -55,8 +68,8 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
             }
         })
             .then(res => res.json())
-            .then(data => {
-                const result = data.filter(place => !place.using && (!place.semi_flex || this.placeIsAllowed(place)));
+            .then(async data => {
+                const result = await data.filter(async place => !place.using && (!place.semi_flex || await this.placeIsAllowed(place)));
                 this.setState({
                     places: result,
                     loading: false
@@ -87,7 +100,7 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
     };
 
     handleOnClickItem = place => {
-        this.props.history.push("/", {place})
+        this.props.history.push("/home", { place })
     }
 
     render() {
@@ -131,16 +144,16 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
                     />
                 </div>
                 {!loading ? (
-                    <div style={{marginTop: 10}}>
+                    <div style={{ marginTop: 10 }}>
                         <div style={styles.label}>Nombre de places : {filteredPlaces.length}</div>
                         <PlacesList places={filteredPlaces} onClickItem={x => this.handleOnClickItem(x)} />
                     </div>
                 ) : (
-                    <Spinner
-                        style={{ marginTop: 20, color: "#2E89AD" }}
-                        size="large"
-                    />
-                )}
+                        <Spinner
+                            style={{ marginTop: 20, color: "#2E89AD" }}
+                            size="large"
+                        />
+                    )}
             </div>
         )
     }

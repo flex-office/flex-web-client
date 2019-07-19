@@ -19,16 +19,18 @@ import Input from "../General/Input"
 
 const ManualInsertionCard = (props: {
   onChangeText: any,
-  onPress: any
-  onSubmitEditing: any
+  onPress: any,
+  onSubmitEditing: any,
+  placeInput: string,
 }) => {
-  const { onSubmitEditing, onChangeText, onPress } = props;
+  const { onSubmitEditing, onChangeText, onPress, placeInput } = props;
   return (
     <div style={styles.view}>
       <Input
         placeholder="Place"
         onChange={onChangeText}
         onSubmit={onSubmitEditing}
+        value={placeInput}
       />
       <button
         style={styles.button}

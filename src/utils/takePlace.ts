@@ -30,7 +30,7 @@ export default async function takePlace(id: string, place: string) {
     })
     if (res.status === 500) {
         const user = await res.json()
-        throw new PlaceError("AlreadyUsed", user)
+        throw new PlaceError("AlreadyTaken", user)
     }
     else if (res.status === 200) {
         return

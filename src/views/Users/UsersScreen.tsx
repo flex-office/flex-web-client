@@ -26,6 +26,7 @@ type UsersScreenState = {
 
 interface UsersScreenProps {
     history: any
+    location: any
 }
 
 class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
@@ -44,6 +45,7 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
     }
 
     redirect(x) {
+        if (this.props.location.pathname !== "/users") return
         if (!x || x.length === 0) {
             this.props.history.push("/users/search")
         } else {
