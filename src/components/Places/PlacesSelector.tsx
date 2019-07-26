@@ -14,8 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from "react";
-import { Button, ButtonGroup } from "reactstrap";
+import { Dropdown, DropdownMenu, DropdownToggle, DropdownItem } from "reactstrap";
 import styles from "./styles/PlacesSelectorStyles"
+
+interface PlacesSelectorState {
+  dropdownIsOpen: boolean
+}
 
 interface PlacesSelectorProps {
   onPress: any
@@ -23,29 +27,45 @@ interface PlacesSelectorProps {
   buttons: Array<string>
 }
 
-class PlacesSelector extends React.Component<PlacesSelectorProps> {
+class PlacesSelector extends React.Component<PlacesSelectorProps, PlacesSelectorState> {
+  constructor(props) {
+    super(props)
+    this.state = {
+      dropdownIsOpen: false,
+    }
+  }
+
   render() {
     const { onPress, selectedIndex, buttons } = this.props;
     return(
-      <ButtonGroup
+      <Dropdown
+        isOpen={this.state.dropdownIsOpen}
+        toggle={() => this.setState({dropdownIsOpen: !this.state.dropdownIsOpen})}
         style={{
-          alignItems: "center",
           display: "flex",
-          flexDirection: "row",
-          flex: 1,
-          margin: 10
+          alignItems: "center",
+          flexDirection: "column" as "column",
         }}
       >
-        {buttons.map((button, i) =>
-        <Button
-          onClick={() => onPress(i)}
-          key={i}
-          outline
-          style={Object.assign({...styles.button}, (i === selectedIndex) ? styles.buttonSelected : {})}
+        <DropdownToggle
+          caret
+          color="white"
+          style={styles.button}
         >
-          <span style={{verticalAlign: "middle"}}>{button}</span>
-        </Button>)}
-      </ButtonGroup>
+          {buttons[selectedIndex]}
+        </DropdownToggle>
+        <DropdownMenu>
+          {buttons.map((button, i) =>
+          <DropdownItem
+            onClick={() => onPress(i)}
+            key={i}
+            active={i === selectedIndex}
+            // style={Object.assign({...styles.button}, (i === selectedIndex) ? styles.buttonSelected : {})}
+          >
+            <span style={{verticalAlign: "middle"}}>{button}</span>
+          </DropdownItem>)}
+        </DropdownMenu>
+      </Dropdown>
     );
   }
 }

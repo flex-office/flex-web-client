@@ -2,6 +2,7 @@ import React from "react"
 import ListPlaces from "../../components/Users/ListPlaces"
 import ListItem from "../../components/Users/ListItem"
 import profileDefaultPic from "../../assets/profile.png";
+import moment from "moment"
 
 interface UsersListProps {
     users: Array<any>
@@ -34,7 +35,7 @@ export default class UsersList extends React.Component<UsersListProps> {
 
     getStatus(user) {
         if (user.id_place) return user.id_place
-        // if () return "Absent"
+        if (user.start_date && user.end_date && moment().isBetween(user.start_date, user.end_date)) return "Absent"
         // if () return "Télétravail"
         return ""
     }
@@ -60,7 +61,7 @@ export default class UsersList extends React.Component<UsersListProps> {
                             {/* <Card containerStyle={{ borderRadius: 10 }}> */}
                             <ListItem
                                 title={`${item.name} ${item.fname}`}
-                                subtitle={item.id_place}
+                                subtitle={this.getStatus(item)}
                                 containerStyle={{ margin: 0, padding: 5 }}
                                 titleStyle={{ fontFamily: "Roboto" }}
                                 rightIcon={{

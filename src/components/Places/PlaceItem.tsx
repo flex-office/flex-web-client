@@ -49,7 +49,7 @@ class PlaceItem extends React.Component<PlaceItemProps> {
 					name="circle"
 					style={{
 						fontSize: 15,
-						color: place.id[2] === "V" ? "green" : (place.id[2] === "B" ? "blue" : "red")
+						color: place.id[5] === "V" ? "green" : (place.id[5] === "B" ? "blue" : "red")
 					}}
 				/>
 			</div>

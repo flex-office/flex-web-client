@@ -31,7 +31,7 @@ class PlacesList extends React.Component<PlaceListProps> {
 					flex: 1,
 					justifyContent: "center",
 					alignItems: "center",
-					marginBottom: 20,
+					// marginBottom: 20,
 					display: "flex",
 					flexDirection: "row",
 					flexWrap: "wrap",

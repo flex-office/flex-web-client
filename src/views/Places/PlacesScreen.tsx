@@ -13,6 +13,7 @@ import styles from "./PlacesScreenStyles"
 type PlacesScreenState = {
     places: Array<any>,
     loading: boolean,
+    selectedBuildingIndex: number,
     selectedFloorIndex: number,
     selectedZoneIndex: number,
     selectedSideIndex: number
@@ -28,6 +29,7 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
         this.state = {
             places: [],
             loading: true,
+            selectedBuildingIndex: 0,
             selectedFloorIndex: 0,
             selectedZoneIndex: 0,
             selectedSideIndex: 0
@@ -77,6 +79,10 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
             });
     }
 
+    updateBuildingIndex = selectedBuildingIndex => {
+        this.setState({ selectedBuildingIndex });
+    };
+
     updateFloorIndex = selectedFloorIndex => {
         this.setState({ selectedFloorIndex });
     };
@@ -90,13 +96,15 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
     };
 
     filterPlaces = () => {
-        const { places, selectedFloorIndex, selectedZoneIndex, selectedSideIndex } = this.state;
+        const { places, selectedBuildingIndex, selectedFloorIndex, selectedZoneIndex, selectedSideIndex } = this.state;
 
+        const buildingCode = placesConfig.buildingCodes[selectedBuildingIndex];
         const floor = selectedFloorIndex === 0 ? "3" : "4";
-        const zoneCode = placesConfig.zoneCodes[selectedZoneIndex];
-        const side = placesConfig.sideIndexUpper[selectedSideIndex];
+        const zoneCode = placesConfig.buildings[selectedBuildingIndex].zoneCodes[selectedZoneIndex];
+        const side = placesConfig.buildings[selectedBuildingIndex].sideIndexUpper[selectedSideIndex];
+        const reg = new RegExp(`${buildingCode}-${floor}-${zoneCode}-${side}\\d{2}`)
 
-        return places.filter(place => place.id[0] === floor && place.id[2] === zoneCode && place.id.slice(4, -2) === side);
+        return places.filter(place => reg.test(place.id));
     };
 
     handleOnClickItem = place => {
@@ -106,6 +114,7 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
     render() {
         const {
             loading,
+            selectedBuildingIndex,
             selectedFloorIndex,
             selectedZoneIndex,
             selectedSideIndex
@@ -118,23 +127,30 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
 
                     <div style={styles.label}>Places disponibles</div>
 
+                    {/* Building selector */}
+                    <PlacesSelector
+                        buttons={placesConfig.buildingIndex}
+                        onPress={this.updateBuildingIndex}
+                        selectedIndex={selectedBuildingIndex}
+                    />
+
                     {/* Floor selector */}
                     <PlacesSelector
-                        buttons={placesConfig.floorIndex}
+                        buttons={placesConfig.buildings[this.state.selectedBuildingIndex].floorIndex}
                         onPress={this.updateFloorIndex}
                         selectedIndex={selectedFloorIndex}
                     />
 
                     {/* Zone selector */}
                     <PlacesSelector
-                        buttons={placesConfig.zoneIndex}
+                        buttons={placesConfig.buildings[this.state.selectedBuildingIndex].zoneIndex}
                         onPress={this.updateZoneIndex}
                         selectedIndex={selectedZoneIndex}
                     />
 
                     {/* Side selector */}
                     <PlacesSelector
-                        buttons={placesConfig.sideIndex}
+                        buttons={placesConfig.buildings[this.state.selectedBuildingIndex].sideIndex}
                         onPress={this.updateSideIndex}
                         selectedIndex={selectedSideIndex}
                     />

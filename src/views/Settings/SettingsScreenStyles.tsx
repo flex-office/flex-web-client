@@ -68,6 +68,7 @@ export default {
     height: 100,
     justifyContent: "space-between",
     margin: 20,
+    marginTop: 0,
     paddingLeft: 10,
     paddingRight: 10,
     shadowColor: "#3662A0",
@@ -85,6 +86,7 @@ export default {
     justifyContent: "space-between",
     alignItems: "center",
     margin: 20,
+    marginTop: 0,
     marginBottom: 0,
     // height: 100,
     borderRadius: 5,
@@ -107,7 +109,8 @@ export default {
     fontWeight: 600,
   },
   regularText: {
-    margin: 10,
+    margin: 0,
+    padding: 0,
     marginBottom: 0,
     fontFamily: "Roboto",
     color: "grey",
@@ -132,11 +135,12 @@ export default {
     fontWeight: "bold"
   },
   semiFlexRow: {
-    alignItems: "flex-start",
-    flexDirection: "row" as "row",
-    justifyContent: "flex-end",
+    alignItems: "center",
+    flexDirection: "column" as "column",
+    justifyContent: "flex-start",
     display: "flex",
     flex: 1,
+    flexWrap: "wrap" as "wrap",
   },
   semiFlexButton: {
     alignItems: 'center',

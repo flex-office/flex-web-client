@@ -11,6 +11,7 @@ const styles = {
         flexDirection: "column",
         height: "100%",
         justifyContent: "center",
+        textAlign: "center",
     },
 }
 

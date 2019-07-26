@@ -47,30 +47,6 @@ type Historical = {
   end: string
 };
 
-type SettingsScreenState = {
-  name: string,
-  fname: string,
-  id: string,
-  place?: string,
-  photo?: string,
-  historical?: Array<Historical>,
-  debug?: Array<any> | string,
-  remoteDay?: string,
-  arrayOfFriends: Array<any>
-  startDate: string
-  endDate: string
-  selectedIndex: number
-  loadingSave: boolean
-  progress: any
-  userPlace: string
-};
-
-interface SettingsScreenProps {
-  history: any
-  fetchPhoto: any
-  logOut: any
-}
-
 const profileStyles = {
   row: {
     fontFamily: "Roboto",
@@ -168,6 +144,30 @@ export const ModalComponent = (props: { visible: any, ctx: any }) => {
   );
 };
 
+type SettingsScreenState = {
+  name: string,
+  fname: string,
+  id: string,
+  place?: string,
+  photo?: string,
+  historical?: Array<Historical>,
+  debug?: Array<any> | string,
+  remoteDay?: Array<string>,
+  arrayOfFriends: Array<any>
+  startDate: string
+  endDate: string
+  remoteDayIndexes: Array<number>
+  loadingSave: boolean
+  progress: any
+  userPlace: string
+};
+
+interface SettingsScreenProps {
+  history: any
+  fetchPhoto: any
+  logOut: any
+}
+
 export class SettingsScreen extends Component<SettingsScreenProps, SettingsScreenState> {
   static navigationOptions = {
     title: "Profile",
@@ -186,7 +186,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
       name: "",
       fname: "",
       id: "",
-      selectedIndex: 0,
+      remoteDayIndexes: [],
       photo: "",
       arrayOfFriends: [],
       loadingSave: false,
@@ -202,11 +202,14 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
     if (!result) this.props.history.push("/login")
     else {
       this.setState(JSON.parse(result));
+      const days = JSON.parse(result).remoteDay
       this.setState({
         // map Trouve index du jour
-        selectedIndex: WEEK_DAYS.findIndex(
-          e => e === JSON.parse(result).remoteDay
-        ),
+        remoteDayIndexes: (days.map) ? days.map(
+          x => WEEK_DAYS.findIndex(
+            e => e === x
+          )
+        ) : [WEEK_DAYS.findIndex(e => e === days)],
         place: ""
       });
       const userId = JSON.parse(result).id;
@@ -248,14 +251,21 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
       });
   }
 
-  updateIndex = selectedIndex => {
-    this.saveRemote();
-    return this.setState({ selectedIndex, remoteDay: WEEK_DAYS[selectedIndex] });
-  };
+  addDay = i => this.state.remoteDayIndexes.concat(i)
+
+  removeDay = i => this.state.remoteDayIndexes.filter(x => x !== i)
+
+  updateIndex = async i => {
+    const newIndexes = (this.state.remoteDayIndexes.includes(i)) ? this.removeDay(i) : this.addDay(i)
+    if (newIndexes.length > 2) return
+    await this.setState({ remoteDayIndexes: newIndexes, remoteDay: newIndexes.map(x => WEEK_DAYS[x]) })
+    this.saveRemote()
+  }
 
   saveRemote = async () => {
     const { id, photo, remoteDay, startDate, endDate } = this.state;
     // this.setState({ loadingSave: true });
+    console.log("lel", remoteDay)
 
     const payload = {
       id_user: id,
@@ -307,7 +317,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
   };
 
   render() {
-    const { selectedIndex, name, fname, id, photo, loadingSave, userPlace, startDate, endDate } = this.state;
+    const { remoteDayIndexes, name, fname, id, photo, loadingSave, startDate, endDate } = this.state;
 
     return (
       <div style={{
@@ -365,37 +375,39 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
                 onClick={() => this.updateIndex(i)}
                 key={i}
                 outline
-                style={Object.assign({...styles.button}, (i === selectedIndex) ? styles.buttonSelected : {})}
+                style={Object.assign({...styles.button}, (remoteDayIndexes.includes(i)) ? styles.buttonSelected : {})}
               >
                 {day}
               </Button>)}
           </ButtonGroup>
         </div>
 
-        {userPlace ? (
-          <div style={styles.viewContainerSemiFlex}>
-            <div style={styles.semiFlexText}>Je suis absent.e entre</div>
-            <div style={styles.semiFlexRow}>
-              <Input
-                onChange={e => this.setState({ startDate: e.target.value })}
-                onSubmit={() => this.saveRemote()}
-                placeholder={startDate}
-              />
-              <div style={styles.regularText}>et</div>
-              <Input
-                onChange={e => this.setState({ endDate: e.target.value })}
-                onSubmit={() => this.saveRemote()}
-                placeholder={endDate}
-              />
-            </div>
-            <button
-              style={styles.semiFlexButton}
-              onClick={() => this.saveRemote()}
-            >
-              <div style={styles.semiFlexButtonText}>Confirmer</div>
-            </button>
+        <div style={styles.viewContainerSemiFlex}>
+          <div style={styles.semiFlexText}>Je suis absent.e entre</div>
+          <div style={styles.semiFlexRow}>
+            <Input
+              onChange={e => this.setState({ startDate: e.target.value })}
+              onSubmit={() => this.saveRemote()}
+              placeholder="DD/MM/YYYY"
+              value={startDate}
+              style={{padding: 0, margin: 0}}
+            />
+            <div style={styles.regularText}>et</div>
+            <Input
+              onChange={e => this.setState({ endDate: e.target.value })}
+              onSubmit={() => this.saveRemote()}
+              placeholder="DD/MM/YYYY"
+              value={endDate}
+              style={{padding: 0, margin: 0, marginBottom: 5}}
+            />
           </div>
-        ) : null}
+          <button
+            style={styles.semiFlexButton}
+            onClick={() => this.saveRemote()}
+          >
+            <div style={styles.semiFlexButtonText}>Confirmer</div>
+          </button>
+        </div>
 
         {/* For future purpose */}
         {/* <Calendar /> */}

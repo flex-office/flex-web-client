@@ -28,7 +28,7 @@ export class LeaveComponent extends React.Component<LeaveComponentProps> {
         return (
             <div style={styles.leave_button}>
                 {(showMessage) ?
-                <div style={{color: "grey"}}>Votre place a bien été reservé</div>
+                <div style={{color: "grey"}}>Votre place a bien été reservée</div>
                 : null}
                 <LeaveButton place={place} onPress={() => leavePlace()} />
             </div>

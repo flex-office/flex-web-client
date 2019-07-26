@@ -209,7 +209,7 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
     };
 
     render() {
-        const { users, userName, arrayOfFriends, loading } = this.state
+        const { users, userName, loading } = this.state
         return (
             <div>
                 <div style={{
@@ -223,7 +223,7 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                 </div>
                 <Route path="/users/favorites" render={ () =>
                     <UsersScreenFavorites
-                        users={arrayOfFriends}
+                        users={users.filter(x => x.isFriend)}
                         removeFriend={this.removeFriend}
                         loading={loading}
                     />

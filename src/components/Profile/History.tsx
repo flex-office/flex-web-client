@@ -71,7 +71,6 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
                 flexDirection: "column" as "column",
                 alignItems: "center",
             }}>
-                <div>History</div>
                 {!loading ? (
                     <PlacesList places={history} onClickItem={this.props.takePlace} />
                 ) : (
