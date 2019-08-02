@@ -17,12 +17,11 @@ limitations under the License.
 export default {
   view: {
     alignItems: "center",
-    backgroundColor: "white",
     display: "flex",
     flex: 1,
     flexDirection: "column" as "column",
-    justifyContent: "flex-start",
     width: "100%",
+   
   },
   view_third: {
     borderRadius: 4,
@@ -31,7 +30,7 @@ export default {
   sendContainer: {
     marginRight: 50,
     marginLeft: 50,
-    marginTop: 20
+    marginTop: 20,
   },
   view_fourth: {
     marginTop: 20,

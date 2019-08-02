@@ -215,11 +215,12 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                 <div style={{
                     display: "flex",
                     flexDirection: "row",
-                    marginTop: 10,
+                    
+                    width: "100%",
                     justifyContent: "center",
                 }}>
-                    <NavElem to="/users/favorites" icon="star">Mes Favoris</NavElem>
-                    <NavElem to="/users/search" icon="search">Rechercher</NavElem>
+                    <NavElem to="/users/favorites" icon="">Favoris</NavElem>
+                    <NavElem to="/users/search" icon="">Recherche</NavElem>
                 </div>
                 <Route path="/users/favorites" render={ () =>
                     <UsersScreenFavorites

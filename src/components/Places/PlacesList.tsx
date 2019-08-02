@@ -35,7 +35,8 @@ class PlacesList extends React.Component<PlaceListProps> {
 					display: "flex",
 					flexDirection: "row",
 					flexWrap: "wrap",
-					maxWidth: "600px"
+					maxWidth: "600px",
+					marginBottom: 20,
 				}}
 			>
 				{(places.length > 0) ?

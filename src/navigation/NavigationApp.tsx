@@ -48,10 +48,10 @@ export class NavBar extends React.Component {
         <div style={styles.navBar}>
           <Nav style={styles.nav} navbar justify="true">
             <NavItem>
-              <NavElem to="/home" icon="qrcode">Ma Place</NavElem>
+              <NavElem to="/home" icon="qrcode">Ma place</NavElem>
             </NavItem>
             <NavItem>
-              <NavElem to="/places" icon="search">Places</NavElem>
+              <NavElem to="/places" icon="search">Trouver une place</NavElem>
             </NavItem>
             <NavItem>
               <NavElem to="/users" icon="users">Utilisateurs</NavElem>

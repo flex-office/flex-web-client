@@ -36,7 +36,8 @@ class QRCodeComponent extends React.Component<Props> {
           style={{
             marginBottom: 15,
             fontFamily: "Roboto",
-            color: "grey"
+            color: "#7F8184",
+            fontSize: 14
           }}
         >
           Scannez le QR code

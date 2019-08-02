@@ -17,7 +17,7 @@ limitations under the License.
 export default {
   view: {
     flex: 1,
-    justifyContent: "space-around",
+  
     alignItems: "center",
     flexDirection: "column" as "column",
     backgroundColor: "white",

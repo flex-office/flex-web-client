@@ -3,9 +3,14 @@ import React, { InputHTMLAttributes } from "react"
 const styles = {
     input: {
         borderWidth: 0,
-        borderBottomWidth: 2,
-        borderColor: "lightgrey",
-        margin: 10
+        borderBottomWidth: 1,
+        borderColor: "#76A6DC",
+        margin: 10,
+        width: "85%",
+        paddingTop: 90,
+       outlineWidth: 0,
+       fontColor: "#979797",
+       fontSize: 12,
     }
 }
 

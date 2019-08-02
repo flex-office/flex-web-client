@@ -1,3 +1,5 @@
+import { relative } from "path";
+
 /*
 Copyright 2019-2020 BRED Banque Populaire
 
@@ -19,20 +21,27 @@ export default {
     alignItems: "center",
     justifyContent: "space-between",
     margin: 15,
-    display: "flex"
+    flexDirection: "column" as "column",
+    display: "flex",
+    
+    
   },
   button: {
-    backgroundColor: "#fff",
-    borderRadius: 15,
-    borderWidth: 0,
-    boxShadow: "1px 1px 1px 1px rgba(0, 0, 00, 0.2)",
+    backgroundColor: "#568AC4",
+    borderRadius: 5,
+    border: "none",
     paddingBottom: "0.5rem",
     paddingTop: "0.5rem",
-    width: 100,
+    width: 150,
+    margin: 50,
+    marginTop: 70,
+    fontSize: 14
+   
+    
   },
   text: {
-    color: "#2E89AD",
+    color: "white",
     fontFamily: "Roboto",
-    fontWeight: "bold" as "bold",
+    fontSize: 14,
   },
 }

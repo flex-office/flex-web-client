@@ -46,7 +46,7 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
             const payload = {
                 name: this.state.name,
                 fname: this.state.fname,
-                id_user: this.state.id
+                id_user: this.state.id,
             };
 
             fetch(`${server.address}login_user`, {
@@ -115,7 +115,7 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
                 <div style={styles.view}>
                     <img src={logo} style={{width: "8%"}} alt="logo" />
                     <div style={styles.view_second}>
-                        <InputLogin
+                    <InputLogin
                             onSubmitEditing={() => this.logIn()}
                             onChangeID={e => this.onChangeID(e.target.value)}
                             onChangeSurname={e => this.setState({name: this.capitalizeFirstLetter(e.target.value).trim()})}

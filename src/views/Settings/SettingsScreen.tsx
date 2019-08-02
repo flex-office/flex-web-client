@@ -52,7 +52,7 @@ const profileStyles = {
     fontFamily: "Roboto",
     display: "flex",
     alignItems: "center",
-    color: "#7E7E7E"
+    color: "#568AC4",
   },
   text: {
     fontWeight: 600,
@@ -65,16 +65,7 @@ export const ProfileDescription = (props: { name: any, fname: any, id: any }) =>
   return (
     <div style={{ maxWidth: "1000px" }}>
       <div style={profileStyles.row}>
-        <div style={profileStyles.text}>Nom : </div>
-        {name}
-      </div>
-      <div style={profileStyles.row}>
-        <div style={profileStyles.text}>Prénom : </div>
-        {fname}
-      </div>
-      <div style={profileStyles.row}>
-        <div style={profileStyles.text}>ID : </div>
-        {id}
+        {name} {fname}
       </div>
     </div>
   );
@@ -331,7 +322,25 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
       }}>
         <div style={styles.viewContainer}>
           <ModalComponent visible={loadingSave} ctx={this} />
-          <ProfileDescription name={name} fname={fname} id={id} />
+          <img
+          style={
+            photo
+              ? {
+                width: 45,
+                height: 45,
+                borderRadius: 35,
+              }
+              : {
+                width: 45,
+                height: 45,
+              }
+          }
+          src={photo ? photo : defaultProfile}
+        />
+        <div style={{
+          margin: 10,
+        }}>
+        <ProfileDescription name={name} fname={fname} id={id} />
           <FilePicker
             type="image/jpeg"
             onChange={async image => {
@@ -341,33 +350,43 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
               }
             }}
           >
-            <img
-              style={
-                photo
-                  ? {
-                    width: 70,
-                    height: 70,
-                    borderRadius: 35,
-                  }
-                  : {
-                    width: 70,
-                    height: 70,
-                  }
-              }
-              src={photo ? photo : defaultProfile}
-            />
+          <button style={{
+            background: "#76A6DC",
+            borderRadius: 7,
+            border: "none",
+            color: "white",
+            fontSize: 11,
+            padding: 2,
+            width : 170,
+            cursor: "pointer"
+          }}>Importer une photo de profil</button>
           </FilePicker>
         </div>
+          
+        </div>
+
+       <DeconnectionButton
+            onPress={() => {
+              // LogOut current user
+              this.props.logOut("");
+              localStorage.removeItem("USER");
+              this.props.history.push("/login")
+            }}
+          />
+    
+        
         <div style={styles.viewContainerRemote}>
-          <div style={styles.remoteText}>Jour de télétravail </div>
+          <div style={styles.remoteText}>Télétravail </div>
           <ButtonGroup
             style={{
               margin: 10,
               alignItems: "center",
               display: "flex",
               flexDirection: "row",
+              flexWrap: "wrap",
               flex: 1,
               maxWidth: "100%",
+              justifyContent: "center"
             }}
           >
             {WEEK_DAYS.map((day, i) =>
@@ -383,45 +402,49 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
         </div>
 
         <div style={styles.viewContainerSemiFlex}>
-          <div style={styles.semiFlexText}>Je suis absent.e entre</div>
           <div style={styles.semiFlexRow}>
-            <Input
-              onChange={e => this.setState({ startDate: e.target.value })}
-              onSubmit={() => this.saveRemote()}
-              placeholder="DD/MM/YYYY"
-              value={startDate}
-              style={{padding: 0, margin: 0}}
-            />
-            <div style={styles.regularText}>et</div>
-            <Input
-              onChange={e => this.setState({ endDate: e.target.value })}
-              onSubmit={() => this.saveRemote()}
-              placeholder="DD/MM/YYYY"
-              value={endDate}
-              style={{padding: 0, margin: 0, marginBottom: 5}}
-            />
+            <div style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              width: "100%"
+            }}>
+              <div style={styles.semiFlexText}>Absent/e du</div>
+              <Input
+                onChange={e => this.setState({ startDate: e.target.value })}
+                onSubmit={() => this.saveRemote()}
+                placeholder="DD.MM.YYYY"
+                value={startDate}
+                style={{padding: 0, margin: 0, width: "60%"}}
+              />
+            </div>
+            <div style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              width: "100%"
+            }}>
+              <div style={styles.semiFlexText}>au</div>
+              <Input
+                onChange={e => this.setState({ endDate: e.target.value })}
+                onSubmit={() => this.saveRemote()}
+                placeholder="DD.MM.YYYY"
+                value={endDate}
+                style={{padding: 0, margin: 0, marginBottom: 5, width: "60%"}}
+              />
+            </div>
           </div>
           <button
             style={styles.semiFlexButton}
             onClick={() => this.saveRemote()}
           >
-            <div style={styles.semiFlexButtonText}>Confirmer</div>
+            <div style={styles.semiFlexButtonText}>Enregistrer</div>
           </button>
         </div>
 
         {/* For future purpose */}
         {/* <Calendar /> */}
 
-        <div style={{flex: 1, alignSelf: "center"}}>
-          <DeconnectionButton
-            onPress={() => {
-              // LogOut current user
-              this.props.logOut("");
-              localStorage.removeItem("USER");
-              this.props.history.push("/login")
-            }}
-          />
-        </div>
       </div>
     );
   }

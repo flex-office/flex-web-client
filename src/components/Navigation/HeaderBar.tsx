@@ -8,27 +8,28 @@ const styles = {
     container: {
         alignItems: "center",
         alignSelf: "flex-start",
-        backgroundColor: "white",
         borderBottomStyle: "solid" as "solid",
-        borderBottomWidth: 7,
-        borderImage: "linear-gradient(to right, #58C0D0, #468BB6, #3662A0)",
-        borderImageSlice: 1,
+        borderBottomWidth:2 ,
+        borderColor: "#568AC4",
         display: "flex",
         flex: 1,
         flexDirection: "row" as "row",
-        height: 80,
-        justifyContent: "space-between",
+        height: 55,
+        justifyContent: "space-around",
         overflow: "hidden",
         position: "fixed" as "fixed",
         top: 0,
         width: "100%",
         zIndex: 100,
+        background: "white"
+      
     },
     text: {
-        color: "black",
+        color: " #568AC4",
         fontFamily: "Roboto",
         fontSize: 20,
         fontWeight: 500,
+        
     }
 }
 
@@ -55,7 +56,7 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
     render() {
         const { showLogo, showProfilePic } = this.props
         return (
-            <div style={{height: 80}}>
+            <div style={{height: 55}}>
                 <div style={styles.container}>
                     {/* Header Left */}
                     {(showLogo) ?
@@ -67,9 +68,7 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
                             margin: 10,
                         }}
                     /> : <div />}
-                    <div style={styles.text}>
-                        Flex-Office
-                    </div>
+                    <div style={styles.text}>Flex-Office</div>
 
                     {/* Header Right */}
                     {(showProfilePic) ?

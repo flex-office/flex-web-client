@@ -16,29 +16,24 @@ limitations under the License.
 
 export default {
   view: {
-    marginTop: 10,
-    marginLeft: 50,
-    marginRight: 50,
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
+    display: "flex"
   },
   container: {
     alignItems: "center",
-    backgroundColor: "#fff",
-    borderRadius: 17.5,
-    boxShadow: "1px 1px 1px 1px rgba(0, 0, 0, 0.2)",
+    width: 130,
+    backgroundColor: "#568AC4",
+    borderRadius: 7,
     cursor: "pointer",
     display: "flex",
-    elevation: 2,
     flex: 1,
     flexDirection: "row" as "row",
     justifyContent: "space-around",
-    padding: 10,
-    shadowColor: "#3662A0",
-    shadowOffset: { height: 1, width: 0 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
+    margin: 10,
+    fontSize: 12,
+    padding : 6
+   
   },
 }

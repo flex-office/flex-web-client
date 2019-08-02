@@ -27,28 +27,33 @@ class PlaceItem extends React.Component<PlaceItemProps> {
 		return (
 			<div
 				style={{
-					borderRadius: 10,
+					borderRadius: 7,
 					flexDirection: "row",
 					justifyContent: "center",
 					alignItems: "center",
 					display: "flex",
-					padding: 10,
-					boxShadow: "1px 1px 1px 1px rgba(0, 0, 0, 0.2)",
-					cursor: "pointer"
+					padding: 4,
+					width: 130,
+					cursor: "pointer",
+					border: "solid" as "solid",
+					borderWidth: 1,
+					borderColor: "#7F8184"
 				}}
 				onClick={() => onClick(place.id)}
 			>
 				<div style={{
 					marginBottom: 0,
 					marginRight: 10,
-					fontFamily: "Roboto"
+					color: "#7F8184",
+					fontFamily: "Roboto",
+					fontSize: 12,
 				}}>
 					{place.id}
 				</div>
 				<Icon
 					name="circle"
 					style={{
-						fontSize: 15,
+						fontSize: 10,
 						color: place.id[5] === "V" ? "green" : (place.id[5] === "B" ? "blue" : "red")
 					}}
 				/>

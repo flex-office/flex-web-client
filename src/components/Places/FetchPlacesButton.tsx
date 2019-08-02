@@ -22,18 +22,18 @@ const FetchPlacesButton = (props: { onPress: () => void }) => {
   return (
     <div style={styles.view}>
       <div onClick={onPress} style={styles.container}>
+      
         <div
           style={{
-            color: "#2E89AD",
+            color: "white",
             fontFamily: "Roboto",
             // fontWeight: 500,
-            marginRight: 10
+            
           }}
-        >
-          Actualiser
-        </div>
-        <Icon name="sync-alt" style={{ fontSize: 15, color: "#2E89AD"}}/>
+        >Rechercher</div>
       </div>
+
+      
     </div>
   );
 };

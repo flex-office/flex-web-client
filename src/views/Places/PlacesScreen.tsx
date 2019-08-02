@@ -86,7 +86,7 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
     updateFloorIndex = selectedFloorIndex => {
         this.setState({ selectedFloorIndex });
     };
-
+   
     updateZoneIndex = selectedZoneIndex => {
         this.setState({ selectedZoneIndex });
     };
@@ -125,8 +125,6 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
             <div style={styles.view}>
                 <div style={styles.selectorContainer}>
 
-                    <div style={styles.label}>Places disponibles</div>
-
                     {/* Building selector */}
                     <PlacesSelector
                         buttons={placesConfig.buildingIndex}
@@ -141,18 +139,18 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
                         selectedIndex={selectedFloorIndex}
                     />
 
+                      {/* Side selector */}
+                      <PlacesSelector
+                      buttons={placesConfig.buildings[this.state.selectedBuildingIndex].sideIndex}
+                      onPress={this.updateSideIndex}
+                      selectedIndex={selectedSideIndex}
+                  />
+
                     {/* Zone selector */}
                     <PlacesSelector
                         buttons={placesConfig.buildings[this.state.selectedBuildingIndex].zoneIndex}
                         onPress={this.updateZoneIndex}
                         selectedIndex={selectedZoneIndex}
-                    />
-
-                    {/* Side selector */}
-                    <PlacesSelector
-                        buttons={placesConfig.buildings[this.state.selectedBuildingIndex].sideIndex}
-                        onPress={this.updateSideIndex}
-                        selectedIndex={selectedSideIndex}
                     />
 
                     <FetchPlacesButton
@@ -161,12 +159,12 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
                 </div>
                 {!loading ? (
                     <div style={{ marginTop: 10 }}>
-                        <div style={styles.label}>Nombre de places : {filteredPlaces.length}</div>
+                        <div style={styles.label}>Places disponibles : {filteredPlaces.length}</div>
                         <PlacesList places={filteredPlaces} onClickItem={x => this.handleOnClickItem(x)} />
                     </div>
                 ) : (
                         <Spinner
-                            style={{ marginTop: 20, color: "#2E89AD" }}
+                            style={{ marginTop: 20, color: "red" }}
                             size="large"
                         />
                     )}

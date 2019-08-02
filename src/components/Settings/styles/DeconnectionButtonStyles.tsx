@@ -18,7 +18,6 @@ export default {
   view: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 15,
-    bottom: 0
+   display:"flex"
   }
 };

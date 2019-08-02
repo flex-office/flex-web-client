@@ -7,6 +7,7 @@ export default {
         justifyContent: "flex-start",
         marginLeft: 40,
         marginRight: 40,
+        
     },
     search: {
         alignItems: "center",
@@ -18,7 +19,7 @@ export default {
     },
     searchButton: {
         alignItems: "center",
-        backgroundColor: "#fff",
+        background: "green",
         borderRadius: 17.5,
         borderWidth: 0,
         boxShadow: "1px 1px 1px 1px rgba(0, 0, 00, 0.2)",
