@@ -35,6 +35,7 @@ export default class NavElem extends React.Component<NavElemProps> {
                     borderWidth: 1.5,
                     textDecoration: "none",
                     paddingBottom: 3,
+                    pointerEvents: "none",
                 }}
             >
                 <Icon

@@ -22,14 +22,14 @@ interface LeaveComponentProps {
 }
 
 export class LeaveComponent extends React.Component<LeaveComponentProps> {
-    render () {
+    render() {
         const { place, leavePlace, showMessage } = this.props;
 
         return (
             <div style={styles.leave_button}>
                 {(showMessage) ?
-                <div style={{color: "#7F8184"}}>Votre place a bien été réservée !</div>
-                : null}
+                    <div style={{ color: "#7F8184" }}>Votre place a bien été réservée !</div>
+                    : null}
                 <LeaveButton place={place} onPress={() => leavePlace()} />
             </div>
         );
@@ -106,9 +106,11 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
     }
 
     redirect() {
-        if (this.props.location.pathname !== "/home") return
         const { place, historical } = this.state
-        const goTo = x => this.props.history.push(x)
+        const pathname = this.props.location.pathname
+
+        if (pathname !== "/home") return
+        const goTo = x => (x !== pathname) ? this.props.history.push(x) : {}
 
         if (place) goTo("/home/leave")
         else if (historical && historical.length > 0) goTo("/home/history")
@@ -127,12 +129,12 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             });
             this.state.socket.emit('joinRoom', placeText);
             localStorage.setItem("USER", JSON.stringify(omit(this.exclude, this.state)))
-            this.setState({recentlyOccupied: true})
+            this.setState({ recentlyOccupied: true })
             this.props.history.push("/home/leave")
             this.setState({ isScanning: false })
             return true
         } catch (err) {
-            switch(err.message) {
+            switch (err.message) {
                 case "WrongFormatPlace":
                     this.setState({ isWrongFormatPlace: true }); break
                 case "AlreadyTaken":
@@ -198,8 +200,8 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         return (
             <div style={styles.view}>
                 <Switch>
-                    <Route path="/home/leave" render={ () =>
-                        <LeaveComponent place={place} leavePlace={this.leavePlace} showMessage={recentlyOccupied}/>
+                    <Route path="/home/leave" render={() =>
+                        <LeaveComponent place={place} leavePlace={this.leavePlace} showMessage={recentlyOccupied} />
                     }
                     />
                     <Route>
@@ -210,28 +212,27 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                             marginBottom: 25,
                             width: "100%",
                             justifyContent: "center",
-                           
                         }}>
                             <NavElem to="/home/scan" icon="">Scan du <br></br> QR Code</NavElem>
                             <NavElem to="/home/input" icon="">Saisie <br></br> Manuelle</NavElem>
                             <NavElem to="/home/history" icon="">Mes dernières <br></br> places</NavElem>
                         </div>
                         <HeaderCard fname={fname} name={name} id={id} />
-                        <Route path="/home/scan" render={ () =>
-                            <QRCodeComponent onRead={this.onRead}/>
+                        <Route path="/home/scan" render={() =>
+                            <QRCodeComponent onRead={this.onRead} />
                         }
                         />
-                        <Route path="/home/input" render={ () =>
+                        <Route path="/home/input" render={() =>
                             <ManualInsertionCard
-                                onChangeText={e => this.setState({placeInput: e.target.value.toUpperCase().trim()})}
+                                onChangeText={e => this.setState({ placeInput: e.target.value.toUpperCase().trim() })}
                                 placeInput={placeInput}
                                 onSubmitEditing={() => this.insertPlace(this.state.placeInput)}
                                 onPress={() => this.insertPlace(this.state.placeInput)}
                             />
                         }
                         />
-                        <Route path="/home/history" render={ () =>
-                            <History historical={historical} takePlace={this.takePlace}/>
+                        <Route path="/home/history" render={() =>
+                            <History historical={historical} takePlace={this.takePlace} />
                         }
                         />
                         {isWrongFormatPlace ? (
