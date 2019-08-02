@@ -1,4 +1,5 @@
 import React, { InputHTMLAttributes } from "react"
+import Radium, { Style } from "radium"
 
 const styles = {
     input: {
@@ -35,7 +36,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     clearable?: boolean
 }
 
-export default class Input extends React.Component<InputProps> {
+class Input extends React.Component<InputProps> {
     inputRef: any
 
     constructor(props) {
@@ -44,7 +45,6 @@ export default class Input extends React.Component<InputProps> {
     }
 
     handleEnterPress = (e) => {
-        // console.log(this.inputRef.current)
         if (e.key === "Enter") {
             this.props.onSubmit()
         }
@@ -72,13 +72,17 @@ export default class Input extends React.Component<InputProps> {
         const { onSubmit, ariaLabel, type, style, error, clearable, ...rest } = this.props
         return (
             <div
-                style={Object.assign({...styles.container}, style || {})}
+                style={Object.assign({ ...styles.container }, style || {})}
             >
                 <div
                     style={styles.input}
                 >
+                    <Style scopeSelector='.my-input::placeholder' rules={{
+                        color: 'red'
+                    }} />
                     <input
                         {...rest}
+                        className="my-input"
                         aria-label={ariaLabel || "An input"}
                         type={type || "text"}
                         onKeyPress={this.handleEnterPress}
@@ -91,19 +95,21 @@ export default class Input extends React.Component<InputProps> {
                         }}
                     />
                     {clearable ? (
-                    <span
-                        style={{
-                            cursor: "pointer",
-                            color: "#6C99CB",
-                        }}
-                        onClick={() => this.inputRef.current.value = ""}
-                    >
-                        X
+                        <span
+                            style={{
+                                cursor: "pointer",
+                                color: "#6C99CB",
+                            }}
+                            onClick={() => this.inputRef.current.value = ""}
+                        >
+                            X
                     </span>
-                    ) : <div/>}
+                    ) : <div />}
                 </div>
-                {error ? this.errorView(error) : <div/>}
+                {error ? this.errorView(error) : <div />}
             </div>
         )
     }
 }
+
+export default Radium(Input)
