@@ -21,11 +21,12 @@ type PlacesScreenState = {
 
 interface PlacesScreenProps {
     history: any
+    setTitle: any
 }
 
 class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState> {
-    constructor() {
-        super(undefined);
+    constructor(props) {
+        super(props);
         this.state = {
             places: [],
             loading: true,
@@ -34,6 +35,7 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
             selectedZoneIndex: 0,
             selectedSideIndex: 0
         };
+        props.setTitle("Trouver une place")
     }
 
     componentDidMount() {

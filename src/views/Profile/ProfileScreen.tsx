@@ -53,11 +53,12 @@ type ProfileScreenState = {
 interface ProfileScreenProps {
     history: any
     location: any
+    setTitle: any
 }
 
 class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenState> {
-    constructor() {
-        super(undefined);
+    constructor(props) {
+        super(props);
         this.state = {
             placeInput: "",
             socket: socketIOClient(server.sockets),
@@ -71,6 +72,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             recentlyOccupied: false,
         };
         this.state.socket.on('leavePlace', () => this.leavePlace());
+        props.setTitle("Ma place")
     }
 
     exclude = ["socket", "isWrongFormatPlace", "isScanning", "placeInput", "recentlyOccupied"]

@@ -34,6 +34,7 @@ import styles from "./SettingsScreenStyles";
 import DeconnectionButton from "../../components/Settings/DeconnectionButton";
 
 import Input from "../../components/General/Input";
+import FilePicker from "../../components/General/FilePicker";
 
 import { fetchPhoto, logOut } from "../../components/Navigation/reducer";
 
@@ -79,36 +80,6 @@ export const ProfileDescription = (props: { name: any, fname: any, id: any }) =>
     </div>
   );
 };
-
-interface FilePickerProps {
-  type: string
-  onChange: any
-}
-
-export class FilePicker extends React.Component<FilePickerProps> {
-  inputRef: any
-
-  constructor(props) {
-    super(props)
-    this.inputRef = React.createRef()
-  }
-
-  handleChange = async (e) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(e.target.files[0])
-    reader.onload = () => this.props.onChange(reader.result)
-    reader.onerror = err => console.error(err)
-  }
-
-  render() {
-    return (
-      <div style={{cursor: "pointer"}} onClick={() => this.inputRef.current.click()}>
-        <input onChange={this.handleChange} ref={this.inputRef} style={{ display: "none" }} type="file" accept={this.props.type} />
-        {this.props.children}
-      </div>
-    )
-  }
-}
 
 export const ModalComponent = (props: { visible: any, ctx: any }) => {
   const { visible } = props;
@@ -166,6 +137,7 @@ interface SettingsScreenProps {
   history: any
   fetchPhoto: any
   logOut: any
+  setTitle: any
 }
 
 export class SettingsScreen extends Component<SettingsScreenProps, SettingsScreenState> {
@@ -180,8 +152,8 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
     )
   };
 
-  constructor() {
-    super(undefined);
+  constructor(props) {
+    super(props);
     this.state = {
       name: "",
       fname: "",
@@ -195,6 +167,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
       startDate: "",
       endDate: ""
     };
+    props.setTitle("Profil")
   }
 
   componentDidMount() {
@@ -205,7 +178,8 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
       const days = JSON.parse(result).remoteDay
       this.setState({
         // map Trouve index du jour
-        remoteDayIndexes: (days.map) ? days.map(
+        remoteDayIndexes: (!days) ? [] :
+        (days.map) ? days.map(
           x => WEEK_DAYS.findIndex(
             e => e === x
           )
@@ -265,7 +239,6 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
   saveRemote = async () => {
     const { id, photo, remoteDay, startDate, endDate } = this.state;
     // this.setState({ loadingSave: true });
-    console.log("lel", remoteDay)
 
     const payload = {
       id_user: id,
@@ -285,7 +258,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
       })
 
     // Wait until the photo is uploaded to Cloudinary and the link is provided to perform request
@@ -427,7 +400,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, _) => {
   return {
     photo: state.photo
   };

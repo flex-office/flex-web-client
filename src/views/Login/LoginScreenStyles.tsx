@@ -18,15 +18,15 @@ export default {
   view: {
     flex: 1,
     justifyContent: "space-around",
-    alignItems: "center",
+    alignItems: "stretch",
     flexDirection: "column" as "column",
     backgroundColor: "white",
     display: "flex",
-    marginTop: 30
+    minHeight: "calc(100% - 80px)",
   },
   view_second: {
-    width: "60%",
-    marginTop: "10%"
+    flex: 1,
+    display: "flex"
   },
   debug: {
     display: "flex",

@@ -10,8 +10,9 @@ const styles = {
         alignSelf: "flex-start",
         backgroundColor: "white",
         borderBottomStyle: "solid" as "solid",
-        borderBottomWidth: 7,
-        borderImage: "linear-gradient(to right, #58C0D0, #468BB6, #3662A0)",
+        borderBottomWidth: 2,
+        borderColor: "#76A6DC",
+        // borderImage: "linear-gradient(to right, #58C0D0, #468BB6, #3662A0)",
         borderImageSlice: 1,
         display: "flex",
         flex: 1,
@@ -25,10 +26,10 @@ const styles = {
         zIndex: 100,
     },
     text: {
-        color: "black",
-        fontFamily: "Roboto",
-        fontSize: 20,
-        fontWeight: 500,
+        color: "#4278B6",
+        fontFamily: "Raleway",
+        fontSize: 22,
+        fontWeight: "bold" as "bold",
     }
 }
 
@@ -42,6 +43,7 @@ const fetchUserPhoto = async () => {
 };
 
 interface HeaderBarProps {
+    title: string
     showLogo?: boolean,
     showProfilePic?: boolean,
 }
@@ -53,7 +55,7 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
     }
 
     render() {
-        const { showLogo, showProfilePic } = this.props
+        const { showLogo, showProfilePic, title } = this.props
         return (
             <div style={{height: 80}}>
                 <div style={styles.container}>
@@ -68,7 +70,7 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
                         }}
                     /> : <div />}
                     <div style={styles.text}>
-                        Flex-Office
+                        {title}
                     </div>
 
                     {/* Header Right */}

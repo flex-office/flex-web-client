@@ -3,6 +3,7 @@ import ListPlaces from "../../components/Users/ListPlaces"
 import ListItem from "../../components/Users/ListItem"
 import profileDefaultPic from "../../assets/profile.png";
 import moment from "moment"
+// import { isDeclareModuleExports } from "@babel/types";
 
 interface UsersListProps {
     users: Array<any>
@@ -33,10 +34,16 @@ export default class UsersList extends React.Component<UsersListProps> {
         return users.filter(e => upper(e.name).includes(upper(search)) || upper(e.fname).includes(upper(search)))
     };
 
+    WEEK_DAYS = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+
+    getWeekDay = () => this.WEEK_DAYS[(new Date()).getDay()]
+
+    isRemote = x => x.includes(this.getWeekDay())
+
     getStatus(user) {
         if (user.id_place) return user.id_place
         if (user.start_date && user.end_date && moment().isBetween(user.start_date, user.end_date)) return "Absent"
-        // if () return "Télétravail"
+        if (this.isRemote(user.remoteDay)) return "Télétravail"
         return ""
     }
 

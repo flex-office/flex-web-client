@@ -27,13 +27,14 @@ type UsersScreenState = {
 interface UsersScreenProps {
     history: any
     location: any
+    setTitle: any
 }
 
 class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
     _isMounted = false;
 
-    constructor() {
-        super(undefined);
+    constructor(props) {
+        super(props);
         this.state = {
             users: [],
             userName: null,
@@ -42,6 +43,7 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
             arrayOfFriends: [],
             tabIndex: 1,
         };
+        props.setTitle("Utilisateurs")
     }
 
     redirect(x) {

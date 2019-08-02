@@ -4,52 +4,67 @@ import server from "../../config/server.json";
 import config from "../../config/api.json";
 import regex from "../../config/regex.json";
 import styles from "./LoginScreenStyles";
-import LoginButton from "../../components/Login/LoginButton";
-import InputLogin from "../../components/Login/InputLogin";
 import logo from "../../assets/logo.png";
 import HeaderBar from "../../components/Navigation/HeaderBar";
+import Input from "../../components/General/Input"
+import FilePicker from "../../components/General/FilePicker"
+import Button from "../../components/General/Button"
 
-interface LoginScreenState {
-    debugField: string
+interface CompleteViewProps {
+    onValidate: any
+    email: string
+}
+
+interface CompleteViewState {
+    id: string
     name: string
     fname: string
-    id: string
+    photo: string
+    errorID: string
+    errorName: string
+    errorFname: string
 }
 
-interface LoginScreenProps {
-    history: any
-}
-
-class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
-    constructor() {
-        super(undefined);
+class CompleteView extends React.Component<CompleteViewProps, CompleteViewState> {
+    constructor(props) {
+        super(props)
         this.state = {
-            debugField: "",
+            id: "",
             name: "",
             fname: "",
-            id: ""
+            photo: "",
+            errorID: "",
+            errorName: "",
+            errorFname: "",
         }
     }
 
-    capitalizeFirstLetter(x) {
-        return x.charAt(0).toUpperCase() + x.slice(1).toLowerCase();
-    }
+    capitalizeFirstLetter = x => x.charAt(0).toUpperCase() + x.slice(1).toLowerCase()
 
-    /** This function handle the user login */
-    logIn() {
-        if (
-            this.state.name !== "" &&
-            this.state.fname !== "" &&
-            this.state.id !== "" &&
-            this.state.id.match(regex.idRegex) !== null
-        ) {
-            const payload = {
-                name: this.state.name,
-                fname: this.state.fname,
-                id_user: this.state.id
-            };
+    validateID = x => x.match(regex.idRegex) !== null
 
-            fetch(`${server.address}login_user`, {
+    onSubmit = async () => {
+        const {id, name, fname, photo} = this.state
+        const {email} = this.props
+
+        this.setState({errorID: "", errorName: "", errorFname: ""})
+        if (!id || !this.validateID(id))
+            return this.setState({errorID: "ID invalide"})
+        if (!name)
+            return this.setState({errorName: "Veuillez saisir votre nom"})
+        if (!fname)
+            return this.setState({errorFname: "Veuillez saisir votre prénom"})
+
+        const payload = {
+            id_user: id,
+            name,
+            fname,
+            photo,
+            email,
+        }
+
+        try {
+            const res = await fetch(`${server.address}complete_user`, {
                 method: "POST",
                 body: JSON.stringify(payload),
                 headers: {
@@ -57,77 +72,322 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
                     "authorization": `Bearer ${config.token}`
                 }
             })
-                .then(res => {
-                    if (res.status === 200) {
-                        res.json().then(user => {
-                            localStorage.setItem("USER", JSON.stringify({
-                                id: this.state.id,
-                                name: this.state.name,
-                                fname: this.state.fname,
-                                place: user.id_place,
-                                historical: user.historical,
-                                photo: user.photo,
-                                remoteDay: user.remoteDay,
-                                pool: user.pool
-                            }));
-                            this.props.history.push("/")
-                        });
-                    }
-                    else if (res.status === 400) {
-                        this.setState({ debugField: "Problème d'authentification" });
-                        res.text().then(message => console.log(message));
-                    }
-                    else if (res.status === 500) {
-                        this.setState({ debugField: "Problème d'authentification" });
-                        res.text().then(message => console.log(message));
-                    }
-                })
-        }
-        else {
-            this.setState({ debugField: "Erreur de saisie" });
-        }
-    }
-
-    onChangeID(text: string) {
-        const x = text.toUpperCase().trim()
-        this.setState({id: x})
-        if (x.match(regex.idRegex) !== null) {
-            fetch(`${server.address}users/${x}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "authorization": `Bearer ${config.token}`,
-                }
-            })
-            .then(res => res.json())
-            .then(user => {
-                this.setState({name: user.name, fname: user.fname})
-            })
-            .catch(() => {})
+            if (res.status !== 200) return false
+            const user = await res.json()
+            localStorage.setItem("USER", JSON.stringify(user))
+            this.props.onValidate()
+        } catch (_) {
+            return this.setState({errorID: "Problème d'authentification"})
         }
     }
 
     render() {
-        const { debugField } = this.state;
+        const { errorID, errorName, errorFname } = this.state
+
         return (
-            <div>
-                <HeaderBar showLogo={false} showProfilePic={false}/>
+            <div style={{
+                flex: 1,
+                display: "flex",
+                flexDirection: "column" as "column",
+                alignItems: "center",
+                justifyContent: "space-around",
+            }}>
+                <Input
+                    style={{
+                        width: "75%",
+                        maxWidth: "40rem",
+                        justifySelf: "flex-start",
+                    }}
+                    onSubmit={this.onSubmit}
+                    onChange={e => this.setState({ name: this.capitalizeFirstLetter(e.target.value) })}
+                    value={this.state.name}
+                    error={errorName}
+                    placeholder="Nom"
+                    clearable
+                />
+                <Input
+                    style={{
+                        width: "75%",
+                        maxWidth: "40rem",
+                        justifySelf: "flex-start",
+                    }}
+                    onSubmit={this.onSubmit}
+                    onChange={e => this.setState({ fname: this.capitalizeFirstLetter(e.target.value) })}
+                    value={this.state.fname}
+                    error={errorFname}
+                    placeholder="Prénom"
+                    clearable
+                />
+                <Input
+                    style={{
+                        width: "75%",
+                        maxWidth: "40rem",
+                        justifySelf: "flex-start",
+                    }}
+                    onSubmit={this.onSubmit}
+                    onChange={e => this.setState({ id: e.target.value.toUpperCase() })}
+                    value={this.state.id}
+                    error={errorID}
+                    placeholder="ID format: XX00000"
+                    clearable
+                />
+                <FilePicker
+                    type="image/jpeg"
+                    onChange={async image => this.setState({photo: image})}
+                >
+                    <Button
+                        style={{
+                            paddingTop: 5,
+                            paddingBottom: 5,
+                            backgroundColor: "#76A6DC",
+                            fontSize: 16,
+                        }}
+                    >
+                        Importer une photo de profil
+                    </Button>
+                </FilePicker>
+                <Button
+                    style={{
+                        paddingLeft: 45,
+                        paddingRight: 45,
+                    }}
+                    onClick={this.onSubmit}
+                >
+                    S'identifier
+                </Button>
+            </div>
+        )
+    }
+}
+
+interface VerificationViewProps {
+    onValidate: any
+}
+
+interface VerificationViewState {
+    user: any
+}
+
+class VerificationView extends React.Component<VerificationViewProps, VerificationViewState> {
+    validate = async (code) => {
+        const payload = {
+            code
+        }
+
+        try {
+            const res = await fetch(`${server.address}verify`, {
+                method: "POST",
+                body: JSON.stringify(payload),
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${config.token}`
+                }
+            })
+            if (res.status !== 200) return false
+            const user = await res.json()
+            localStorage.setItem("USER", JSON.stringify(user))
+            await this.setState({user})
+            return true
+        } catch (_) {
+            return false
+        }
+    }
+
+    render() {
+        return (
+            <CommonView
+                validate={this.validate}
+                onValidate={() => this.props.onValidate(this.state.user)}
+                errorMessage="Code non valide"
+                title="Code"
+                text="Valider"
+                inputType="number"
+            />
+        )
+    }
+}
+
+interface SendVerifViewProps {
+    onValidate: any
+}
+
+interface SendVerifViewState {
+    email: string
+}
+
+class SendVerifView extends React.Component<SendVerifViewProps, SendVerifViewState> {
+    constructor(props) {
+        super(props)
+        this.state = {
+            email: ""
+        }
+    }
+
+    validate = async (email) => {
+        if (/*!(/@bred.fr$/.test(email))*/false) return false
+        const payload = {
+            email
+        }
+
+        try {
+            const res = await fetch(`${server.address}login_user`, {
+                method: "POST",
+                body: JSON.stringify(payload),
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${config.token}`
+                }
+            })
+            if (res.status !== 200) return false
+            await this.setState({email})
+            return true
+        } catch (_) {
+            return false
+        }
+    }
+
+    render() {
+        return (
+            <CommonView
+                validate={this.validate}
+                onValidate={() => this.props.onValidate(this.state.email)}
+                errorMessage="Adresse mail non valide"
+                title="Adresse mail BRED"
+                text="Envoyer le code"
+                inputType="text"
+            />
+        )
+    }
+}
+
+interface CommonViewProps {
+    validate: any
+    onValidate: any
+    errorMessage: string
+    title: string
+    text: string
+    inputType: string
+}
+
+interface CommonViewState {
+    value: string
+    error: string
+}
+
+class CommonView extends React.Component<CommonViewProps, CommonViewState> {
+    constructor(props) {
+        super(props)
+        this.state = {
+            value: "",
+            error: "",
+        }
+    }
+
+    onSubmit = async () => {
+        const { validate, onValidate } = this.props
+        if (await validate(this.state.value)) {
+            this.setState({error: ""})
+            onValidate()
+        } else {
+            this.setState({error: this.props.errorMessage})
+        }
+    }
+
+    render() {
+        const { error } = this.state
+
+        return (
+            <div style={{
+                flex: 1,
+                display: "flex",
+                flexDirection: "column" as "column",
+                alignItems: "center",
+                justifyContent: "space-around",
+            }}>
+                <Input
+                    style={{
+                        width: "75%",
+                        maxWidth: "40rem",
+                        justifySelf: "flex-start",
+                    }}
+                    onSubmit={this.onSubmit}
+                    onChange={e => this.setState({ value: e.target.value })}
+                    error={error}
+                    placeholder={this.props.title}
+                    type={this.props.inputType}
+                    clearable
+                />
+                <Button
+                    onClick={this.onSubmit}
+                >
+                    {this.props.text}
+                </Button>
+            </div>
+        )
+    }
+}
+
+interface LoginScreenState {
+    firstDone: boolean
+    secondDone: boolean
+    email: string
+}
+
+interface LoginScreenProps {
+    history: any
+}
+
+class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            firstDone: false,
+            secondDone: false,
+            email: "",
+        }
+    }
+
+    // this.setState({ debugField: "Problème d'authentification" });
+    // this.setState({ debugField: "Erreur de saisie" });
+
+    thirdStage = () => {
+        this.props.history.push("/")
+    }
+
+    secondStage = (user) => {
+        if (user.id && user.name && user.fname)
+            this.props.history.push("/")
+        else
+            this.setState({secondDone: true})
+    }
+
+    firstStage = (email) => {
+        this.setState({firstDone: true, email})
+    }
+
+    render() {
+        const { firstDone, secondDone, email } = this.state;
+        return (
+            <div style={{height: "100%"}}>
+                <HeaderBar title="Flex-Office" showLogo={false} showProfilePic={false}/>
                 <div style={styles.view}>
-                    <img src={logo} style={{width: "8%"}} alt="logo" />
-                    <div style={styles.view_second}>
-                        <InputLogin
-                            onSubmitEditing={() => this.logIn()}
-                            onChangeID={e => this.onChangeID(e.target.value)}
-                            onChangeSurname={e => this.setState({name: this.capitalizeFirstLetter(e.target.value).trim()})}
-                            onChangeName={e => this.setState({fname: this.capitalizeFirstLetter(e.target.value).trim()})}
-                            id={this.state.id}
-                            surname={this.state.name}
-                            name={this.state.fname}
-                        />
-                        <LoginButton onPress={() => this.logIn()} />
-                        <p style={styles.debug}>{debugField}</p>
+                    <div style={{
+                        flex: 1,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}>
+                        <img src={logo} style={{width: "8%"}} alt="logo" />
                     </div>
-                    {/* <p style={styles.version}>{DeviceInfo.getVersion()}</p> */}
+                    <div style={styles.view_second}>
+                        {(secondDone) ?
+                        <CompleteView onValidate={this.thirdStage} email={email}/>
+                        : (firstDone) ?
+                        <VerificationView onValidate={this.secondStage}/>
+                        : <SendVerifView onValidate={this.firstStage}/>
+                        }
+                    </div>
+                    <div style={{flex: 1}}/>
                 </div>
             </div>
         );

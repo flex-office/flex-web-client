@@ -63,25 +63,46 @@ export class NavBar extends React.Component {
   }
 }
 
+interface NavigationAppState {
+  title: string
+}
+
 interface NavigationAppProps {
   history: any
   location: any
 }
 
-export class NavigationApp extends React.Component<NavigationAppProps> {
+export class NavigationApp extends React.Component<NavigationAppProps, NavigationAppState> {
+  constructor(props) {
+    super(props)
+    this.state = {
+      title: "Flex-Office",
+    }
+  }
+
   componentWillMount() {
     if (this.props.location.pathname === "/") this.props.history.push("/home")
   }
 
+  setTitle = x => this.setState({title: x})
+
   render() {
     return (
       <div style={styles.navApp}>
-        <HeaderBar/>
+        <HeaderBar title={this.state.title}/>
         <div style={styles.pageContainer}>
-          <Route path="/home" component={ProfileScreen}/>
-          <Route path="/places" component={PlacesScreen}/>
-          <Route path="/users" component={UsersScreen}/>
-          <Route path="/settings" component={SettingsScreen}/>
+          <Route path="/home" render={() =>
+            <ProfileScreen setTitle={this.setTitle}/>
+          }/>
+          <Route path="/places" render={() =>
+            <PlacesScreen setTitle={this.setTitle}/>
+          }/>
+          <Route path="/users" render={() =>
+            <UsersScreen setTitle={this.setTitle}/>
+          }/>
+          <Route path="/settings" render={() =>
+            <SettingsScreen setTitle={this.setTitle}/>
+          }/>
         </div>
         <NavBar/>
       </div>
