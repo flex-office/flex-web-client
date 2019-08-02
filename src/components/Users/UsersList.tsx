@@ -63,7 +63,7 @@ export default class UsersList extends React.Component<UsersListProps> {
                         <div
                             key={item.id}
                             onClick={() => onClick(item)}
-                            style={{cursor: "pointer", alignSelf: "stretch" }}
+                            style={{cursor: "pointer", alignSelf: "stretch", border: "black"}}
                         >
                             {/* <Card containerStyle={{ borderRadius: 10 }}> */}
                             <ListItem

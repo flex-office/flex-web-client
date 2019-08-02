@@ -45,13 +45,13 @@ class UsersScreenSearch extends React.Component<UsersScreenSearchProps, UsersScr
                     <Input
                         onChange={e => this._handleSearch(e.target.value)}
                         onSubmit={getUsers}
-                        placeholder="Recherche   ex: Prénom NOM"
+                        placeholder="Nom Prénom"
                     />
                     <button
                         onClick={getUsers}
                         style={styles.searchButton}
                     >
-                        <Icon name="arrow-right" style={{ fontSize: 15, color: "#2E89AD" }} />
+                        Rechercher
                     </button>
                 </div>
                 {/* <FindPlacesCard users={getUsers} /> */}

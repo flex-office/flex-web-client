@@ -22,12 +22,11 @@ export default {
     flex: 1,
     flexDirection: "column" as "column",
     width: "100%",
-    maxWidth: "30rem",
+    maxWidth: "30rem"
   },
   selectorContainer: {
     elevation: 2,
     padding: 15,
-    margin: 20,
     marginBottom: 0,
     borderRadius: 10,
     shadowOpacity: 0.4,
@@ -36,19 +35,19 @@ export default {
     shadowOffset: { height: 1, width: 0 },
     display: "flex",
     alignItems: "stretch",
-    justifyContent: "center",
-    flexDirection: "column" as "column",
-    boxShadow: "2px 2px 2px 2px rgba(0, 0, 0, 0.4)",
+    flexDirection: "row" as "row",
+    flexWrap: "wrap" as "wrap",
+    justifyContent:"center",  
     flex: 0,
-    width: "90%",
     maxWidth: "30rem",
 	},
 	label: {
 		textAlign: "center" as "center",
 		fontSize: 18,
 		fontFamily: "Roboto",
-		color: "black",
+		color: " #568AC4",
     marginBottom: 10,
-    fontWeight: 500
+    fontWeight: 500,
+    justifyContent: "center"
 	}
 }

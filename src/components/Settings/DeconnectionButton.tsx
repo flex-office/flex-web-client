@@ -25,32 +25,24 @@ const DeconnectionButton = (props: { onPress: () => any }) => {
     <button
       onClick={onPress}
       style={{
-        backgroundColor: '#fff',
-        width: 200,
-        height: 45,
-        marginTop: 10,
-        borderRadius: 5,
-        borderWidth: 2,
-        borderColor: '#2E89AD',
-        flex: 1,
+        backgroundColor: ' #568AC4',
+        width: 130,
+        padding: 4,
+        border: "none",
+        borderRadius: 7,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-around"
       }}
+    
     >
-      <Icon
-        name="power-off"
-        style={{
-          size: 15,
-          color: '#2E89AD'
-        }}
-      />
+    
       <div style={{
-        fontWeight: 700,
         fontFamily: 'Roboto',
-        color: '#2E89AD'
+        color: 'white',
+        fontSize: 12,
       }}>
-        ME DÉCONNECTER
+        Me déconnecter
       </div>
     </button>
   </div>

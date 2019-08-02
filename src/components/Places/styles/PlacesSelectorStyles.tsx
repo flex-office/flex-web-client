@@ -25,7 +25,7 @@ export default {
   },
   container: {
     elevation: 2,
-    backgroundColor: "#fff",
+    backgroundColor: "green",
     shadowOpacity: 0.4,
     shadowRadius: 2,
     shadowColor: "#3662A0",
@@ -33,22 +33,24 @@ export default {
     borderRadius: 17.5,
     padding: 10,
     alignItems: "center",
-    justifyContent: "center"
   },
   button: {
     backgroundColor: "white",
-    borderColor: "#E4E4E4",
-    height: 30,
-    color: "black",
+    borderColor: "#7F8184",
+    borderWidth: 1,
+    color: " #568AC4",
     fontFamily: "Roboto",
     display: "flex",
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
-    padding: 10,
+    fontSize: 11,
+    width: 110,
+    margin: 10,
   },
   buttonSelected: {
     color: "#2E89AD",
     // fontWeight: 500,
   }
+  
 }

@@ -15,12 +15,14 @@ limitations under the License.
 */
 export default {
   view_second: {
-    margin: 10,
+    padding : 5,
+  
   },
   text_first: {
-    color: "black",
+    color: "#568AC4",
     fontFamily: "Roboto",
-    fontWeight: "bold" as "bold",
-    margin: 2,
+    fontSize: 18,
+    margin: 0,
+    
   }
 }

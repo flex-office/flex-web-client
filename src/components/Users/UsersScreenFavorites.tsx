@@ -34,7 +34,7 @@ export default class UsersScreenFavorites extends React.Component<UsersScreenFav
             }}>
                 <Input
                     onChange={e => this.setState({ search: e.target.value })}
-                    placeholder="Recherche   ex: Prénom NOM"
+                    placeholder="Nom Prénom"
                 />
                 {!loading ? (
                 <UsersList

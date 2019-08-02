@@ -21,7 +21,7 @@ const HeaderCard = (props: { fname: string, name: string, id: string }) => {
   return (
     <div style={styles.view_second}>
       <h4 style={styles.text_first}>
-        {fname} {name} [{id}]
+        {name} {fname}
       </h4>
     </div>
   );

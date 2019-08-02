@@ -28,7 +28,7 @@ export class LeaveComponent extends React.Component<LeaveComponentProps> {
         return (
             <div style={styles.leave_button}>
                 {(showMessage) ?
-                <div style={{color: "grey"}}>Votre place a bien été reservée</div>
+                <div style={{color: "#7F8184"}}>Votre place a bien été réservée !</div>
                 : null}
                 <LeaveButton place={place} onPress={() => leavePlace()} />
             </div>
@@ -206,12 +206,15 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                         <div style={{
                             display: "flex",
                             flexDirection: "row",
-                            marginTop: 10,
+                            margin: 15,
+                            marginBottom: 25,
+                            width: "100%",
                             justifyContent: "center",
+                           
                         }}>
-                            <NavElem to="/home/scan" icon="qrcode">QR</NavElem>
-                            <NavElem to="/home/input" icon="keyboard">Saisie</NavElem>
-                            <NavElem to="/home/history" icon="history">Mes derniers places</NavElem>
+                            <NavElem to="/home/scan" icon="">Scan du <br></br> QR Code</NavElem>
+                            <NavElem to="/home/input" icon="">Saisie <br></br> Manuelle</NavElem>
+                            <NavElem to="/home/history" icon="">Mes dernières <br></br> places</NavElem>
                         </div>
                         <HeaderCard fname={fname} name={name} id={id} />
                         <Route path="/home/scan" render={ () =>

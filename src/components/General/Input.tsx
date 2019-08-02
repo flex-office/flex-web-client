@@ -16,6 +16,13 @@ const styles = {
         display: "flex",
         flexDirection: "column" as "column",
         alignItems: "center",
+        borderColor: "#76A6DC",
+        margin: 10,
+        width: "85%",
+        paddingTop: 90,
+        outlineWidth: 0,
+        fontColor: "#979797",
+        fontSize: 12,
     }
 }
 

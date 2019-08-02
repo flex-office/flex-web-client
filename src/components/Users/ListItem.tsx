@@ -14,7 +14,7 @@ const styles = {
     dividerStyle: {
         borderBottomWidth: 1,
         borderBottomStyle: "solid",
-        borderBottomColor: "lightgrey"
+        borderBottomColor: "#7F8184"
     },
     container: {
         flex: 1,
@@ -24,11 +24,12 @@ const styles = {
         alignSelf: "stretch",
     },
     image: {
-        width: 50,
-        height: 50
+        width: 30,
+        height: 30
     },
     text: {
-        color: "grey"
+        color: "#568AC4",
+        fontSize: 14
     }
 }
 

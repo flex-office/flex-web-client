@@ -5,13 +5,15 @@ import Icon from "react-fontawesome"
 const styles = {
     navLink: {
         alignItems: "center",
-        color: "#3662A0",
+        color: "#7F8184",
         display: "flex",
         flex: 1,
         flexDirection: "column",
+        justifyContent: "space-around",
         height: "100%",
-        justifyContent: "center",
         textAlign: "center",
+        fontSize: 11,
+        textDecoration: "none"
     },
 }
 
@@ -28,7 +30,11 @@ export default class NavElem extends React.Component<NavElemProps> {
                 exact={this.props.exact}
                 style={styles.navLink}
                 activeStyle={{
-                    color: "#58C0D0"
+                    color: "#3662A0",
+                    borderBottom : "solid #3662A0" as "solid #3662A0",
+                    borderWidth: 1.5,
+                    textDecoration: "none",
+                    paddingBottom: 3,
                 }}
             >
                 <Icon
