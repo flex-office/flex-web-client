@@ -88,7 +88,7 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
     updateFloorIndex = selectedFloorIndex => {
         this.setState({ selectedFloorIndex });
     };
-   
+
     updateZoneIndex = selectedZoneIndex => {
         this.setState({ selectedZoneIndex });
     };
@@ -141,12 +141,12 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
                         selectedIndex={selectedFloorIndex}
                     />
 
-                      {/* Side selector */}
-                      <PlacesSelector
-                      buttons={placesConfig.buildings[this.state.selectedBuildingIndex].sideIndex}
-                      onPress={this.updateSideIndex}
-                      selectedIndex={selectedSideIndex}
-                  />
+                    {/* Side selector */}
+                    <PlacesSelector
+                        buttons={placesConfig.buildings[this.state.selectedBuildingIndex].sideIndex}
+                        onPress={this.updateSideIndex}
+                        selectedIndex={selectedSideIndex}
+                    />
 
                     {/* Zone selector */}
                     <PlacesSelector

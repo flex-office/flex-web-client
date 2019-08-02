@@ -72,7 +72,7 @@ class CompleteView extends React.Component<CompleteViewProps, CompleteViewState>
                     "authorization": `Bearer ${config.token}`
                 }
             })
-            if (res.status !== 200) return false
+            if (res.status !== 200) return this.setState({errorID: "Problème d'authentification"})
             const user = await res.json()
             localStorage.setItem("USER", JSON.stringify(user))
             this.props.onValidate()
