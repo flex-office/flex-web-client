@@ -12,6 +12,7 @@ interface UsersScreenFavoritesProps {
     users: Array<any>
     removeFriend: any
     loading: boolean
+    getUsers: any
 }
 
 export default class UsersScreenFavorites extends React.Component<UsersScreenFavoritesProps, UsersScreenFavoritesState> {
@@ -23,19 +24,23 @@ export default class UsersScreenFavorites extends React.Component<UsersScreenFav
     }
 
     render() {
-        const { users, removeFriend, loading } = this.props
+        const { users, removeFriend, loading, getUsers } = this.props
         const { search } = this.state
 
         return (
-            <div style={{
-                display: "flex",
-                flexDirection: "column" as "column",
-                alignItems: "center"
-            }}>
-                <Input
+            <div style={styles.view}>
+        <div style={styles.search}>
+         <Input
                     onChange={e => this.setState({ search: e.target.value })}
                     placeholder="Nom Prénom"
+                    clearable
                 />
+                <button
+                onClick={getUsers}
+                style={styles.searchButton}
+            >
+                Rechercher
+            </button>
                 {!loading ? (
                 <UsersList
                     users={users}
@@ -48,6 +53,8 @@ export default class UsersScreenFavorites extends React.Component<UsersScreenFav
                     <Spinner style={{ marginTop: 40, color: "#2E89AD" }}/>
                 </div>
                 )}
+        </div>
+               
             </div>
         )
     }

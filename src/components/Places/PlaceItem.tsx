@@ -45,8 +45,8 @@ class PlaceItem extends React.Component<PlaceItemProps> {
 					marginBottom: 0,
 					marginRight: 10,
 					color: "#7F8184",
-					fontFamily: "Roboto",
-					fontSize: 12,
+					fontFamily: "Raleway",
+					fontSize: "0.9rem",
 				}}>
 					{place.id}
 				</div>

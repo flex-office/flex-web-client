@@ -140,7 +140,7 @@ class CompleteView extends React.Component<CompleteViewProps, CompleteViewState>
                             paddingTop: 5,
                             paddingBottom: 5,
                             backgroundColor: "#76A6DC",
-                            fontSize: 16,
+                            fontSize: "1.1rem",
                         }}
                     >
                         Importer une photo de profil

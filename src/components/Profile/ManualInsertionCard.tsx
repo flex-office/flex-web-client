@@ -31,6 +31,7 @@ const ManualInsertionCard = (props: {
         onChange={onChangeText}
         onSubmit={onSubmitEditing}
         value={placeInput}
+        clearable
       />
       <button
         style={styles.button}

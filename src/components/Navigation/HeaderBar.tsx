@@ -16,7 +16,7 @@ const styles = {
         display: "flex",
         flex: 1,
         flexDirection: "row" as "row",
-        height: 55,
+        height: "4rem",
         justifyContent: "space-around",
         overflow: "hidden",
         position: "fixed" as "fixed",
@@ -28,7 +28,7 @@ const styles = {
     text: {
         color: "#568AC4",
         fontFamily: "Raleway",
-        fontSize: 22,
+        fontSize: "1.2rem",
         fontWeight: "bold" as "bold",
     }
 }
@@ -57,7 +57,7 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
     render() {
         const { showLogo, showProfilePic, title } = this.props
         return (
-            <div style={{ height: 55 }}>
+            <div style={{ height: "4.5rem"}}>
                 <div style={styles.container}>
                     {/* Header Left */}
                     {(showLogo) ?
@@ -65,7 +65,7 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
                             src={logo}
                             alt="logo"
                             style={{
-                                height: 30,
+                                height: "1.5rem",
                                 margin: 10,
                             }}
                         /> : <div />}

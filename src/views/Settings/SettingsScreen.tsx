@@ -50,7 +50,7 @@ type Historical = {
 
 const profileStyles = {
   row: {
-    fontFamily: "Roboto",
+    fontFamily: "Raleway",
     display: "flex",
     alignItems: "center",
     color: "#568AC4",
@@ -138,7 +138,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
     tabBarIcon: () => (
       <img
         src={picProfile}
-        style={{ width: 20, height: 20 }}
+        style={{ width: "1rem", height: "1rem" }}
       />
     )
   };
@@ -290,7 +290,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-start",
-        alignItems: "stretch",
+        alignItems: "center",
         maxWidth: "100%",
       }}>
         <div style={styles.viewContainer}>
@@ -328,7 +328,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
             borderRadius: 7,
             border: "none",
             color: "white",
-            fontSize: 11,
+            fontSize: "0.6rem",
             padding: 2,
             width : 170,
             cursor: "pointer"
@@ -389,6 +389,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
                 placeholder="DD.MM.YYYY"
                 value={startDate}
                 style={{padding: 0, margin: 0, width: "60%"}}
+                clearable
               />
             </div>
             <div style={{
@@ -404,6 +405,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
                 placeholder="DD.MM.YYYY"
                 value={endDate}
                 style={{padding: 0, margin: 0, marginBottom: 5, width: "60%"}}
+                clearable
               />
             </div>
           </div>

@@ -26,7 +26,7 @@ export default {
   },
   selectorContainer: {
     elevation: 2,
-    padding: 15,
+    padding: "0.7rem",
     marginBottom: 0,
     borderRadius: 10,
     shadowOpacity: 0.4,
@@ -43,11 +43,11 @@ export default {
 	},
 	label: {
 		textAlign: "center" as "center",
-		fontSize: 18,
-		fontFamily: "Roboto",
+		fontSize: "1.1rem",
+		fontFamily: "Raleway",
 		color: " #568AC4",
     marginBottom: 10,
-    fontWeight: 500,
+    fontWeight: 600,
     justifyContent: "center"
 	}
 }

@@ -55,14 +55,14 @@ class ProfileImage extends Component<ProfileImageProps> {
         style={
           photo === ""
             ? {
-                width: 30,
-                height: 30,
+                width: "2.2rem",
+                height: "2.2rem",
                 margin: 8,
               }
             : {
-                width: 30,
-                height: 30,
-                borderRadius: 15,
+                width: "2.2rem",
+                height: "2.2rem",
+                borderRadius: "0.7rem",
                 margin: 8,
               }
         }

@@ -19,29 +19,25 @@ limitations under the License.
 export default {
   view: {
     alignItems: "center",
-    justifyContent: "space-between",
-    margin: 15,
+    justifyContent: "space-around",
+    margin: "2rem",
     flexDirection: "column" as "column",
     display: "flex",
+    height: "60vh"
     
     
   },
   button: {
     backgroundColor: "#568AC4",
-    borderRadius: 5,
+    borderRadius: 7,
     border: "none",
-    paddingBottom: "0.5rem",
-    paddingTop: "0.5rem",
-    width: 150,
-    margin: 50,
-    marginTop: 70,
-    fontSize: 14
-   
+    width: "11rem",
+    height: "2.7rem",
     
   },
   text: {
     color: "white",
-    fontFamily: "Roboto",
-    fontSize: 14,
+    fontFamily: "Raleway",
+    fontSize: "1.1rem",
   },
 }

@@ -8,9 +8,8 @@ const styles = {
         border: 0,
         color: "white",
         padding: 12,
-        paddingLeft: 30,
-        paddingRight: 30,
-        fontSize: 17,
+        paddingLeft: "1.5rem",
+        paddingRight: "1.5rem",
     }
 }
 

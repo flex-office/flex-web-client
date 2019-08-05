@@ -21,15 +21,17 @@ const styles = {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        alignSelf: "stretch",
+        alignSelf: "center",
+        height: "4.5rem",
     },
     image: {
-        width: 30,
-        height: 30
+        width: "2.3rem",
+        height: "2.3rem"
     },
     text: {
         color: "#568AC4",
-        fontSize: 14
+        fontSize: "1rem",
+        fontWeight: 600,
     }
 }
 

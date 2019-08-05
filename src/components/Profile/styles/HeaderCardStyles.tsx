@@ -15,13 +15,15 @@ limitations under the License.
 */
 export default {
   view_second: {
-    padding : 5,
+    alignSelf: "center",
+    padding: "0.3rem"
+
   
   },
   text_first: {
     color: "#568AC4",
-    fontFamily: "Roboto",
-    fontSize: 18,
+    fontFamily: "Raleway",
+    fontSize: "1.5rem",
     margin: 0,
     
   }

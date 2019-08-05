@@ -17,19 +17,7 @@ export default {
         marginBottom: 10,
         marginTop: 10,
     },
-    searchButton: {
-        alignItems: "center",
-        background: "green",
-        borderRadius: 17.5,
-        borderWidth: 0,
-        boxShadow: "1px 1px 1px 1px rgba(0, 0, 00, 0.2)",
-        display: "flex",
-        flex: 1,
-        height: 35,
-        justifyContent: "center",
-        paddingLeft: 20,
-        paddingRight: 20,
-    },
+
     spinner: {
         alignItems: "center",
         backgroundColor: "white",

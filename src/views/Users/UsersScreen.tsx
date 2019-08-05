@@ -213,22 +213,26 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
     render() {
         const { users, userName, loading } = this.state
         return (
-            <div>
+            <div style={{
+                width: "100%",
+            }}>
                 <div style={{
                     display: "flex",
                     flexDirection: "row",
-                    
+                    margin: "0.8rem 0.7rem 1.5rem 0rem",
                     width: "100%",
                     justifyContent: "center",
+                   
                 }}>
-                    <NavElem to="/users/favorites" icon="">Favoris</NavElem>
-                    <NavElem to="/users/search" icon="">Recherche</NavElem>
+                    <NavElem to="/users/favorites" src="" border>Favoris</NavElem>
+                    <NavElem to="/users/search" src="" border>Recherche</NavElem>
                 </div>
                 <Route path="/users/favorites" render={ () =>
                     <UsersScreenFavorites
                         users={users.filter(x => x.isFriend)}
                         removeFriend={this.removeFriend}
                         loading={loading}
+                        getUsers={this.getUsers}
                     />
                 }
                 />

@@ -23,7 +23,7 @@ const LeaveButton = (props: { place: any, onPress: () => void }) => {
  <div
     style={{
     fontWeight: "bold",
-    fontFamily: "Roboto",
+    fontFamily: "Raleway",
     color: "#468BB6",
     display: "flex",
     justifyContent: "flex-start",

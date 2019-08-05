@@ -166,7 +166,7 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
                     </div>
                 ) : (
                         <Spinner
-                            style={{ marginTop: 20, color: "red" }}
+                            style={{ marginTop: "1rem", color: "red" }}
                             size="large"
                         />
                     )}

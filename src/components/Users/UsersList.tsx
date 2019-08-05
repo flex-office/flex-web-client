@@ -54,7 +54,7 @@ export default class UsersList extends React.Component<UsersListProps> {
         const isFriend = this.props.isFriend || (() => false)
 
         return (
-            <div style={{ alignSelf: "stretch" }}>
+            <div style={{ alignSelf: "stretch", width: "100%" }}>
                 {users !== [] && users.length > 0 ? (
                 <ListPlaces
                     handleList={this._handleList()}
@@ -63,14 +63,14 @@ export default class UsersList extends React.Component<UsersListProps> {
                         <div
                             key={item.id}
                             onClick={() => onClick(item)}
-                            style={{cursor: "pointer", alignSelf: "stretch", border: "black"}}
+                            style={{cursor: "pointer", alignSelf: "center", border: "black"}}
                         >
                             {/* <Card containerStyle={{ borderRadius: 10 }}> */}
                             <ListItem
                                 title={`${item.name} ${item.fname}`}
                                 subtitle={this.getStatus(item)}
                                 containerStyle={{ margin: 0, padding: 5 }}
-                                titleStyle={{ fontFamily: "Roboto" }}
+                                titleStyle={{ fontFamily: "Raleway" }}
                                 rightIcon={{
                                     name: "star",
                                     fa: isFriend(item),

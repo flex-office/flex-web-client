@@ -5,8 +5,7 @@ export default {
         flex: 1,
         flexDirection: "column" as "column",
         justifyContent: "flex-start",
-        marginLeft: 40,
-        marginRight: 40,
+        
         
     },
     search: {
@@ -14,7 +13,7 @@ export default {
         display: "flex",
         flexDirection: "column" as "column",
         justifyContent: "space-around",
-        margin: 10
+        width: "85%"
     },
     searchButton: {
         alignItems: "center",
@@ -22,10 +21,13 @@ export default {
         color: "white",
         borderRadius: 7,
         border: "none",
-        margin: 10,
+        margin: "1.4rem",
         padding : 6,
-        fontSize:12,
-        width : 130,
+        fontSize:"1rem",
+        fontWeight: 600,
+        width : "9rem",
+        fontFamily: "Raleway",
+        height: "2.3rem"
     },
     spinner: {
         alignItems: "center",

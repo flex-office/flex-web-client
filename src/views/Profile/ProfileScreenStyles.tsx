@@ -16,7 +16,7 @@ limitations under the License.
 
 export default {
   view: {
-    alignItems: "center",
+    alignItems: "stretch",
     display: "flex",
     flex: 1,
     flexDirection: "column" as "column",
@@ -52,13 +52,13 @@ export default {
   },
   logOut: {},
   places: {
-    fontSize: 15
+    fontSize: "0.7rem"
   },
   debug: {
     // textAlign: "center",
     color: "#2E89AD",
     margin: 10,
-    fontFamily: "Roboto",
+    fontFamily: "Raleway",
   },
   leave_button: {
     alignItems: "center",

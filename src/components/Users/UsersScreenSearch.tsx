@@ -46,6 +46,7 @@ class UsersScreenSearch extends React.Component<UsersScreenSearchProps, UsersScr
                         onChange={e => this._handleSearch(e.target.value)}
                         onSubmit={getUsers}
                         placeholder="Nom Prénom"
+                        clearable
                     />
                     <button
                         onClick={getUsers}
@@ -56,7 +57,7 @@ class UsersScreenSearch extends React.Component<UsersScreenSearchProps, UsersScr
                 </div>
                 {/* <FindPlacesCard users={getUsers} /> */}
                 {!loading ? (
-                <div style={{ alignSelf: "stretch" }}>
+                <div style={{ alignSelf: "center", width: "80%" }}>
                     {search !== "" && users !== [] && users.length > 0 ? (
                     <UsersList
                         users={users}

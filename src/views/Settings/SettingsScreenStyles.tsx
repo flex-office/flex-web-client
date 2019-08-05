@@ -17,20 +17,20 @@ limitations under the License.
 export default {
   centerText: {
     flex: 1,
-    fontSize: 18,
+    fontSize: "1rem",
     padding: 32,
     color: "#777",
-    fontFamily: "Roboto"
+    fontFamily: "Raleway"
   },
   textBold: {
     fontWeight: "500",
     color: "#000",
-    fontFamily: "Roboto"
+    fontFamily: "Raleway"
   },
   buttonText: {
     fontSize: 21,
     color: "rgb(0,122,255)",
-    fontFamily: "Roboto"
+    fontFamily: "Raleway"
   },
   buttonTouchable: {
     padding: 16
@@ -79,8 +79,8 @@ export default {
   },
   remoteText: {
     color: "#568AC4",
-    fontFamily: "Roboto",
-    fontSize: 12,
+    fontFamily: "Raleway",
+    fontSize: "0.9rem",
     margin: 10,
     width: "85%",
     display: "flex",
@@ -88,17 +88,17 @@ export default {
     borderTop: "solid" as "solid",
     borderTopWidth: 1,
     borderTopColor:"#7F8184",
-    paddingTop: 15,
-    marginTop: 20
+    paddingTop: "0.7rem",
+    marginTop: "1rem"
 
   },
   semiFlexText: {
     width: "40%",
     padding: 5,
     marginBottom: 0,
-    fontFamily: "Roboto",
+    fontFamily: "Raleway",
     color: " #568AC4",
-    fontSize: 12,
+    fontSize: "0.9rem",
    textAlign: "right" as "right"
   },
   input: {
@@ -155,7 +155,7 @@ export default {
   semiFlexButtonText: {
     flex: 1,
     color: "white",
-    fontSize: 12,
+    fontSize: "0.9rem",
   
     
   },

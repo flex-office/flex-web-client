@@ -21,8 +21,8 @@ class EmptyResult extends React.Component {
 			<div
 				style={{
 					color: "#7F8184",
-					fontFamily: "Roboto",
-					fontSize: 14,
+					fontFamily: "Raleway",
+					fontSize: "1rem",
 					textAlign: "center",
 					marginTop: 70,
 					width: 280,

@@ -34,10 +34,10 @@ class QRCodeComponent extends React.Component<Props> {
       }}>
         <div
           style={{
-            marginBottom: 15,
-            fontFamily: "Roboto",
+            marginBottom: "1rem",
+            fontFamily: "Raleway",
             color: "#7F8184",
-            fontSize: 14
+            fontSize: "0.9rem",
           }}
         >
           Scannez le QR code

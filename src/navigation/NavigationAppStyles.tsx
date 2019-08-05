@@ -17,7 +17,7 @@ export default {
     },
     nav: {
         flex: 1,
-        fontSize: 12,
+        fontSize: "0.9rem",
         flexDirection: "row",
         justifyContent: "space-around",
         marginTop: 5,

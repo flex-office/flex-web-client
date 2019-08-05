@@ -38,9 +38,9 @@ const DeconnectionButton = (props: { onPress: () => any }) => {
     >
     
       <div style={{
-        fontFamily: 'Roboto',
+        fontFamily: 'Raleway',
         color: 'white',
-        fontSize: 12,
+        fontSize: "0.9rem",
       }}>
         Me déconnecter
       </div>

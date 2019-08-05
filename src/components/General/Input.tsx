@@ -12,6 +12,7 @@ const styles = {
         display: "flex",
         flexDirection: "row" as "row",
         justifyContent: "space-between",
+    fontSize: "0.8rem"
     },
     container: {
         display: "flex",
@@ -19,12 +20,13 @@ const styles = {
         alignItems: "center",
         borderColor: "#76A6DC",
         margin: 10,
-        width: "85%",
+        width: "90%",
         // paddingTop: 90,
         outlineWidth: 0,
         fontColor: "#979797",
-        fontSize: 12,
-    }
+        fontSize: "0.9rem",
+    },
+
 }
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -69,7 +71,7 @@ class Input extends React.Component<InputProps> {
     }
 
     render() {
-        const { onSubmit, ariaLabel, type, style, error, clearable, ...rest } = this.props
+        const { onSubmit, ariaLabel, type, style, error,clearable, ...rest } = this.props
         return (
             <div
                 style={Object.assign({ ...styles.container }, style || {})}
@@ -78,7 +80,7 @@ class Input extends React.Component<InputProps> {
                     style={styles.input}
                 >
                     <Style scopeSelector='.my-input::placeholder' rules={{
-                        color: 'red'
+                        color: '#7F8184'
                     }} />
                     <input
                         {...rest}
@@ -91,7 +93,8 @@ class Input extends React.Component<InputProps> {
                         style={{
                             border: "none",
                             outline: "none",
-                            flex: 1,
+                            fontSize: "1rem",
+                            flex: 1,  
                         }}
                     />
                     {clearable ? (

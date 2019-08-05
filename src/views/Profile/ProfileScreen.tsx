@@ -208,14 +208,14 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                         <div style={{
                             display: "flex",
                             flexDirection: "row",
-                            margin: 15,
-                            marginBottom: 25,
+                            margin: "0.7rem 0rem 1rem 0rem",
                             width: "100%",
                             justifyContent: "center",
+                            fontFamily: "Raleway"
                         }}>
-                            <NavElem to="/home/scan" icon="">Scan du <br></br> QR Code</NavElem>
-                            <NavElem to="/home/input" icon="">Saisie <br></br> Manuelle</NavElem>
-                            <NavElem to="/home/history" icon="">Mes dernières <br></br> places</NavElem>
+                            <NavElem to="/home/scan" src="" border>Scan du <br></br> QR Code</NavElem>
+                            <NavElem to="/home/input" src="" border>Saisie <br></br> Manuelle</NavElem>
+                            <NavElem to="/home/history" src="" border>Mes dernières <br></br> places</NavElem>
                         </div>
                         <HeaderCard fname={fname} name={name} id={id} />
                         <Route path="/home/scan" render={() =>

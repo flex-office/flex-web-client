@@ -23,7 +23,7 @@ export default {
   },
   container: {
     alignItems: "center",
-    width: 130,
+    width: "10rem",
     backgroundColor: "#568AC4",
     borderRadius: 7,
     cursor: "pointer",
@@ -32,7 +32,7 @@ export default {
     flexDirection: "row" as "row",
     justifyContent: "space-around",
     margin: 10,
-    fontSize: 12,
+    fontSize: "1.1rem",
     padding : 6
    
   },
