@@ -35,6 +35,16 @@ export default {
   buttonTouchable: {
     padding: 16
   },
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    display: "flex",
+    flexDirection: "column" as "column",
+    justifyContent: "flex-start",
+    alignItems: "stretch",
+    maxWidth: "100%",
+    marginTop: "1.5rem",
+  },
   scrollViewContainer: {
     flex: 1,
     backgroundColor: "white",
@@ -42,45 +52,44 @@ export default {
     flexDirection: "column"
   },
   viewContainer: {
-    alignItems: "center",
+    alignItems: "stretch",
     alignSelf: "center",
+    maxWidth: "20rem",
     width: "85%",
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "center",
     elevation: 2,
-    // height: 100,
-    padding: 10,
+    padding: "0.7rem",
+    marginBottom: "1rem",
+    // padding: 10,
   },
-
   viewContainerRemote: {
     alignItems: "center",
     display: "flex",
-
-    
     flexDirection: "column" as "column",
     justifyContent: "space-between",
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: "0.7rem",
+    paddingRight: "0.7rem",
+    maxWidth: "25rem",
     shadowColor: "#468BB6",
     shadowOffset: { height: 1, width: 0 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
   },
   viewContainerSemiFlex: {
-    
-   
-    justifyContent: "space-between",
+    marginTop: "2rem",
+    justifyContent: "space-evenly",
     alignItems: "center",
     borderRadius: 7,
-    
     flexDirection: "column" as "column",
     display: "flex",
-    padding: 10,
+    // flex: 1,
+    // padding: 10,
   },
   remoteText: {
     color: "#568AC4",
-    fontFamily: "Raleway",
-    fontSize: "0.9rem",
+    fontFamily: "Roboto",
+    fontSize: "1.1rem",
     margin: 10,
     width: "85%",
     display: "flex",
@@ -94,12 +103,17 @@ export default {
   },
   semiFlexText: {
     width: "40%",
-    padding: 5,
+    // padding: 5,
     marginBottom: 0,
     fontFamily: "Raleway",
     color: " #568AC4",
     fontSize: "0.9rem",
-   textAlign: "right" as "right"
+    textAlign: "right" as "right"
+  },
+  semiFlexInput: {
+    flex: 1,
+    fontSize: "1rem",
+    marginLeft: "0.3rem",
   },
   input: {
     height: 40,
@@ -111,52 +125,50 @@ export default {
     color: "#979797",
     borderColor: "#979797",
     borderRadius: 4,
-    maxWidth: 80,
-    margin: 7,
+    // minWidth: "20%",
+    maxWidth: "20%",
+    margin: "0.6rem",
+    marginRight: "0.3rem",
+    marginLeft: "0.3rem",
     marginTop: 0,
     flex: 1,
     display: "flex",
     justifyContent: "center",
-    fontSize: "0.7rem",
-    paddingLeft: 8,
-    paddingRight: 8,
-    padding: 4
-
+    fontSize: "0.9rem",
+    padding: "0.3rem",
+    paddingLeft: "2.7rem",
+    paddingRight: "2.7rem",
   },
   buttonSelected: {
     color: "white",
     border: "none",
     backgroundColor: "#568AC4",
-    
-
   },
   semiFlexRow: {
     alignItems: "center",
     flexDirection: "column" as "column",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     display: "flex",
     flex: 1,
     flexWrap: "wrap" as "wrap",
-    width: "85%"
+    // width: "85%"
   },
   semiFlexButton: {
     alignItems: 'center',
-    // alignSelf: 'stretch',
     backgroundColor: ' #568AC4',
     borderRadius: 5,
-    flex: 1,
+    // flex: 1,
     justifyContent: 'center',
-    width: 130,
-        padding: 4,
-        border: "none",
-        marginTop: "0.5rem",
-  
+    // width: 130,
+    padding: "0.4rem",
+    paddingLeft: "2rem",
+    paddingRight: "2rem",
+    border: "none",
+    marginTop: "0.5rem",
   },
   semiFlexButtonText: {
     flex: 1,
     color: "white",
     fontSize: "0.9rem",
-  
-    
   },
 }

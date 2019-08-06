@@ -58,6 +58,7 @@ const profileStyles = {
   text: {
     fontWeight: 600,
     marginRight: 5,
+    fontSize: "1.2rem",
   },
 }
 
@@ -66,7 +67,7 @@ export const ProfileDescription = (props: { name: any, fname: any, id: any }) =>
   return (
     <div style={{ maxWidth: "1000px" }}>
       <div style={profileStyles.row}>
-        {name} {fname}
+        {fname} {name.toUpperCase()}
       </div>
     </div>
   );
@@ -170,11 +171,11 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
       this.setState({
         // map Trouve index du jour
         remoteDayIndexes: (!days) ? [] :
-        (days.map) ? days.map(
-          x => WEEK_DAYS.findIndex(
-            e => e === x
-          )
-        ) : [WEEK_DAYS.findIndex(e => e === days)],
+          (days.map) ? days.map(
+            x => WEEK_DAYS.findIndex(
+              e => e === x
+            )
+          ) : [WEEK_DAYS.findIndex(e => e === days)],
         place: ""
       });
       const userId = JSON.parse(result).id;
@@ -284,70 +285,69 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
     const { remoteDayIndexes, name, fname, id, photo, loadingSave, startDate, endDate } = this.state;
 
     return (
-      <div style={{
-        flex: 1,
-        backgroundColor: "white",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        maxWidth: "100%",
-      }}>
+      <div style={styles.container}>
         <div style={styles.viewContainer}>
           <ModalComponent visible={loadingSave} ctx={this} />
           <img
-          style={
-            photo
-              ? {
-                width: 45,
-                height: 45,
-                borderRadius: 35,
-              }
-              : {
-                width: 45,
-                height: 45,
-              }
-          }
-          src={photo ? photo : defaultProfile}
-        />
-        <div style={{
-          margin: 10,
-        }}>
-        <ProfileDescription name={name} fname={fname} id={id} />
-          <FilePicker
-            type="image/jpeg"
-            onChange={async image => {
-              if (image) {
-                await this.setState({ photo: image });
-                this.saveRemote();
-              }
-            }}
-          >
-          <button style={{
-            background: "#76A6DC",
-            borderRadius: 7,
-            border: "none",
-            color: "white",
-            fontSize: "0.6rem",
-            padding: 2,
-            width : 170,
-            cursor: "pointer"
-          }}>Importer une photo de profil</button>
-          </FilePicker>
-        </div>
-          
+            style={
+              photo
+                ? {
+                  width: "1rem",
+                  height: "1rem",
+                  borderRadius: 35,
+                }
+                : {
+                  width: "4rem",
+                  height: "4rem",
+                }
+            }
+            src={photo ? photo : defaultProfile}
+          />
+          <div style={{
+            marginLeft: "0.6rem",
+            marginTop: "0.24rem",
+            marginBottom: "0.24rem",
+            flex: 1,
+            display: "flex",
+            flexDirection: "column" as "column",
+            justifyContent: "space-between",
+          }}>
+            <ProfileDescription name={name} fname={fname} id={id} />
+            <FilePicker
+              type="image/jpeg"
+              onChange={async image => {
+                if (image) {
+                  await this.setState({ photo: image });
+                  this.saveRemote();
+                }
+              }}
+            >
+              <button style={{
+                flex: 1,
+                background: "#76A6DC",
+                borderRadius: 7,
+                border: "none",
+                color: "white",
+                fontSize: "0.9rem",
+                padding: 2,
+                width: 170,
+                cursor: "pointer"
+              }}>Importer une photo de profil</button>
+            </FilePicker>
+          </div>
+
         </div>
 
-       <DeconnectionButton
-            onPress={() => {
-              // LogOut current user
-              this.props.logOut("");
-              localStorage.removeItem("USER");
-              this.props.history.push("/login")
-            }}
-          />
-    
-        
+        <DeconnectionButton
+          onPress={() => {
+            // LogOut current user
+            this.props.logOut("");
+            localStorage.removeItem("USER");
+            this.props.history.push("/login")
+          }}
+        />
+
+
         <div style={styles.viewContainerRemote}>
           <div style={styles.remoteText}>Télétravail </div>
           <ButtonGroup
@@ -367,7 +367,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
                 onClick={() => this.updateIndex(i)}
                 key={i}
                 outline
-                style={Object.assign({...styles.button}, (remoteDayIndexes.includes(i)) ? styles.buttonSelected : {})}
+                style={Object.assign({ ...styles.button }, (remoteDayIndexes.includes(i)) ? styles.buttonSelected : {})}
               >
                 {day}
               </Button>)}
@@ -379,32 +379,34 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
             <div style={{
               display: "flex",
               flexDirection: "row",
-              justifyContent: "flex-end",
-              width: "100%"
+              justifyContent: "space-between",
+              width: "100%",
             }}>
               <div style={styles.semiFlexText}>Absent/e du</div>
               <Input
                 onChange={e => this.setState({ startDate: e.target.value })}
                 onSubmit={() => this.saveRemote()}
-                placeholder="DD.MM.YYYY"
+                placeholder="DD/MM/AAAA"
                 value={startDate}
-                style={{padding: 0, margin: 0, width: "60%"}}
+                style={styles.semiFlexInput}
                 clearable
               />
             </div>
             <div style={{
               display: "flex",
               flexDirection: "row",
-              justifyContent: "flex-end",
-              width: "100%"
+              justifyContent: "space-between",
+              width: "100%",
+              marginTop: "0.5rem",
+              marginBottom: "1.2rem",
             }}>
               <div style={styles.semiFlexText}>au</div>
               <Input
                 onChange={e => this.setState({ endDate: e.target.value })}
                 onSubmit={() => this.saveRemote()}
-                placeholder="DD.MM.YYYY"
+                placeholder="DD/MM/AAAA"
                 value={endDate}
-                style={{padding: 0, margin: 0, marginBottom: 5, width: "60%"}}
+                style={styles.semiFlexInput}
                 clearable
               />
             </div>

@@ -26,17 +26,17 @@ const DeconnectionButton = (props: { onPress: () => any }) => {
       onClick={onPress}
       style={{
         backgroundColor: ' #568AC4',
-        width: 130,
-        padding: 4,
+        // width: 130,
+        padding: "0.4rem",
+        paddingLeft: "0.7rem",
+        paddingRight: "0.7rem",
         border: "none",
         borderRadius: 7,
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-around"
+        // justifyContent: "space-around"
       }}
-    
     >
-    
       <div style={{
         fontFamily: 'Raleway',
         color: 'white',

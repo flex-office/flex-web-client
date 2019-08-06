@@ -44,11 +44,12 @@ class ProfileImage extends Component<ProfileImageProps> {
 
   render() {
     const { photo } = this.props;
+    console.log("kek", photo)
 
     return (
       <img
         src={
-          photo === ""
+          !photo
             ? picProfile
             : photo
         }

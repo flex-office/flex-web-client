@@ -94,7 +94,7 @@ class Input extends React.Component<InputProps> {
                             border: "none",
                             outline: "none",
                             fontSize: "1rem",
-                            flex: 1,  
+                            flex: 1,
                         }}
                     />
                     {clearable ? (

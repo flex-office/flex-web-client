@@ -22,7 +22,7 @@ export default class FilePicker extends React.Component<FilePickerProps> {
 
     render() {
         return (
-            <div style={{ cursor: "pointer" }} onClick={() => this.inputRef.current.click()}>
+            <div style={{ cursor: "pointer", display: "flex" }} onClick={() => this.inputRef.current.click()}>
                 <input
                     onChange={this.handleChange}
                     ref={this.inputRef}

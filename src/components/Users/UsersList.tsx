@@ -40,10 +40,21 @@ export default class UsersList extends React.Component<UsersListProps> {
 
     isRemote = x => x.includes(this.getWeekDay())
 
+    getDisplayDate = x => moment(x).format("DD.MM.YYYY")
+
+    getAbsentMessage = x => `Absent jusqu'au ${this.getDisplayDate(x.end_date)}`
+
+    listStrings = x => `${x.slice(0, -1).join(", ")} et ${x[x.length - 1]}`
+
+    getRemoteDays = x => (x <= 1) ? x[0]
+                            : this.listStrings(x.map(x => x.toLowerCase()))
+
+    getRemoteMessage = x => `Télétravail : ${this.getRemoteDays(x.remoteDay)}`
+
     getStatus(user) {
         if (user.id_place) return user.id_place
-        if (user.start_date && user.end_date && moment().isBetween(user.start_date, user.end_date)) return "Absent"
-        if (this.isRemote(user.remoteDay)) return "Télétravail"
+        if (user.start_date && user.end_date && moment().isBetween(user.start_date, user.end_date)) return this.getAbsentMessage(user)
+        if (this.isRemote(user.remoteDay)) return this.getRemoteMessage(user)
         return ""
     }
 
