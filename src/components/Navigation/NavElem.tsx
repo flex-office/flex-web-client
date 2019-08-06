@@ -1,26 +1,21 @@
-import React from "react";
+import React from "react"
 import { NavLink } from 'react-router-dom'
 import Icon from "react-fontawesome"
 
 const styles = {
     navLink: {
-        alignItems: "center",
-        color: "#7F8184",
-        display: "flex",
-        flex: 1,
-        flexDirection: "column",
-        justifyContent: "space-around",
-        height: "100%",
+        width: "100%",
+        alignSelf: "center",
+        color: "#979797",
         textAlign: "center",
-        fontSize: "0.9rem",
-        textDecoration: "none",
-        fontFamily: "Raleway",
+
     },
 }
 
 interface NavElemProps {
     to: string
     src: string
+    unactiveSrc?: string
     exact?: boolean
     border?: boolean
 }
@@ -28,16 +23,40 @@ interface NavElemProps {
 export default class NavElem extends React.Component<NavElemProps> {
     render() {
         const {border} = this.props
-        
+        console.log('lol', this.props.src)
         return (
+            <div style={{
+                display: "flex", 
+                flexDirection: "column",
+                fontFamily: "Raleway",
+                fontSize: "0.8rem",
+                flex: 1,
+                // color: "#3662A0",
+            }}>
+           
+            {(this.props.src || this.props.unactiveSrc) ?
+            <NavLink to={this.props.to}
+                exact={this.props.exact}
+                style={Object.assign({
+                    height: "1.9rem",
+                    background: `url(${this.props.unactiveSrc}) no-repeat 50%`,
+                }, styles.navLink)}
+                activeStyle={{
+                    textDecoration: "none",
+                    background: `url(${this.props.src}) no-repeat 50%`,
+                    textColor: "#979797",
+                }}
+            >
+            </NavLink>
+            : null}
             <NavLink to={this.props.to}
                 exact={this.props.exact}
                 style={styles.navLink}
                 activeStyle={Object.assign({
-                    color: "#3662A0",
                     textDecoration: "none",
+                    color: "#3662A0",
                 }, (border) ? {
-                    borderBottom: "solid #3662A0" as "solid #3662A0",
+                    borderBottom: "solid" as "solid",
                     borderWidth: 1.5,
                     textDecoration: "none",
                     paddingBottom: "0.4rem",
@@ -45,10 +64,9 @@ export default class NavElem extends React.Component<NavElemProps> {
                     fontWeight: 600,
                 } : {})}
             >
-                {(this.props.src) ? <img style={{height: "1.7rem"}} src={this.props.src} alt=""/> : null}
-                
                 {this.props.children}
             </NavLink>
+            </div>
         )
     }
 }

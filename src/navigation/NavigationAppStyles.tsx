@@ -10,7 +10,6 @@ export default {
         flex: 1,
         overflow: "hidden",
         position: "fixed" as "fixed",
-        padding: 6,
         width: "100%",
         zIndex: 100,
         
@@ -20,7 +19,8 @@ export default {
         fontSize: "0.9rem",
         flexDirection: "row",
         justifyContent: "space-around",
-        marginTop: 5,
+        alignItems: "center",
+        height: "3.8rem",
         
     },
     navApp: {

@@ -222,6 +222,7 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                     margin: "0.8rem 0.7rem 1.5rem 0rem",
                     width: "100%",
                     justifyContent: "center",
+                    fontFamily: "Raleway"
                    
                 }}>
                     <NavElem to="/users/favorites" src="" border>Favoris</NavElem>

@@ -16,7 +16,8 @@ limitations under the License.
 export default {
   view_second: {
     alignSelf: "center",
-    padding: "0.3rem"
+    padding: "0.3rem",
+    paddingTop: "0.8rem"
 
   
   },

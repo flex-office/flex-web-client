@@ -40,9 +40,15 @@ import NavElem from "../components/Navigation/NavElem";
 import styles from "./NavigationAppStyles"
 
 
+import myPlaceActive from "../assets/Ma_place_bleue.svg"
+import foundPlaceActive from "../assets/Trouver_place_bleue.svg"
+import userActive from "../assets/Utilisateurs_bleue.svg"
+
 import myPlaceUnactive from "../assets/Ma_place_grise.svg"
 import foundPlaceUnactive from "../assets/Trouver_place_grise.svg"
 import userUnactive from "../assets/Utilisateurs_grise.svg"
+
+
 
 const store = createStore(reducer, devToolsEnhancer());
 
@@ -53,13 +59,13 @@ export class NavBar extends React.Component {
         <div style={styles.navBar}>
           <Nav style={styles.nav} navbar justify="true">
             <NavItem>
-              <NavElem to="/home" src={myPlaceUnactive}>Ma place</NavElem>
+              <NavElem to="/home" src={myPlaceActive} unactiveSrc={myPlaceUnactive}>Ma place</NavElem>
             </NavItem>
             <NavItem>
-              <NavElem to="/places" src={foundPlaceUnactive}>Trouver une place</NavElem>
+              <NavElem to="/places" src={foundPlaceActive} unactiveSrc={foundPlaceUnactive}>Trouver une place</NavElem>
             </NavItem>
             <NavItem>
-              <NavElem to="/users" src={userUnactive}>Utilisateurs</NavElem>
+              <NavElem to="/users" src={userActive} unactiveSrc={userUnactive}>Utilisateurs</NavElem>
             </NavItem>
           </Nav>
         </div>

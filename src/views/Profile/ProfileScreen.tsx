@@ -208,7 +208,6 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                         <div style={{
                             display: "flex",
                             flexDirection: "row",
-                            margin: "0.7rem 0rem 1rem 0rem",
                             width: "100%",
                             justifyContent: "center",
                             fontFamily: "Raleway"

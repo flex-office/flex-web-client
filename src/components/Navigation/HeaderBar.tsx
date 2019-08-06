@@ -17,7 +17,7 @@ const styles = {
         flex: 1,
         flexDirection: "row" as "row",
         height: "4rem",
-        justifyContent: "space-around",
+        justifyContent: "space-between",
         overflow: "hidden",
         position: "fixed" as "fixed",
         top: 0,
@@ -29,6 +29,7 @@ const styles = {
         color: "#568AC4",
         fontFamily: "Raleway",
         fontSize: "1.2rem",
+        textAlign: "center" as "center",
         fontWeight: "bold" as "bold",
     }
 }
@@ -66,7 +67,7 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
                             alt="logo"
                             style={{
                                 height: "1.5rem",
-                                margin: 10,
+                                // paddingLeft: "1rem"
                             }}
                         /> : <div />}
                     <div style={styles.text}>
@@ -78,6 +79,9 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
                         <Link to="/settings"
                             onClick={() => {
                                 fetchUserPhoto();
+                            }}
+                            style={{
+                                // paddingRight: "1rem"
                             }}
                         >
                             <ProfileImage />
