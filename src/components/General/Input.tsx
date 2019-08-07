@@ -19,7 +19,7 @@ const styles = {
         flexDirection: "column" as "column",
         alignItems: "center",
         borderColor: "#76A6DC",
-        margin: 10,
+        // margin: 10,
         width: "90%",
         // paddingTop: 90,
         outlineWidth: 0,

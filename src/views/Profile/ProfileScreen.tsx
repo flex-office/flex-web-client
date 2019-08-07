@@ -19,18 +19,42 @@ interface LeaveComponentProps {
     place: string
     leavePlace: any
     showMessage: boolean
+    name: string
+    fname: string
 }
 
 export class LeaveComponent extends React.Component<LeaveComponentProps> {
     render() {
-        const { place, leavePlace, showMessage } = this.props;
+        const { place, leavePlace, showMessage, name, fname } = this.props;
 
         return (
             <div style={styles.leave_button}>
-                {(showMessage) ?
-                    <div style={{ color: "#7F8184" }}>Votre place a bien été réservée !</div>
+                <HeaderCard fname={fname} name={name} />
+                <div style={{
+                    display: "flex",
+                    flexDirection: "column" as "column",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    height: "6rem",
+                }}>
+                    <div style={{
+                        color: "#468BB6",
+                        fontFamily: "Raleway",
+                        fontWeight: "bold",
+                        fontSize: "1.2rem",
+                    }}>
+                        Place {place}
+                    </div>
+                    {(showMessage) ?
+                    <div style={{
+                        color: "#7F8184",
+                        fontSize: "1.3rem",
+                    }}>
+                        Votre place a bien été réservée !
+                    </div>
                     : null}
-                <LeaveButton place={place} onPress={() => leavePlace()} />
+                </div>
+                <LeaveButton onPress={() => leavePlace()} />
             </div>
         );
     }
@@ -82,6 +106,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         if (!user) this.props.history.push("/login")
         else {
             const result = JSON.parse(user);
+            console.log("kek", result)
             if (result.place || result.pool)
                 this.state.socket.emit('checkPlace', result.id, result.place, config._id);
             await this.setState(result);
@@ -128,8 +153,8 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                 isWrongFormatPlace: false
             });
             this.state.socket.emit('joinRoom', placeText);
+            this.setState({ recentlyOccupied: true, historical: this.state.historical.concat([{id_place: placeText}]) })
             localStorage.setItem("USER", JSON.stringify(omit(this.exclude, this.state)))
-            this.setState({ recentlyOccupied: true })
             this.props.history.push("/home/leave")
             this.setState({ isScanning: false })
             return true
@@ -189,7 +214,6 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         const {
             fname,
             name,
-            id,
             isWrongFormatPlace,
             place,
             placeInput,
@@ -201,7 +225,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             <div style={styles.view}>
                 <Switch>
                     <Route path="/home/leave" render={() =>
-                        <LeaveComponent place={place} leavePlace={this.leavePlace} showMessage={recentlyOccupied} />
+                        <LeaveComponent name={name} fname={fname} place={place} leavePlace={this.leavePlace} showMessage={recentlyOccupied} />
                     }
                     />
                     <Route>
@@ -216,7 +240,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                             <NavElem to="/home/input" src="" border>Saisie <br></br> Manuelle</NavElem>
                             <NavElem to="/home/history" src="" border>Mes dernières <br></br> places</NavElem>
                         </div>
-                        <HeaderCard fname={fname} name={name} id={id} />
+                        <HeaderCard fname={fname} name={name} />
                         <Route path="/home/scan" render={() =>
                             <QRCodeComponent onRead={this.onRead} />
                         }

@@ -1,6 +1,5 @@
 import React from "react"
 import { NavLink } from 'react-router-dom'
-import Icon from "react-fontawesome"
 
 const styles = {
     navLink: {
@@ -23,17 +22,16 @@ interface NavElemProps {
 export default class NavElem extends React.Component<NavElemProps> {
     render() {
         const {border} = this.props
-        console.log('lol', this.props.src)
+
         return (
             <div style={{
-                display: "flex", 
+                display: "flex",
                 flexDirection: "column",
                 fontFamily: "Raleway",
                 fontSize: "0.8rem",
                 flex: 1,
                 // color: "#3662A0",
             }}>
-           
             {(this.props.src || this.props.unactiveSrc) ?
             <NavLink to={this.props.to}
                 exact={this.props.exact}

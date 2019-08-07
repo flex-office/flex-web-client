@@ -397,7 +397,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
               flexDirection: "row",
               justifyContent: "space-between",
               width: "100%",
-              marginTop: "0.5rem",
+              marginTop: "0.1rem",
               marginBottom: "1.2rem",
             }}>
               <div style={styles.semiFlexText}>au</div>

@@ -15,25 +15,20 @@ limitations under the License.
 */
 import React from "react";
 import styles from "./styles/FetchPlacesButtonStyles";
-import Icon from "react-fontawesome"
 
 const FetchPlacesButton = (props: { onPress: () => void }) => {
   const { onPress } = props;
   return (
     <div style={styles.view}>
       <div onClick={onPress} style={styles.container}>
-      
         <div
           style={{
             color: "white",
             fontFamily: "Raleway",
             // fontWeight: 500,
-            
           }}
         >Rechercher</div>
       </div>
-
-      
     </div>
   );
 };
