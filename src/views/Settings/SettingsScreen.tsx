@@ -133,17 +133,6 @@ interface SettingsScreenProps {
 }
 
 export class SettingsScreen extends Component<SettingsScreenProps, SettingsScreenState> {
-  static navigationOptions = {
-    title: "Profile",
-    headerTintColor: "black",
-    tabBarIcon: () => (
-      <img
-        src={picProfile}
-        style={{ width: "1rem", height: "1rem" }}
-      />
-    )
-  };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -189,9 +178,12 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
         .then(res => res.json()) // transform data to json
         .then(data => {
           this.setState({
+            photo: data.photo,
             historical: data.historical,
             loadingSave: false
           });
+          const user = JSON.parse(localStorage.getItem("USER") || "")
+          localStorage.setItem("USER", JSON.stringify(Object.assign({...user}, {photo: data.photo})))
           this.getUserPlace(userId)
         });
     }

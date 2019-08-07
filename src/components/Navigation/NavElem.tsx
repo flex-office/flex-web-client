@@ -8,7 +8,6 @@ const styles = {
         alignSelf: "center",
         color: "#979797",
         textAlign: "center",
-
     },
 }
 
@@ -46,6 +45,7 @@ export default class NavElem extends React.Component<NavElemProps> {
                 activeStyle={{
                     textDecoration: "none",
                     background: `url(${this.props.src}) no-repeat 50%`,
+                    pointerEvents: "none",
                     textColor: "#979797",
                 }}
             >

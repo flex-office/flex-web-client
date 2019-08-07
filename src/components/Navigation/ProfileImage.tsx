@@ -61,7 +61,7 @@ class ProfileImage extends Component<ProfileImageProps> {
             : {
                 width: "2.2rem",
                 height: "2.2rem",
-                borderRadius: "0.7rem",
+                borderRadius: "1rem",
               }
         }
       />
