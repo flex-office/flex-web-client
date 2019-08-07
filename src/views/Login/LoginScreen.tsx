@@ -139,7 +139,7 @@ class CompleteView extends React.Component<CompleteViewProps, CompleteViewState>
                         style={{
                             paddingTop: 5,
                             paddingBottom: 5,
-                            backgroundColor: "#76A6DC",
+                            backgroundColor: "#E64417",
                             fontSize: "1.1rem",
                         }}
                     >
@@ -377,7 +377,7 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
                         alignItems: "center",
                         justifyContent: "center",
                     }}>
-                        <img src={logo} style={{width: "8%"}} alt="logo" />
+                        <img src={logo} style={{width: "40%"}} alt="logo" />
                     </div>
                     <div style={styles.view_second}>
                         {(secondDone) ?

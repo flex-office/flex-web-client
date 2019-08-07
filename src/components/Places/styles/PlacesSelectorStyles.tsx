@@ -28,7 +28,7 @@ export default {
     backgroundColor: "green",
     shadowOpacity: 0.4,
     shadowRadius: 2,
-    shadowColor: "#3662A0",
+    shadowColor: "#1B3F7B",
     shadowOffset: { height: 1, width: 0 },
     borderRadius: 17.5,
     padding: 10,

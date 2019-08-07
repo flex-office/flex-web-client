@@ -2,7 +2,7 @@ export default {
     navBar: {
         alignSelf: "flex-end",
         backgroundColor: "white",
-        borderTopColor: "#3662A0",
+        borderTopColor: "#1B3F7B",
         borderTopStyle: "solid" as "solid",
         borderTopWidth:2 ,
         bottom: 0,

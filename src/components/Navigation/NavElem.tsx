@@ -54,7 +54,7 @@ export default class NavElem extends React.Component<NavElemProps> {
                 style={styles.navLink}
                 activeStyle={Object.assign({
                     textDecoration: "none",
-                    color: "#3662A0",
+                    color: "#1B3F7B",
                 }, (border) ? {
                     borderBottom: "solid" as "solid",
                     borderWidth: 1.5,

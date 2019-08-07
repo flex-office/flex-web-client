@@ -24,17 +24,16 @@ const DeconnectionButton = (props: { onPress: () => any }) => {
   >
     <button
       onClick={onPress}
+      
       style={{
-        backgroundColor: ' #568AC4',
-        // width: 130,
-        padding: "0.4rem",
-        paddingLeft: "0.7rem",
-        paddingRight: "0.7rem",
+        backgroundColor: '#568AC4',
+        width: "10rem",
+        padding: 4,
         border: "none",
         borderRadius: 7,
         display: "flex",
         alignItems: "center",
-        // justifyContent: "space-around"
+        justifyContent: "space-around"
       }}
     >
       <div style={{

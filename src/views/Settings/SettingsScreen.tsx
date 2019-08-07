@@ -292,13 +292,16 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
             style={
               photo
                 ? {
-                  width: "1rem",
-                  height: "1rem",
-                  borderRadius: 35,
+                  width: "2.2rem",
+                height: "2.2rem",
+                borderRadius: "50%",
+                objectFit: "cover"
                 }
                 : {
-                  width: "4rem",
-                  height: "4rem",
+                  width: "2.2rem",
+                height: "2.2rem",
+                borderRadius: "50%",
+                objectFit: "cover"
                 }
             }
             src={photo ? photo : defaultProfile}
