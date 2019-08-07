@@ -38,7 +38,7 @@ export default {
     backgroundColor: "white",
     borderColor: "#7F8184",
     borderWidth: 1,
-    color: " #568AC4",
+    color: " #5B75A0",
     fontFamily: "Raleway",
     display: "flex",
     flex: 1,

@@ -53,7 +53,7 @@ const profileStyles = {
     fontFamily: "Raleway",
     display: "flex",
     alignItems: "center",
-    color: "#568AC4",
+    color: "#5B75A0",
   },
   text: {
     fontWeight: 600,
@@ -327,7 +327,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
             >
               <button style={{
                 flex: 1,
-                background: "#76A6DC",
+                background: "#5B75A0",
                 borderRadius: 7,
                 border: "none",
                 color: "white",

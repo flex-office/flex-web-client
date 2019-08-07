@@ -56,7 +56,7 @@ class UsersScreenSearch extends React.Component<UsersScreenSearchProps, UsersScr
                 </div>
                 {/* <FindPlacesCard users={getUsers} /> */}
                 {!loading ? (
-                <div style={{ alignSelf: "center", width: "80%" }}>
+                <div style={{ alignSelf: "center", width: "80%", maxWidth: 700 }}>
                     {search !== "" && users !== [] && users.length > 0 ? (
                     <UsersList
                         users={users}
@@ -69,7 +69,7 @@ class UsersScreenSearch extends React.Component<UsersScreenSearchProps, UsersScr
                 </div>
                 ) : (
                 <div style={styles.spinner}>
-                    <Spinner style={{ marginTop: 40, color: "#2E89AD" }}/>
+                    <Spinner style={{ marginTop: "0.5rem", color: "#E64417" }}/>
                 </div>
                 )}
             </div>

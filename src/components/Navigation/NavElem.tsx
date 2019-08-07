@@ -1,5 +1,6 @@
 import React from "react"
 import { NavLink } from 'react-router-dom'
+import Radium, { Style } from "radium"
 
 const styles = {
     navLink: {
@@ -32,6 +33,9 @@ export default class NavElem extends React.Component<NavElemProps> {
                 flex: 1,
                 // color: "#3662A0",
             }}>
+            <Style scopeSelector='a:hover' rules={{
+                textDecoration: "none"
+            }} />
             {(this.props.src || this.props.unactiveSrc) ?
             <NavLink to={this.props.to}
                 exact={this.props.exact}

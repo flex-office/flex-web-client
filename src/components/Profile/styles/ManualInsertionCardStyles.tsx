@@ -24,7 +24,7 @@ export default {
     height: "60vh"
   },
   button: {
-    backgroundColor: "#568AC4",
+    backgroundColor: "#5B75A0",
     borderRadius: 7,
     border: "none",
     width: "11rem",

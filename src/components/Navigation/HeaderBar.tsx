@@ -7,20 +7,13 @@ import { Link } from 'react-router-dom'
 const styles = {
     container: {
         alignItems: "center",
-        // alignSelf: "flex-start",
-        borderBottomStyle: "solid" as "solid",
-        borderBottomWidth: 2,
-        borderColor: "#1B3F7B",
-        // // borderImage: "linear-gradient(to right, #58C0D0, #468BB6, #3662A0)",
-        // borderImageSlice: 1,
+       
         display: "flex",
-        // flex: 1,
-        // flexDirection: "row" as "row",
+        
         height: "4rem",
         justifyContent: "space-between",
-        // overflow: "hidden",
         position: "fixed" as "fixed",
-        // top: 0,
+        maxWidth: 900,
         width: "100%",
         // zIndex: 100,
         background: "white",
@@ -58,7 +51,13 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
     render() {
         const { showLogo, showProfilePic, title } = this.props
         return (
-            <div style={{ height: "4.5rem"}}>
+            <div style={{ 
+                height: "4.5rem",
+            display: "flex",
+            justifyContent: "center",
+            borderBottom: "2px solid" as "2px solid",
+            borderBottomColor: "#1B3F7B"
+            }}>
                 <div style={styles.container}>
                     {/* Header Left */}
                     {(showLogo) ?
@@ -67,16 +66,22 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
                             alt="logo"
                             style={{
                                 width: "6.1rem",
-                                paddingLeft: "2rem",
-                                 
+                                paddingLeft: "2rem",                               
                             }}
                         /> : <div />}
                     <div style={styles.text}>
                         {title}
                     </div>
-<div style={{ display: "flex", justifyContent: "flex-end", width: "6.1rem", paddingRight: "2rem"}}>
+                 
                     {/* Header Right */}
-                    {(showProfilePic) ?
+                    {(showProfilePic) ?    
+                         <div 
+                        style={{ 
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        width: "6.1rem", 
+                        paddingRight: "2rem"
+                    }}>    
                         <Link to="/settings"
                             onClick={() => {
                                 fetchUserPhoto();
@@ -84,10 +89,10 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
                             
                         >
                             <ProfileImage />
-                        </Link> : <div />}
+                        </Link>    </div>: <div />}
 
 </div>
-                </div>
+             
             </div>
         )
     }

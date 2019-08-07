@@ -22,7 +22,7 @@ export default {
   
   },
   text_first: {
-    color: "#568AC4",
+    color: "#5B75A0",
     fontFamily: "Raleway",
     fontSize: "1.5rem",
     margin: 0,

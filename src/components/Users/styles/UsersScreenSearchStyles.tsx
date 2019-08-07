@@ -5,7 +5,7 @@ export default {
         flex: 1,
         flexDirection: "column" as "column",
         justifyContent: "flex-start",
-        
+        alignSelf: "stretch"
         
     },
     search: {
@@ -17,14 +17,13 @@ export default {
     },
     searchButton: {
         alignItems: "center",
-        backgroundColor: "#568AC4",
+        backgroundColor: "#5B75A0",
         color: "white",
         borderRadius: 7,
         border: "none",
         margin: "1.4rem",
         padding : 6,
         fontSize:"1rem",
-        fontWeight: 600,
         width : "9rem",
         fontFamily: "Raleway",
         height: "2.3rem"

@@ -34,7 +34,7 @@ const styles = {
         marginLeft: "auto",
     },
     text: {
-        color: "#568AC4",
+        color: "#5B75A0",
         fontSize: "1rem",
         fontWeight: 600,
     }

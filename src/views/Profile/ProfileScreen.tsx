@@ -106,7 +106,6 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         if (!user) this.props.history.push("/login")
         else {
             const result = JSON.parse(user);
-            console.log("kek", result)
             if (result.place || result.pool)
                 this.state.socket.emit('checkPlace', result.id, result.place, config._id);
             await this.setState(result);
@@ -234,7 +233,9 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                             flexDirection: "row",
                             width: "100%",
                             justifyContent: "center",
-                            fontFamily: "Raleway"
+                            fontFamily: "Raleway",
+                            maxWidth: 900,
+                            alignSelf: "center"
                         }}>
                             <NavElem to="/home/scan" src="" border>Scan du <br></br> QR Code</NavElem>
                             <NavElem to="/home/input" src="" border>Saisie <br></br> Manuelle</NavElem>

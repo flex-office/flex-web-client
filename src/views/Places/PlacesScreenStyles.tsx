@@ -41,7 +41,7 @@ export default {
 		textAlign: "center" as "center",
 		fontSize: "1.1rem",
 		fontFamily: "Raleway",
-		color: " #568AC4",
+		color: " #5B75A0",
     marginBottom: 10,
     fontWeight: 600,
     justifyContent: "center"

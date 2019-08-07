@@ -41,19 +41,22 @@ export default class UsersScreenFavorites extends React.Component<UsersScreenFav
             >
                 Rechercher
             </button>
-                {!loading ? (
+            {!loading ? (
+                <div style={{ alignSelf: "center", width: "80%", maxWidth: 700 }}>
+                    
                 <UsersList
                     users={users}
                     search={search}
                     onClick={removeFriend}
                     isFriend={() => true}
-                />
+                />  </div>
                 ) : (
                 <div style={styles.spinner}>
-                    <Spinner style={{ marginTop: 40, color: "#2E89AD" }}/>
+                    <Spinner style={{ margin: "1rem", color: "#E64417" }}/>
                 </div>
                 )}
-        </div>
+                </div>
+      
                
             </div>
         )
