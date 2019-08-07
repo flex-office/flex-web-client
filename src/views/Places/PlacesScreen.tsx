@@ -106,7 +106,7 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
         const side = placesConfig.buildings[selectedBuildingIndex].sideIndexUpper[selectedSideIndex];
         const reg = new RegExp(`${buildingCode}-${floor}-${zoneCode}-${side}\\d{2}`)
 
-        return places.filter(place => reg.test(place.id));
+        return places.filter(place => reg.test(place.id) && !place.using);
     };
 
     handleOnClickItem = place => {

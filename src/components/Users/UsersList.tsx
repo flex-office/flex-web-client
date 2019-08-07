@@ -2,6 +2,8 @@ import React from "react"
 import ListPlaces from "../../components/Users/ListPlaces"
 import ListItem from "../../components/Users/ListItem"
 import profileDefaultPic from "../../assets/profile.png";
+import fullStar from "../../assets/Etoile_pleine.png";
+import emptyStar from "../../assets/Etoile_vide.png";
 import moment from "moment"
 // import { isDeclareModuleExports } from "@babel/types";
 
@@ -82,8 +84,14 @@ export default class UsersList extends React.Component<UsersListProps> {
                                 subtitle={this.getStatus(item)}
                                 containerStyle={{ margin: 0, padding: 5 }}
                                 titleStyle={{ fontFamily: "Raleway" }}
+                                subtitleStyle={{
+                                    fontFamily: "Raleway",
+                                    color: "#979797",
+                                    fontSize: "0.9rem",
+                                }}
                                 rightIcon={{
-                                    name: "star",
+                                    source: emptyStar,
+                                    sourceFa: fullStar,
                                     fa: isFriend(item),
                                     color: "#2E89AD"
                                 }}

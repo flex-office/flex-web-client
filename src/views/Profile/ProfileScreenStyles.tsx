@@ -21,7 +21,6 @@ export default {
     flex: 1,
     flexDirection: "column" as "column",
     width: "100%",
-   
   },
   view_third: {
     borderRadius: 4,
@@ -66,7 +65,7 @@ export default {
     display: "flex",
     flex: 1,
     height: "100%",
-    justifyContent: "center",
+    justifyContent: "space-around",
     flexDirection: "column" as "column",
   },
 };

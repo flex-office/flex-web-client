@@ -16,12 +16,12 @@ limitations under the License.
 import React from "react";
 import styles from "./styles/HeaderCardStyles";
 
-const HeaderCard = (props: { fname: string, name: string, id: string }) => {
-  const { fname, name, id } = props;
+const HeaderCard = (props: { fname: string, name: string }) => {
+  const { fname, name } = props;
   return (
     <div style={styles.view_second}>
       <h4 style={styles.text_first}>
-        {name} {fname}
+        {fname} {name.toUpperCase()}
       </h4>
     </div>
   );

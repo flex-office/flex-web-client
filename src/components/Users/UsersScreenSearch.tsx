@@ -1,6 +1,5 @@
 import React from "react"
 import { withRouter } from "react-router-dom"
-import Icon from "react-fontawesome"
 import { Spinner } from "reactstrap"
 import Input from "../../components/General/Input"
 import UsersList from "../../components/Users/UsersList"

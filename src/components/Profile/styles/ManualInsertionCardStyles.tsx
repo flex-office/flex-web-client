@@ -1,5 +1,3 @@
-import { relative } from "path";
-
 /*
 Copyright 2019-2020 BRED Banque Populaire
 
@@ -24,8 +22,6 @@ export default {
     flexDirection: "column" as "column",
     display: "flex",
     height: "60vh"
-    
-    
   },
   button: {
     backgroundColor: "#568AC4",
@@ -33,7 +29,6 @@ export default {
     border: "none",
     width: "11rem",
     height: "2.7rem",
-    
   },
   text: {
     color: "white",
