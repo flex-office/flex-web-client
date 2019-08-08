@@ -24,7 +24,7 @@ export default {
   container: {
     alignItems: "center",
     width: "10rem",
-    backgroundColor: "#5B75A0",
+    backgroundColor: "#295CB3",
     borderRadius: 7,
     cursor: "pointer",
     display: "flex",

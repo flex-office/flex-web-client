@@ -87,7 +87,7 @@ export default {
     // padding: 10,
   },
   remoteText: {
-    color: "#5B75A0",
+    color: "#295CB3",
     fontFamily: "Roboto",
     fontSize: "1.1rem",
     margin: 10,
@@ -106,7 +106,7 @@ export default {
     // padding: 5,
     marginBottom: 0,
     fontFamily: "Raleway",
-    color: " #5B75A0",
+    color: " #295CB3",
     fontSize: "0.9rem",
     textAlign: "right" as "right"
   },
@@ -142,7 +142,7 @@ export default {
   buttonSelected: {
     color: "white",
     border: "none",
-    backgroundColor: "#5B75A0",
+    backgroundColor: "#295CB3",
   },
   semiFlexRow: {
     alignItems: "center",
@@ -155,7 +155,7 @@ export default {
   },
   semiFlexButton: {
     alignItems: 'center',
-    backgroundColor: ' #5B75A0',
+    backgroundColor: ' #295CB3',
     borderRadius: 5,
     // flex: 1,
     justifyContent: 'center',

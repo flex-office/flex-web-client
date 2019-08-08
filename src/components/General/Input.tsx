@@ -5,7 +5,7 @@ const styles = {
     input: {
         borderWidth: 0,
         borderBottomWidth: 1,
-        borderColor: "#5B75A0",
+        borderColor: "#295CB3",
         borderStyle: "solid",
         alignSelf: "stretch",
         fontFamily: "Raleway",
@@ -102,7 +102,7 @@ class Input extends React.Component<InputProps> {
                         <span
                             style={{
                                 cursor: "pointer",
-                                color: "#5B75A0",
+                                color: "#295CB3",
                             }}
                             onClick={() => this.inputRef.current.value = ""}
                         >

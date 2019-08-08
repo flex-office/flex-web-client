@@ -3,7 +3,7 @@ import React, { ButtonHTMLAttributes } from "react"
 const styles = {
     button: {
         fontFamily: "Raleway",
-        backgroundColor: "#5B75A0",
+        backgroundColor: "#295CB3",
         borderRadius: 9,
         border: 0,
         color: "white",

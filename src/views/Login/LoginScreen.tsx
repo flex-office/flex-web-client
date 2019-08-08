@@ -377,7 +377,7 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
                         alignItems: "center",
                         justifyContent: "center",
                     }}>
-                        <img src={logo} style={{width: "40%"}} alt="logo" />
+                        <img src={logo} style={{width: "40%", maxWidth: 200}} alt="logo" />
                     </div>
                     <div style={styles.view_second}>
                         {(secondDone) ?

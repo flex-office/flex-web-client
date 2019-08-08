@@ -17,7 +17,7 @@ export default {
     },
     searchButton: {
         alignItems: "center",
-        backgroundColor: "#5B75A0",
+        backgroundColor: "#295CB3",
         color: "white",
         borderRadius: 7,
         border: "none",

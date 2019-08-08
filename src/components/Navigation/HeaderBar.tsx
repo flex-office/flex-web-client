@@ -10,7 +10,7 @@ const styles = {
         display: "flex",
         height: "4rem",
         justifyContent: "space-between",
-        maxWidth: 900,
+        maxWidth: 800,
         width: "100%",
         // zIndex: 100,
     },
