@@ -7,16 +7,12 @@ import { Link } from 'react-router-dom'
 const styles = {
     container: {
         alignItems: "center",
-
         display: "flex",
-
         height: "4rem",
         justifyContent: "space-between",
-        position: "fixed" as "fixed",
         maxWidth: 900,
         width: "100%",
         // zIndex: 100,
-        background: "white",
     },
     text: {
         color: "#1B3F7B",
@@ -53,10 +49,16 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
         return (
             <div style={{
                 height: "4.5rem",
+            }}>
+            <div style={{
                 display: "flex",
                 justifyContent: "center",
                 borderBottom: "2px solid" as "2px solid",
-                borderBottomColor: "#1B3F7B"
+                borderBottomColor: "#1B3F7B",
+                position: "fixed" as "fixed",
+                background: "white",
+                width: "100%",
+                zIndex: 100,
             }}>
                 <div style={styles.container}>
                     {/* Header Left */}
@@ -91,6 +93,7 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
                             </Link>
                         </div> : <div />}
                 </div>
+            </div >
             </div >
         )
     }
