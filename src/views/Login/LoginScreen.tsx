@@ -387,7 +387,17 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
                         : <SendVerifView onValidate={this.firstStage}/>
                         }
                     </div>
-                    <div style={{flex: 1}}/>
+                    <div
+                    style= {{
+                        color: "#979797",
+                        fontFamily: "Raleway",
+                        fontSize: "0.8rem",
+                        textAlign: "center",
+                        marginBottom: "1rem",
+                        marginTop: "5rem"
+                    }}
+                    >Version O.1.O</div>
+                    
                 </div>
             </div>
         );
