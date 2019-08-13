@@ -1,6 +1,6 @@
 import React from "react"
 import { NavLink } from 'react-router-dom'
-import Radium, { Style } from "radium"
+import { Style } from "radium"
 
 const styles = {
     navLink: {
