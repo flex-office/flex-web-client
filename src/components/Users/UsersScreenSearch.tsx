@@ -57,7 +57,7 @@ class UsersScreenSearch extends React.Component<UsersScreenSearchProps, UsersScr
                 {/* <FindPlacesCard users={getUsers} /> */}
                 {!loading ? (
                 <div style={{ alignSelf: "center", width: "80%", maxWidth: 700 }}>
-                    {search !== "" && users !== [] && users.length > 0 ? (
+                    {search !== "" && users !== [] && users.length > 0 && (
                     <UsersList
                         users={users}
                         search={search}
@@ -65,7 +65,7 @@ class UsersScreenSearch extends React.Component<UsersScreenSearchProps, UsersScr
                         onClick={item => item.isFriend ? removeFriend(item) : addFriend(item)}
                         isFriend={item => item.isFriend}
                     />
-                    ) : null}
+                    )}
                 </div>
                 ) : (
                 <div style={styles.spinner}>

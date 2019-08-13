@@ -21,6 +21,7 @@ export default class FilePicker extends React.Component<FilePickerProps> {
     }
 
     render() {
+        const { children } = this.props
         return (
             <div style={{ cursor: "pointer", display: "flex" }} onClick={() => this.inputRef.current.click()}>
                 <input
@@ -30,7 +31,7 @@ export default class FilePicker extends React.Component<FilePickerProps> {
                     accept={this.props.type}
                     type="file"
                 />
-                {this.props.children}
+                {children}
             </div>
         )
     }

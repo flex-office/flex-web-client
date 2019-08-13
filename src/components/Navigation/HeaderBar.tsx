@@ -62,7 +62,7 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
             }}>
                 <div style={styles.container}>
                     {/* Header Left */}
-                    {(showLogo) ?
+                    {(showLogo) &&
                         <img
                             src={logo}
                             alt="logo"
@@ -70,13 +70,13 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
                                 width: "6.1rem",
                                 paddingLeft: "2rem",
                             }}
-                        /> : <div />}
+                        />}
                     <div style={styles.text}>
                         {title}
                     </div>
 
                     {/* Header Right */}
-                    {(showProfilePic) ?
+                    {(showProfilePic) &&
                         <div
                             style={{
                                 display: "flex",
@@ -91,7 +91,7 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
                             >
                                 <ProfileImage />
                             </Link>
-                        </div> : <div />}
+                        </div>}
                 </div>
             </div >
             </div >

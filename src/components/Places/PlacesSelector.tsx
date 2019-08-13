@@ -60,8 +60,7 @@ class PlacesSelector extends React.Component<PlacesSelectorProps, PlacesSelector
             onClick={() => onPress(i)}
             key={i}
             active={i === selectedIndex}
-            // style={Object.assign({...styles.button}, (i === selectedIndex) ? styles.buttonSelected : {})}
-          >
+           >
             <span style={{verticalAlign: "middle"}}>{button}</span>
           </DropdownItem>)}
         </DropdownMenu>

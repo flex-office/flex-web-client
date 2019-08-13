@@ -45,14 +45,13 @@ export class LeaveComponent extends React.Component<LeaveComponentProps> {
                     }}>
                         Place {place}
                     </div>
-                    {(showMessage) ?
+                    {(showMessage) &&
                     <div style={{
                         color: "#7F8184",
                         fontSize: "1.3rem",
                     }}>
                         Votre place a bien été réservée !
-                    </div>
-                    : null}
+                    </div>}
                 </div>
                 <LeaveButton onPress={() => leavePlace()} />
             </div>
@@ -121,20 +120,14 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         }
     }
 
-    takePlace = async place => {
-        if (!this.state.place) {
-            if (await this.insertPlace(place)) return true
-            return false
-        }
-        return false
-    }
+    takePlace = async place => !this.state.place && await this.insertPlace(place)
 
     redirect() {
         const { place, historical } = this.state
         const pathname = this.props.location.pathname
 
         if (pathname !== "/home") return
-        const goTo = x => (x !== pathname) ? this.props.history.push(x) : {}
+        const goTo = x => (x !== pathname) && this.props.history.push(x)
 
         if (place) goTo("/home/leave")
         else if (historical && historical.length > 0) goTo("/home/history")
@@ -259,9 +252,9 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                             <History historical={historical} takePlace={this.takePlace} />
                         }
                         />
-                        {isWrongFormatPlace ? (
+                        {isWrongFormatPlace && (
                             <p style={styles.debug}>Mauvais format de place</p>
-                        ) : null}
+                        )}
                     </Route>
                 </Switch>
             </div>

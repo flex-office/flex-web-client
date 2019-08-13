@@ -68,11 +68,11 @@ export default class UsersList extends React.Component<UsersListProps> {
 
         return (
             <div style={{ alignSelf: "stretch", width: "100%" }}>
-                {users !== [] && users.length > 0 ? (
+                {users !== [] && users.length > 0 && (
                 <ListPlaces
                     handleList={this._handleList()}
                     build={item =>
-                        item && filterItem(item) ? (
+                        item && filterItem(item) && (
                         <div
                             key={item.id}
                             onClick={() => onClick(item)}
@@ -107,10 +107,9 @@ export default class UsersList extends React.Component<UsersListProps> {
                             />
                             {/* </Card> */}
                         </div>
-                        ) : null
-                    }
+                        )}
                 />
-                ) : null}
+                )}
             </div>
         )
     }

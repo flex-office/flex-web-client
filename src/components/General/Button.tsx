@@ -20,13 +20,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export default class Button extends React.Component<ButtonProps> {
 
     render() {
-        const { style, ...rest } = this.props
+        const { style, children, ...rest } = this.props
         return (
             <button
                 {...rest}
                 style={Object.assign({...styles.button}, style)}
             >
-                {this.props.children}
+                {children}
             </button>
         )
     }

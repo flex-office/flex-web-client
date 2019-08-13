@@ -44,7 +44,7 @@ export default class ListItem extends React.Component<ListItemProps> {
     render() {
         const {title, subtitleStyle, titleStyle, containerStyle, subtitle, rightIcon, leftAvatar, bottomDivider} = this.props
         return (
-            <div style={Object.assign({...styles.container}, Object.assign({...containerStyle}, (bottomDivider) ? styles.dividerStyle : {}))}>
+            <div style={Object.assign({...styles.container}, Object.assign({...containerStyle}, (bottomDivider) && styles.dividerStyle ))}>
                 <img src={leftAvatar.source} style={Object.assign({...styles.image}, leftAvatar.imageStyle)} alt="profile"/>
                 <div style={{marginLeft: 10}}>
                     <div style={Object.assign({...styles.text}, titleStyle)}>{title}</div>

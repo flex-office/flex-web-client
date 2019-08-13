@@ -98,7 +98,7 @@ class Input extends React.Component<InputProps> {
                             flex: 1,
                         }}
                     />
-                    {clearable ? (
+                    {clearable && (
                         <span
                             style={{
                                 cursor: "pointer",
@@ -108,9 +108,9 @@ class Input extends React.Component<InputProps> {
                         >
                             X
                     </span>
-                    ) : <div />}
+                    )}
                 </div>
-                {error ? this.errorView(error) : <div />}
+                {error && this.errorView(error)}
             </div>
         )
     }

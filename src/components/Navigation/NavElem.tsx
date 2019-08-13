@@ -35,7 +35,7 @@ export default class NavElem extends React.Component<NavElemProps> {
             <Style scopeSelector='a:hover' rules={{
                 textDecoration: "none"
             }} />
-            {(this.props.src || this.props.unactiveSrc) ?
+            {(this.props.src || this.props.unactiveSrc) &&
             <NavLink to={this.props.to}
                 exact={this.props.exact}
                 style={Object.assign({
@@ -49,22 +49,21 @@ export default class NavElem extends React.Component<NavElemProps> {
                     textColor: "#979797",
                 }}
             >
-            </NavLink>
-            : null}
+            </NavLink>}
             <NavLink to={this.props.to}
                 exact={this.props.exact}
                 style={styles.navLink}
                 activeStyle={Object.assign({
                     textDecoration: "none",
                     color: "#1B3F7B",
-                }, (border) ? {
+                }, (border) && {
                     borderBottom: "solid" as "solid",
                     borderWidth: 1.5,
                     textDecoration: "none",
                     paddingBottom: "0.4rem",
                     pointerEvents: "none",
                     fontWeight: 600,
-                } : {})}
+                })}
             >
                 {this.props.children}
             </NavLink>

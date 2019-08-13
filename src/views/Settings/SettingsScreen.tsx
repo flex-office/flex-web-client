@@ -362,7 +362,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
                 onClick={() => this.updateIndex(i)}
                 key={i}
                 outline
-                style={Object.assign({ ...styles.button }, (remoteDayIndexes.includes(i)) ? styles.buttonSelected : {})}
+                style={Object.assign({ ...styles.button }, (remoteDayIndexes.includes(i)) && styles.buttonSelected)}
               >
                 {day}
               </Button>)}
