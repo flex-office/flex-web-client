@@ -111,12 +111,11 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-## CI / CD
+## Continuous Deployment
 
-This project uses **Gitlab CI / CD**.   
-The deployment process is triggered when we update the master branch.
-The Gitlab CI is started and the docker image is build and **pushed to DockerHub** (https://hub.docker.com/r/bredfactory/flexoffice). 
-Then, the image is pulled from **Azure** and deployed on an **App Service**.
+<p align="center">
+  <img width="500" src="./assets/CD.png">
+</p>
 
 ## Project structure
 
@@ -138,39 +137,12 @@ Then, the image is pulled from **Azure** and deployed on an **App Service**.
 │   │   └── profile.png
 │   ├── components          <- List of Components
 │   │   ├── General
-│   │   │   └── Input.tsx
 │   │   ├── Login
-│   │   │   ├── InputLogin.tsx
-│   │   │   └── LoginButton.tsx
 │   │   ├── Navigation
-│   │   │   ├── HeaderBar.tsx
-│   │   │   ├── NavElem.tsx
-│   │   │   ├── ProfileImage.tsx
-│   │   │   └── reducer.ts
 │   │   ├── Places
-│   │   │   ├── EmptyResult.tsx
-│   │   │   ├── FetchPlacesButton.tsx
-│   │   │   ├── PlaceItem.tsx
-│   │   │   ├── PlacesList.tsx
-│   │   │   ├── PlacesSelector.tsx
-│   │   │   ├── ZoneCard.tsx
-│   │   │   └── styles
 │   │   ├── Profile
-│   │   │   ├── HeaderCard.tsx
-│   │   │   ├── LeaveButton.tsx
-│   │   │   ├── ManualInsertionCard.tsx
-│   │   │   ├── QRCodeComponent.tsx
-│   │   │   └── styles
 │   │   ├── Settings
-│   │   │   ├── DeconnectionButton.tsx
-│   │   │   └── styles
 │   │   └── Users
-│   │       ├── ListItem.tsx
-│   │       ├── ListPlaces.tsx
-│   │       ├── UsersList.tsx
-│   │       ├── UsersScreenFavorites.tsx
-│   │       ├── UsersScreenSearch.tsx
-│   │       └── styles
 │   ├── config             <- Main configuration
 │   │   ├── api.json
 │   │   ├── places.json
@@ -192,17 +164,9 @@ Then, the image is pulled from **Azure** and deployed on an **App Service**.
 │       │   ├── LoginScreen.tsx
 │       │   └── LoginScreenStyles.tsx
 │       ├── Places
-│       │   ├── PlacesScreen.tsx
-│       │   └── PlacesScreenStyles.tsx
 │       ├── Profile
-│       │   ├── ProfileScreen.tsx
-│       │   └── ProfileScreenStyles.tsx
 │       ├── Settings
-│       │   ├── SettingsScreen.tsx
-│       │   └── SettingsScreenStyles.tsx
 │       └── Users
-│           ├── UsersScreen.tsx
-│           └── UsersScreenStyles.tsx
-├── tsconfig.json
+├── tsconfig.json           <- Typescript configuration
 └── yarn.lock
 ```
