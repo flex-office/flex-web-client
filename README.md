@@ -114,7 +114,7 @@ Instead, it will copy all the configuration files and the transitive dependencie
 ## Continuous Deployment
 
 <p align="center">
-  <img width="500" src="./assets/CD.png">
+  <img width="800" src="./assets/CD.png">
 </p>
 
 ## Project structure
