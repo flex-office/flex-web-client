@@ -1,8 +1,8 @@
 import React from "react"
 import { append, filter } from "ramda";
 import { withRouter } from "react-router-dom"
-import config from "../../config/api.json";
-import server from "../../config/server.json";
+import config from "../../config/api.js";
+import server from "../../config/server.js";
 import UsersScreenSearch from "../../components/Users/UsersScreenSearch"
 import UsersScreenFavorites from "../../components/Users/UsersScreenFavorites"
 import NavElem from "../../components/Navigation/NavElem"

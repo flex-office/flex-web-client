@@ -1,8 +1,8 @@
 import React from "react"
 import PlacesList from "../../components/Places/PlacesList"
 import { withRouter } from "react-router-dom"
-import server from "../../config/server.json";
-import config from "../../config/api.json";
+import server from "../../config/server.js";
+import config from "../../config/api.js";
 import { Spinner } from "reactstrap"
 
 interface HistoryProps {

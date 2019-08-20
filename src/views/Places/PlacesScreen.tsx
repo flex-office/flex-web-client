@@ -1,8 +1,8 @@
 import React from "react"
 import moment from "moment"
 import { withRouter } from "react-router-dom"
-import config from "../../config/api.json";
-import server from "../../config/server.json";
+import config from "../../config/api.js";
+import server from "../../config/server.js";
 import placesConfig from "../../config/places.json";
 import PlacesList from "../../components/Places/PlacesList"
 import PlacesSelector from "../../components/Places/PlacesSelector"

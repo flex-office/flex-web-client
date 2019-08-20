@@ -18,9 +18,9 @@ Make sure you have filled your API environment files by editing the ```.env``` f
 
 In Flex Client, be sure to have four files in the `config` directory :
 
-`server.json` , `api.json` , `regex.json` , `places.json`
+`server.js` , `api.js` , `regex.js` , `places.json`
 
-Fill in your server address in `server.json` file :
+Fill in your server address in `server.js` file :
 
 ```
 {
@@ -31,7 +31,7 @@ Fill in your server address in `server.json` file :
 
 You'll add also the access token provided by Heroku :
 
-Fill in your api credentials in `api.json` file :
+Fill in your api credentials in `api.js` file :
 
 ```
 {
@@ -44,7 +44,7 @@ Fill in your api credentials in `api.json` file :
 
 (For android deployment use ```10.0.2.2``` for the host)
 
-Fill in your regexes in `regex.json` file :
+Fill in your regexes in `regex.js` file :
 
 ```
 {
@@ -144,10 +144,10 @@ Instead, it will copy all the configuration files and the transitive dependencie
 │   │   ├── Settings
 │   │   └── Users
 │   ├── config             <- Main configuration
-│   │   ├── api.json
+│   │   ├── api.js
 │   │   ├── places.json
-│   │   ├── regex.json
-│   │   └── server.json
+│   │   ├── regex.js
+│   │   └── server.js
 │   ├── index.css
 │   ├── index.tsx
 │   ├── install.ts

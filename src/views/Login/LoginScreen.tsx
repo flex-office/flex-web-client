@@ -1,8 +1,8 @@
 import React from "react"
 import { withRouter } from "react-router-dom"
-import server from "../../config/server.json";
-import config from "../../config/api.json";
-import regex from "../../config/regex.json";
+import server from "../../config/server.js";
+import config from "../../config/api.js";
+import regex from "../../config/regex.js";
 import styles from "./LoginScreenStyles";
 import logo from "../../assets/logo.png";
 import HeaderBar from "../../components/Navigation/HeaderBar";
