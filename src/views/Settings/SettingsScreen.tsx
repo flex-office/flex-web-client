@@ -22,8 +22,8 @@ import { withRouter } from "react-router-dom"
 
 import { connect } from "react-redux";
 import { assoc, omit } from "ramda";
-import config from "../../config/api.json";
-import server from "../../config/server.json";
+import config from "../../config/api.js";
+import server from "../../config/server.js";
 import picProfile from "../../assets/profile.png";
 
 import moment from "moment"
