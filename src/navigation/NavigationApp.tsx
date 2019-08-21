@@ -48,6 +48,7 @@ import myPlaceUnactive from "../assets/Ma_place_grise.svg"
 import foundPlaceUnactive from "../assets/Trouver_place_grise.svg"
 import userUnactive from "../assets/Utilisateurs_grise.svg"
 
+import { BrowserRouter as Router, Redirect, Switch } from "react-router-dom";
 
 
 const store = createStore(reducer, devToolsEnhancer());
@@ -114,6 +115,10 @@ export class NavigationApp extends React.Component<NavigationAppProps, Navigatio
           <Route path="/settings" render={() =>
             <SettingsScreen setTitle={this.setTitle}/>
           }/>
+          <Route>
+            <Redirect to="/home"/>
+          </Route>
+          
         </div>
         <NavBar/>
       </div>
