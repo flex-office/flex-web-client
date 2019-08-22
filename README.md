@@ -3,7 +3,7 @@
 </p>
 
 <a href="https://www.browserstack.com">
-    <img src="browserstack-logo-600x315.png" alt="BrowserStack" />
+    <img src="assets/browserstack-logo-600x315.png" alt="BrowserStack" />
 </a>
 
 We also use [BrowserStack](https://www.browserstack.com) to help us verify that the frontend works in all of our supported browsers. Thanks, BrowserStack!
