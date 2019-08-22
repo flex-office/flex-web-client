@@ -17,7 +17,8 @@ limitations under the License.
 /* eslint-disable */
 import React, { Component } from "react";
 import { Button, ButtonGroup, Modal } from "reactstrap"
-import { Spinner } from "react-activity"
+//import { Spinner } from "react-activity"
+import { Spinner } from "reactstrap"
 import { withRouter } from "react-router-dom"
 
 import { connect } from "react-redux";
@@ -122,7 +123,8 @@ type SettingsScreenState = {
   remoteDayIndexes: Array<number>
   loadingSave: boolean
   progress: any
-  userPlace: string
+  userPlace: string,
+  change: boolean
 };
 
 interface SettingsScreenProps {
@@ -146,7 +148,8 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
       progress: 0,
       userPlace: null,
       startDate: "",
-      endDate: ""
+      endDate: "",
+      change: false,
     };
     props.setTitle("Profil")
   }
@@ -180,7 +183,8 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
           this.setState({
             photo: data.photo,
             historical: data.historical,
-            loadingSave: false
+            loadingSave: false,
+            change: false
           });
           const user = JSON.parse(localStorage.getItem("USER") || "")
           localStorage.setItem("USER", JSON.stringify(Object.assign({...user}, {photo: data.photo})))
@@ -217,12 +221,13 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
     const newIndexes = (this.state.remoteDayIndexes.includes(i)) ? this.removeDay(i) : this.addDay(i)
     if (newIndexes.length > 2) return
     await this.setState({ remoteDayIndexes: newIndexes, remoteDay: newIndexes.map(x => WEEK_DAYS[x]) })
-    this.saveRemote()
+    // this.saveRemote()
+    this.setState({ change: true })
   }
 
   saveRemote = async () => {
     const { id, photo, remoteDay, startDate, endDate } = this.state;
-    // this.setState({ loadingSave: true });
+    this.setState({ loadingSave: true });
 
     const payload = {
       id_user: id,
@@ -268,13 +273,19 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
             )
           );
 
-          this.setState({ loadingSave: false });
+          this.setState({ loadingSave: false, change: this.state.change ? false : true });
         });
     }, 3000);
+    console.log('save')
   };
 
+ showAlert()
+{
+  alert("Vos modifications ont bien été prises en compte !");
+};
+
   render() {
-    const { remoteDayIndexes, name, fname, id, photo, loadingSave, startDate, endDate } = this.state;
+    const { remoteDayIndexes, name, fname, id, photo, loadingSave, startDate, endDate, change } = this.state;
 
     return (
       <div style={styles.container}>
@@ -312,8 +323,8 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
               type="image/jpeg"
               onChange={async image => {
                 if (image) {
-                  await this.setState({ photo: image });
-                  this.saveRemote();
+                  await this.setState({ photo: image, change: true });
+                  // this.saveRemote();
                 }
               }}
             >
@@ -379,7 +390,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
             }}>
               <div style={styles.semiFlexText}>Absent/e du</div>
               <Input
-                onChange={e => this.setState({ startDate: e.target.value })}
+                onChange={e => this.setState({ startDate: e.target.value, change: true })}
                 onSubmit={() => this.saveRemote()}
                 placeholder="DD/MM/AAAA"
                 value={startDate}
@@ -397,7 +408,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
             }}>
               <div style={styles.semiFlexText}>au</div>
               <Input
-                onChange={e => this.setState({ endDate: e.target.value })}
+                onChange={e => this.setState({ endDate: e.target.value, change: true })}
                 onSubmit={() => this.saveRemote()}
                 placeholder="DD/MM/AAAA"
                 value={endDate}
@@ -406,12 +417,20 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
               />
             </div>
           </div>
-          <button
-            style={styles.semiFlexButton}
-            onClick={() => this.saveRemote()}
-          >
-            <div style={styles.semiFlexButtonText}>Enregistrer</div>
-          </button>
+            {!loadingSave ? (
+              <button
+                style={{ backgroundColor: change ? '#295CB3'  :'grey', ...styles.semiFlexButton}}
+                onClick={() => change ? this.saveRemote() : null}
+              >
+                <div style={styles.semiFlexButtonText}
+                 >Enregistrer
+                </div>
+              </button>
+            ) : (
+              <div style={styles.spinner}>
+                <Spinner style={{ margin: "1rem", color: "#E64417" }}/>
+              </div>
+            )}
         </div>
 
         {/* For future purpose */}
@@ -438,3 +457,6 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withRouter(SettingsScreen));
+
+
+

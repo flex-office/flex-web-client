@@ -43,8 +43,6 @@ class CompleteView extends React.Component<CompleteViewProps, CompleteViewState>
 
     validateID = x => x.match(regex.idRegex) !== null
 
-    
-
     onSubmit = async () => {
         const {id, name, fname, photo} = this.state
         const {email} = this.props
@@ -52,6 +50,7 @@ class CompleteView extends React.Component<CompleteViewProps, CompleteViewState>
         this.setState({errorID: "", errorName: "", errorFname: ""})
         if (!id || !this.validateID(id))
             return this.setState({errorID: "ID invalide"})
+            console.log(regex.idRegex)
         if (!name)
             return this.setState({errorName: "Veuillez saisir votre nom"})
         if (!fname)
@@ -226,7 +225,7 @@ class SendVerifView extends React.Component<SendVerifViewProps, SendVerifViewSta
     }
 
     validate = async (email) => {
-        if (!(/@bred.fr$/.test(email))) return false
+        if (/*!(/@bred.fr$/.test(email))*/ false) return false
         const payload = {
             email
         }

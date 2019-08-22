@@ -155,7 +155,6 @@ export default {
   },
   semiFlexButton: {
     alignItems: 'center',
-    backgroundColor: ' #295CB3',
     borderRadius: 5,
     // flex: 1,
     justifyContent: 'center',
@@ -171,4 +170,10 @@ export default {
     color: "white",
     fontSize: "0.9rem",
   },
+  spinner: {
+    alignItems: "center",
+    backgroundColor: "white",
+    flex: 1,
+    justifyContent: "center",
+}
 }
