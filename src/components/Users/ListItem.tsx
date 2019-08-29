@@ -49,6 +49,7 @@ export default class ListItem extends React.Component<ListItemProps> {
                 <div style={{marginLeft: 10}}>
                     <div style={Object.assign({...styles.text}, titleStyle)}>{title}</div>
                     <div style={Object.assign({...styles.text}, subtitleStyle)}>{subtitle}</div>
+                    
                 </div>
                 <img src={(rightIcon.fa) ? rightIcon.sourceFa : rightIcon.source} style={Object.assign({...styles.image}, styles.imageRight)} alt="star"/>
                 {/* <span className={((rightIcon.fa) ? "fa" : "far") + " fa-" + rightIcon.name} style={{ flex: 1, display: "flex", justifyContent: "flex-end", color: rightIcon.color }}/> */}

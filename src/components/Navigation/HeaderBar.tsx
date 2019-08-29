@@ -20,6 +20,7 @@ const styles = {
         fontSize: "1.2rem",
         textAlign: "center" as "center",
         fontWeight: "bold" as "bold",
+        width : "100%"
     }
 }
 

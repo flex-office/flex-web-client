@@ -47,10 +47,10 @@ export default class UsersList extends React.Component<UsersListProps> {
     getAbsentMessage = x => `Absent jusqu'au ${this.getDisplayDate(x.end_date)}`
 
     listStrings = x => `${x.slice(0, -1).join(", ")} et ${x[x.length - 1]}`
-
+    
     getRemoteDays = x => (x <= 1) ? x[0]
                             : this.listStrings(x.map(x => x.toLowerCase()))
-
+                            
     getRemoteMessage = x => `Télétravail : ${this.getRemoteDays(x.remoteDay)}`
 
     getStatus(user) {
@@ -65,6 +65,7 @@ export default class UsersList extends React.Component<UsersListProps> {
         const filterItem = this.props.filterItem || (() => true)
         const onClick = this.props.onClick || (() => true)
         const isFriend = this.props.isFriend || (() => false)
+
 
         return (
             <div style={{ alignSelf: "stretch", width: "100%" }}>

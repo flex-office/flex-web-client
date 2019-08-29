@@ -33,6 +33,7 @@ interface UsersScreenProps {
 class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
     _isMounted = false;
 
+
     constructor(props) {
         super(props);
         this.state = {

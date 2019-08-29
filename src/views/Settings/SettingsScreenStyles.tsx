@@ -105,6 +105,7 @@ export default {
     width: "40%",
     // padding: 5,
     marginBottom: 0,
+    marginRight: "2rem",
     fontFamily: "Raleway",
     color: " #295CB3",
     fontSize: "0.9rem",
