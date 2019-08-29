@@ -15,7 +15,7 @@ limitations under the License.
 */
 // @flow
 /* eslint-disable */
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Button, ButtonGroup, Modal } from "reactstrap"
 //import { Spinner } from "react-activity"
 import { Spinner } from "reactstrap"
@@ -37,6 +37,20 @@ import DeconnectionButton from "../../components/Settings/DeconnectionButton";
 import Input from "../../components/General/Input";
 import FilePicker from "../../components/General/FilePicker";
 
+
+// import {
+//   DatePicker,
+//   MuiPickersUtilsProvider,
+// } from "@material-ui/pickers";
+
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  DatePicker,
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+
 import { fetchPhoto, logOut } from "../../components/Navigation/reducer";
 
 import defaultProfile from "../../assets/profile.png"
@@ -48,7 +62,6 @@ type Historical = {
   begin: string,
   end: string
 };
-
 const profileStyles = {
   row: {
     fontFamily: "Raleway",
@@ -118,13 +131,15 @@ type SettingsScreenState = {
   debug?: Array<any> | string,
   remoteDay?: Array<string>,
   arrayOfFriends: Array<any>
-  startDate: string
-  endDate: string
+  startDate: any
+  endDate: any
   remoteDayIndexes: Array<number>
   loadingSave: boolean
   progress: any
-  userPlace: string,
+  userPlace: string
   change: boolean
+  selectedStartDate: any
+  selectedEndDate: any
 };
 
 interface SettingsScreenProps {
@@ -147,13 +162,32 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
       loadingSave: false,
       progress: 0,
       userPlace: null,
-      startDate: "",
-      endDate: "",
+      startDate: new Date(),
+      endDate: new Date(),
       change: false,
+      selectedStartDate: new Date(),
+      selectedEndDate: new Date()
+
+
+      // const [selectedDate, setSelectedDate] = React.useState<Date | null>(
+      //   new Date('2014-08-18T21:11:54'),
     };
     props.setTitle("Profil")
   }
 
+  handleDateChange = (selectedStartDate) => {
+    this.setState({
+      startDate: selectedStartDate,
+      change : true
+    });
+  }
+  handleEndDateChange = (selectedEndDate) => {
+    console.log(selectedEndDate)
+    this.setState({
+      endDate: selectedEndDate,
+      change : true
+    }); 
+  }
   componentDidMount() {
     const result = localStorage.getItem("USER")
     if (!result) this.props.history.push("/login")
@@ -206,8 +240,8 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
         if (data) {
           this.setState({
             userPlace: data,
-            startDate: moment(data.start_date).format("DD/MM/YYYY"),
-            endDate: moment(data.end_date).format("DD/MM/YYYY")
+            startDate: moment(data.start_date).format("dd/MM/yyyy"),
+            endDate: moment(data.end_date).format("dd/MM/yyyy")
           });
         }
       });
@@ -231,7 +265,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
 
     const payload = {
       id_user: id,
-      photo: photo.substring(23),
+      photo: photo,
       remoteDay,
       startDate,
       endDate
@@ -284,9 +318,10 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
   alert("Vos modifications ont bien été prises en compte !");
 };
 
+
   render() {
     const { remoteDayIndexes, name, fname, id, photo, loadingSave, startDate, endDate, change } = this.state;
-
+    console.log(this.state.selectedEndDate)
     return (
       <div style={styles.container}>
         <div style={styles.viewContainer}>
@@ -379,6 +414,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
               </Button>)}
           </ButtonGroup>
         </div>
+  
 
         <div style={styles.viewContainerSemiFlex}>
           <div style={styles.semiFlexRow}>
@@ -387,16 +423,23 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
               flexDirection: "row",
               justifyContent: "space-between",
               width: "100%",
+              alignItems: "baseline"
             }}>
               <div style={styles.semiFlexText}>Absent/e du</div>
-              <Input
-                onChange={e => this.setState({ startDate: e.target.value, change: true })}
-                onSubmit={() => this.saveRemote()}
-                placeholder="DD/MM/AAAA"
-                value={startDate}
-                style={styles.semiFlexInput}
-                clearable
-              />
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container justify="space-around">
+                  <KeyboardDatePicker
+                 //  @ts-ignore
+                    disableToolbar
+                    format="dd/MM/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    value={this.state.startDate}
+                    onChange={this.handleDateChange}
+                    KeyboardButtonProps={{'aria-label': 'change date' }}
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
             </div>
             <div style={{
               display: "flex",
@@ -407,20 +450,36 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
               marginBottom: "1.2rem",
             }}>
               <div style={styles.semiFlexText}>au</div>
-              <Input
-                onChange={e => this.setState({ endDate: e.target.value, change: true })}
-                onSubmit={() => this.saveRemote()}
-                placeholder="DD/MM/AAAA"
-                value={endDate}
-                style={styles.semiFlexInput}
-                clearable
-              />
+
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container justify="space-around">
+                  <KeyboardDatePicker
+                  //  @ts-ignore
+                    disableToolbar
+                    format="dd/MM/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    value={this.state.endDate}
+                    onChange={this.handleEndDateChange}
+                    KeyboardButtonProps={{'aria-label': 'change date' }}
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
+
+
+              {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <DatePicker 
+                  emptyLabel=""
+                  format="dd/MM/yyyy"
+                  value={this.state.endDate} 
+                  onChange={this.handleEndDateChange} />
+              </MuiPickersUtilsProvider> */}
             </div>
           </div>
             {!loadingSave ? (
               <button
                 style={{ backgroundColor: change ? '#295CB3'  :'grey', ...styles.semiFlexButton}}
-                onClick={() => change ? this.saveRemote() : null}
+                onClick={() => !change ? null : this.saveRemote()}
               >
                 <div style={styles.semiFlexButtonText}
                  >Enregistrer
