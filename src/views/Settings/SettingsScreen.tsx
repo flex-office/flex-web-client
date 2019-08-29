@@ -16,9 +16,8 @@ limitations under the License.
 // @flow
 /* eslint-disable */
 import React, { Component, useState } from "react";
-import { Button, ButtonGroup, Modal } from "reactstrap"
+import { Button, ButtonGroup, Modal, Spinner } from "reactstrap"
 //import { Spinner } from "react-activity"
-import { Spinner } from "reactstrap"
 import { withRouter } from "react-router-dom"
 
 import { connect } from "react-redux";
@@ -27,7 +26,7 @@ import config from "../../config/api.js";
 import server from "../../config/server.js";
 import picProfile from "../../assets/profile.png";
 
-import moment from "moment"
+import moment from "moment";
 
 import styles from "./SettingsScreenStyles";
 
@@ -53,30 +52,34 @@ import {
 
 import { fetchPhoto, logOut } from "../../components/Navigation/reducer";
 
-import defaultProfile from "../../assets/profile.png"
+import defaultProfile from "../../assets/profile.png";
 
 const WEEK_DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
 
 type Historical = {
-  place_id: string,
-  begin: string,
-  end: string
+  place_id: string;
+  begin: string;
+  end: string;
 };
 const profileStyles = {
   row: {
     fontFamily: "Raleway",
     display: "flex",
     alignItems: "center",
-    color: "#295CB3",
+    color: "#295CB3"
   },
   text: {
     fontWeight: 600,
     marginRight: 5,
-    fontSize: "1.2rem",
-  },
-}
+    fontSize: "1.2rem"
+  }
+};
 
-export const ProfileDescription = (props: { name: any, fname: any, id: any }) => {
+export const ProfileDescription = (props: {
+  name: any;
+  fname: any;
+  id: any;
+}) => {
   const { name, fname, id } = props;
   return (
     <div style={{ maxWidth: "1000px" }}>
@@ -87,7 +90,7 @@ export const ProfileDescription = (props: { name: any, fname: any, id: any }) =>
   );
 };
 
-export const ModalComponent = (props: { visible: any, ctx: any }) => {
+export const ModalComponent = (props: { visible: any; ctx: any }) => {
   const { visible } = props;
   // Animated.timing(ctx.state.progress, {
   //   toValue: 1,
@@ -149,7 +152,10 @@ interface SettingsScreenProps {
   setTitle: any
 }
 
-export class SettingsScreen extends Component<SettingsScreenProps, SettingsScreenState> {
+export class SettingsScreen extends Component<
+  SettingsScreenProps,
+  SettingsScreenState
+> {
   constructor(props) {
     super(props);
     this.state = {
@@ -172,7 +178,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
       // const [selectedDate, setSelectedDate] = React.useState<Date | null>(
       //   new Date('2014-08-18T21:11:54'),
     };
-    props.setTitle("Profil")
+    props.setTitle("Profil");
   }
 
   handleDateChange = (selectedStartDate) => {
@@ -189,19 +195,18 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
     }); 
   }
   componentDidMount() {
-    const result = localStorage.getItem("USER")
-    if (!result) this.props.history.push("/login")
+    const result = localStorage.getItem("USER");
+    if (!result) this.props.history.push("/login");
     else {
       this.setState(JSON.parse(result));
-      const days = JSON.parse(result).remoteDay
+      const days = JSON.parse(result).remoteDay;
       this.setState({
         // map Trouve index du jour
-        remoteDayIndexes: (!days) ? [] :
-          (days.map) ? days.map(
-            x => WEEK_DAYS.findIndex(
-              e => e === x
-            )
-          ) : [WEEK_DAYS.findIndex(e => e === days)],
+        remoteDayIndexes: !days
+          ? []
+          : days.map
+          ? days.map(x => WEEK_DAYS.findIndex(e => e === x))
+          : [WEEK_DAYS.findIndex(e => e === days)],
         place: ""
       });
       const userId = JSON.parse(result).id;
@@ -209,7 +214,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
         method: "GET",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          "authorization": `Bearer ${config.token}`
+          authorization: `Bearer ${config.token}`
         }
       })
         .then(res => res.json()) // transform data to json
@@ -218,21 +223,25 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
             photo: data.photo,
             historical: data.historical,
             loadingSave: false,
-            change: false
+            startDate: moment(data.start_date).format("DD/MM/YYYY"),
+            endDate: moment(data.end_date).format("DD/MM/YYYY")
           });
-          const user = JSON.parse(localStorage.getItem("USER") || "")
-          localStorage.setItem("USER", JSON.stringify(Object.assign({...user}, {photo: data.photo})))
-          this.getUserPlace(userId)
+          const user = JSON.parse(localStorage.getItem("USER") || "");
+          localStorage.setItem(
+            "USER",
+            JSON.stringify(Object.assign({ ...user }, { photo: data.photo }))
+          );
+          this.getUserPlace(userId);
         });
     }
-  };
+  }
 
   getUserPlace = userId => {
     fetch(`${server.address}users/${userId}/place`, {
       method: "GET",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "authorization": `Bearer ${config.token}`
+        authorization: `Bearer ${config.token}`
       }
     })
       .then(res => res.json()) // transform data to json
@@ -244,20 +253,25 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
             endDate: moment(data.end_date).format("dd/MM/yyyy")
           });
         }
-      });
-  }
+      })
+      .catch(error => console.log(error))
+  };
 
-  addDay = i => this.state.remoteDayIndexes.concat(i)
+  addDay = i => this.state.remoteDayIndexes.concat(i);
 
-  removeDay = i => this.state.remoteDayIndexes.filter(x => x !== i)
+  removeDay = i => this.state.remoteDayIndexes.filter(x => x !== i);
 
   updateIndex = async i => {
-    const newIndexes = (this.state.remoteDayIndexes.includes(i)) ? this.removeDay(i) : this.addDay(i)
-    if (newIndexes.length > 2) return
-    await this.setState({ remoteDayIndexes: newIndexes, remoteDay: newIndexes.map(x => WEEK_DAYS[x]) })
-    // this.saveRemote()
-    this.setState({ change: true })
-  }
+    const newIndexes = this.state.remoteDayIndexes.includes(i)
+      ? this.removeDay(i)
+      : this.addDay(i);
+    if (newIndexes.length > 2) return;
+    await this.setState({
+      remoteDayIndexes: newIndexes,
+      remoteDay: newIndexes.map(x => WEEK_DAYS[x])
+    });
+    this.saveRemote();
+  };
 
   saveRemote = async () => {
     const { id, photo, remoteDay, startDate, endDate } = this.state;
@@ -276,13 +290,13 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
       body: JSON.stringify(payload),
       headers: {
         "Content-Type": "application/json",
-        "authorization": `Bearer ${config.token}`
+        authorization: `Bearer ${config.token}`
       }
     })
       .then(res => res.json())
       .then(data => {
         // console.log(data);
-      })
+      });
 
     // Wait until the photo is uploaded to Cloudinary and the link is provided to perform request
     setTimeout(async () => {
@@ -290,7 +304,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${config.token}`
+          authorization: `Bearer ${config.token}`
         }
       })
         .then(res => res.json())
@@ -321,7 +335,6 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
 
   render() {
     const { remoteDayIndexes, name, fname, id, photo, loadingSave, startDate, endDate, change } = this.state;
-    console.log(this.state.selectedEndDate)
     return (
       <div style={styles.container}>
         <div style={styles.viewContainer}>
@@ -330,29 +343,31 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
             style={
               photo
                 ? {
-                  width: "2.2rem",
-                height: "2.2rem",
-                borderRadius: "50%",
-                objectFit: "cover"
-                }
+                    width: "2.2rem",
+                    height: "2.2rem",
+                    borderRadius: "50%",
+                    objectFit: "cover"
+                  }
                 : {
-                  width: "2.2rem",
-                height: "2.2rem",
-                borderRadius: "50%",
-                objectFit: "cover"
-                }
+                    width: "2.2rem",
+                    height: "2.2rem",
+                    borderRadius: "50%",
+                    objectFit: "cover"
+                  }
             }
             src={photo ? photo : defaultProfile}
           />
-          <div style={{
-            marginLeft: "0.6rem",
-            marginTop: "0.24rem",
-            marginBottom: "0.24rem",
-            flex: 1,
-            display: "flex",
-            flexDirection: "column" as "column",
-            justifyContent: "space-between",
-          }}>
+          <div
+            style={{
+              marginLeft: "0.6rem",
+              marginTop: "0.24rem",
+              marginBottom: "0.24rem",
+              flex: 1,
+              display: "flex",
+              flexDirection: "column" as "column",
+              justifyContent: "space-between"
+            }}
+          >
             <ProfileDescription name={name} fname={fname} id={id} />
             <FilePicker
               type="image/jpeg"
@@ -363,20 +378,23 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
                 }
               }}
             >
-              <button style={{
-                flex: 1,
-                background: "#295CB3",
-                borderRadius: 7,
-                border: "none",
-                color: "white",
-                fontSize: "0.9rem",
-                padding: 2,
-                width: 170,
-                cursor: "pointer"
-              }}>Importer une photo de profil</button>
+              <button
+                style={{
+                  flex: 1,
+                  background: "#295CB3",
+                  borderRadius: 7,
+                  border: "none",
+                  color: "white",
+                  fontSize: "0.9rem",
+                  padding: 2,
+                  width: 170,
+                  cursor: "pointer"
+                }}
+              >
+                Importer une photo de profil
+              </button>
             </FilePicker>
           </div>
-
         </div>
 
         <DeconnectionButton
@@ -384,10 +402,9 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
             // LogOut current user
             this.props.logOut("");
             localStorage.removeItem("USER");
-            this.props.history.push("/login")
+            this.props.history.push("/login");
           }}
         />
-
 
         <div style={styles.viewContainerRemote}>
           <div style={styles.remoteText}>Télétravail </div>
@@ -403,15 +420,19 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
               justifyContent: "center"
             }}
           >
-            {WEEK_DAYS.map((day, i) =>
+            {WEEK_DAYS.map((day, i) => (
               <Button
                 onClick={() => this.updateIndex(i)}
                 key={i}
                 outline
-                style={Object.assign({ ...styles.button }, (remoteDayIndexes.includes(i)) && styles.buttonSelected)}
+                style={Object.assign(
+                  { ...styles.button },
+                  remoteDayIndexes.includes(i) && styles.buttonSelected
+                )}
               >
                 {day}
-              </Button>)}
+              </Button>
+            ))}
           </ButtonGroup>
         </div>
   
@@ -441,14 +462,16 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
                 </Grid>
               </MuiPickersUtilsProvider>
             </div>
-            <div style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              width: "100%",
-              marginTop: "0.1rem",
-              marginBottom: "1.2rem",
-            }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                width: "100%",
+                marginTop: "0.1rem",
+                marginBottom: "1.2rem"
+              }}
+            >
               <div style={styles.semiFlexText}>au</div>
 
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -494,7 +517,6 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
 
         {/* For future purpose */}
         {/* <Calendar /> */}
-
       </div>
     );
   }
@@ -516,6 +538,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withRouter(SettingsScreen));
-
-
-
