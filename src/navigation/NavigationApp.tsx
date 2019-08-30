@@ -48,7 +48,7 @@ import myPlaceUnactive from "../assets/Ma_place_grise.svg"
 import foundPlaceUnactive from "../assets/Trouver_place_grise.svg"
 import userUnactive from "../assets/Utilisateurs_grise.svg"
 
-import { BrowserRouter as Router, Redirect, Switch } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 
 const store = createStore(reducer, devToolsEnhancer());
