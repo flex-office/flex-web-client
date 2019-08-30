@@ -240,7 +240,7 @@ class SendVerifView extends React.Component<
   }
 
   validate = async email => {
-    if (/*!(/@bred.fr$/.test(email))*/ false) return false;
+    if (!(/@bred.fr$/.test(email))) return false;
     const payload = {
       email
     };
