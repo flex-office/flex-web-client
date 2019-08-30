@@ -7,28 +7,20 @@ import { Link } from 'react-router-dom'
 const styles = {
     container: {
         alignItems: "center",
-        alignSelf: "flex-start",
-        backgroundColor: "white",
-        borderBottomStyle: "solid" as "solid",
-        borderBottomWidth: 7,
-        borderImage: "linear-gradient(to right, #58C0D0, #468BB6, #3662A0)",
-        borderImageSlice: 1,
         display: "flex",
-        flex: 1,
-        flexDirection: "row" as "row",
-        height: 80,
+        height: "4rem",
         justifyContent: "space-between",
-        overflow: "hidden",
-        position: "fixed" as "fixed",
-        top: 0,
+        maxWidth: 800,
         width: "100%",
-        zIndex: 100,
+        // zIndex: 100,
     },
     text: {
-        color: "black",
-        fontFamily: "Roboto",
-        fontSize: 20,
-        fontWeight: 500,
+        color: "#1B3F7B",
+        fontFamily: "Raleway",
+        fontSize: "1.2rem",
+        textAlign: "center" as "center",
+        fontWeight: "bold" as "bold",
+        width : "100%"
     }
 }
 
@@ -42,6 +34,7 @@ const fetchUserPhoto = async () => {
 };
 
 interface HeaderBarProps {
+    title: string
     showLogo?: boolean,
     showProfilePic?: boolean,
 }
@@ -53,35 +46,56 @@ export default class HeaderBar extends React.Component<HeaderBarProps> {
     }
 
     render() {
-        const { showLogo, showProfilePic } = this.props
+        const { showLogo, showProfilePic, title } = this.props
         return (
-            <div style={{height: 80}}>
+            <div style={{
+                height: "4.5rem",
+            }}>
+            <div style={{
+                display: "flex",
+                justifyContent: "center",
+                borderBottom: "2px solid" as "2px solid",
+                borderBottomColor: "#1B3F7B",
+                position: "fixed" as "fixed",
+                background: "white",
+                width: "100%",
+                zIndex: 100,
+            }}>
                 <div style={styles.container}>
                     {/* Header Left */}
-                    {(showLogo) ?
-                    <img
-                        src={logo}
-                        alt="logo"
-                        style={{
-                            height: 30,
-                            margin: 10,
-                        }}
-                    /> : <div />}
+                    {(showLogo) &&
+                        <img
+                            src={logo}
+                            alt="logo"
+                            style={{
+                                width: "6.1rem",
+                                paddingLeft: "2rem",
+                            }}
+                        />}
                     <div style={styles.text}>
-                        Flex-Office
+                        {title}
                     </div>
 
                     {/* Header Right */}
-                    {(showProfilePic) ?
-                    <Link to="/settings"
-                        onClick={() => {
-                            fetchUserPhoto();
-                        }}
-                    >
-                        <ProfileImage />
-                    </Link> : <div />}
+                    {(showProfilePic) &&
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "flex-end",
+                                width: "6.1rem",
+                                paddingRight: "2rem"
+                            }}>
+                            <Link to="/settings"
+                                onClick={() => {
+                                    fetchUserPhoto();
+                                }}
+                            >
+                                <ProfileImage />
+                            </Link>
+                        </div>}
                 </div>
-            </div>
+            </div >
+            </div >
         )
     }
 };

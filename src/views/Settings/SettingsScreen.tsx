@@ -15,18 +15,18 @@ limitations under the License.
 */
 // @flow
 /* eslint-disable */
-import React, { Component } from "react";
-import { Button, ButtonGroup, Modal } from "reactstrap"
-import { Spinner } from "react-activity"
+import React, { Component, useState } from "react";
+import { Button, ButtonGroup, Modal, Spinner } from "reactstrap"
+//import { Spinner } from "react-activity"
 import { withRouter } from "react-router-dom"
 
 import { connect } from "react-redux";
 import { assoc, omit } from "ramda";
-import config from "../../config/api.json";
-import server from "../../config/server.json";
+import config from "../../config/api.js";
+import server from "../../config/server.js";
 import picProfile from "../../assets/profile.png";
 
-import moment from "moment"
+import moment from "moment";
 
 import styles from "./SettingsScreenStyles";
 
@@ -34,107 +34,63 @@ import styles from "./SettingsScreenStyles";
 import DeconnectionButton from "../../components/Settings/DeconnectionButton";
 
 import Input from "../../components/General/Input";
+import FilePicker from "../../components/General/FilePicker";
+
+
+// import {
+//   DatePicker,
+//   MuiPickersUtilsProvider,
+// } from "@material-ui/pickers";
+
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  DatePicker,
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 import { fetchPhoto, logOut } from "../../components/Navigation/reducer";
 
-import defaultProfile from "../../assets/profile.png"
+import defaultProfile from "../../assets/profile.png";
 
 const WEEK_DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
 
 type Historical = {
-  place_id: string,
-  begin: string,
-  end: string
+  place_id: string;
+  begin: string;
+  end: string;
 };
-
-type SettingsScreenState = {
-  name: string,
-  fname: string,
-  id: string,
-  place?: string,
-  photo?: string,
-  historical?: Array<Historical>,
-  debug?: Array<any> | string,
-  remoteDay?: string,
-  arrayOfFriends: Array<any>
-  startDate: string
-  endDate: string
-  selectedIndex: number
-  loadingSave: boolean
-  progress: any
-  userPlace: string
-};
-
-interface SettingsScreenProps {
-  history: any
-  fetchPhoto: any
-  logOut: any
-}
-
 const profileStyles = {
   row: {
-    fontFamily: "Roboto",
+    fontFamily: "Raleway",
     display: "flex",
     alignItems: "center",
-    color: "#7E7E7E"
+    color: "#295CB3"
   },
   text: {
     fontWeight: 600,
     marginRight: 5,
-  },
-}
+    fontSize: "1.2rem"
+  }
+};
 
-export const ProfileDescription = (props: { name: any, fname: any, id: any }) => {
+export const ProfileDescription = (props: {
+  name: any;
+  fname: any;
+  id: any;
+}) => {
   const { name, fname, id } = props;
   return (
     <div style={{ maxWidth: "1000px" }}>
       <div style={profileStyles.row}>
-        <div style={profileStyles.text}>Nom : </div>
-        {name}
-      </div>
-      <div style={profileStyles.row}>
-        <div style={profileStyles.text}>Prénom : </div>
-        {fname}
-      </div>
-      <div style={profileStyles.row}>
-        <div style={profileStyles.text}>ID : </div>
-        {id}
+        {fname} {name.toUpperCase()}
       </div>
     </div>
   );
 };
 
-interface FilePickerProps {
-  type: string
-  onChange: any
-}
-
-export class FilePicker extends React.Component<FilePickerProps> {
-  inputRef: any
-
-  constructor(props) {
-    super(props)
-    this.inputRef = React.createRef()
-  }
-
-  handleChange = async (e) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(e.target.files[0])
-    reader.onload = () => this.props.onChange(reader.result)
-    reader.onerror = err => console.error(err)
-  }
-
-  render() {
-    return (
-      <div style={{cursor: "pointer"}} onClick={() => this.inputRef.current.click()}>
-        <input onChange={this.handleChange} ref={this.inputRef} style={{ display: "none" }} type="file" accept={this.props.type} />
-        {this.props.children}
-      </div>
-    )
-  }
-}
-
-export const ModalComponent = (props: { visible: any, ctx: any }) => {
+export const ModalComponent = (props: { visible: any; ctx: any }) => {
   const { visible } = props;
   // Animated.timing(ctx.state.progress, {
   //   toValue: 1,
@@ -168,45 +124,80 @@ export const ModalComponent = (props: { visible: any, ctx: any }) => {
   );
 };
 
-export class SettingsScreen extends Component<SettingsScreenProps, SettingsScreenState> {
-  static navigationOptions = {
-    title: "Profile",
-    headerTintColor: "black",
-    tabBarIcon: () => (
-      <img
-        src={picProfile}
-        style={{ width: 20, height: 20 }}
-      />
-    )
-  };
+type SettingsScreenState = {
+  name: string,
+  fname: string,
+  id: string,
+  place?: string,
+  photo?: string,
+  historical?: Array<Historical>,
+  debug?: Array<any> | string,
+  remoteDay?: Array<string>,
+  arrayOfFriends: Array<any>
+  startDate: any
+  endDate: any
+  remoteDayIndexes: Array<number>
+  loadingSave: boolean
+  progress: any
+  userPlace: string
+  change: boolean
+};
 
-  constructor() {
-    super(undefined);
+interface SettingsScreenProps {
+  history: any
+  fetchPhoto: any
+  logOut: any
+  setTitle: any
+}
+
+export class SettingsScreen extends Component<
+  SettingsScreenProps,
+  SettingsScreenState
+> {
+  constructor(props) {
+    super(props);
     this.state = {
       name: "",
       fname: "",
       id: "",
-      selectedIndex: 0,
+      remoteDayIndexes: [],
       photo: "",
       arrayOfFriends: [],
       loadingSave: false,
       progress: 0,
       userPlace: null,
-      startDate: "",
-      endDate: ""
+      startDate: null,
+      endDate: null,
+      change: false,
     };
+    props.setTitle("Profil");
   }
 
+  handleDateChange = (selectedStartDate) => {
+    this.setState({
+      startDate: selectedStartDate,
+      change : true
+    });
+  }
+  handleEndDateChange = (selectedEndDate) => {
+    this.setState({
+      endDate: selectedEndDate,
+      change : true
+    }); 
+  }
   componentDidMount() {
-    const result = localStorage.getItem("USER")
-    if (!result) this.props.history.push("/login")
+    const result = localStorage.getItem("USER");
+    if (!result) this.props.history.push("/login");
     else {
       this.setState(JSON.parse(result));
+      const days = JSON.parse(result).remoteDay;
       this.setState({
         // map Trouve index du jour
-        selectedIndex: WEEK_DAYS.findIndex(
-          e => e === JSON.parse(result).remoteDay
-        ),
+        remoteDayIndexes: !days
+          ? []
+          : days.map
+          ? days.map(x => WEEK_DAYS.findIndex(e => e === x))
+          : [WEEK_DAYS.findIndex(e => e === days)],
         place: ""
       });
       const userId = JSON.parse(result).id;
@@ -214,26 +205,34 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
         method: "GET",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          "authorization": `Bearer ${config.token}`
+          authorization: `Bearer ${config.token}`
         }
       })
         .then(res => res.json()) // transform data to json
         .then(data => {
           this.setState({
+            photo: data.photo,
             historical: data.historical,
-            loadingSave: false
+            loadingSave: false,
+            startDate: data.start_date,
+            endDate: data.end_date
           });
-          this.getUserPlace(userId)
+          const user = JSON.parse(localStorage.getItem("USER") || "");
+          localStorage.setItem(
+            "USER",
+            JSON.stringify(Object.assign({ ...user }, { photo: data.photo }))
+          );
+          this.getUserPlace(userId);
         });
     }
-  };
+  }
 
   getUserPlace = userId => {
     fetch(`${server.address}users/${userId}/place`, {
       method: "GET",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "authorization": `Bearer ${config.token}`
+        authorization: `Bearer ${config.token}`
       }
     })
       .then(res => res.json()) // transform data to json
@@ -241,28 +240,41 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
         if (data) {
           this.setState({
             userPlace: data,
-            startDate: moment(data.start_date).format("DD/MM/YYYY"),
-            endDate: moment(data.end_date).format("DD/MM/YYYY")
+            startDate: data.start_date,
+            endDate: data.end_date
           });
         }
-      });
-  }
+      })
+      .catch(error => console.log(error))
+  };
 
-  updateIndex = selectedIndex => {
-    this.saveRemote();
-    return this.setState({ selectedIndex, remoteDay: WEEK_DAYS[selectedIndex] });
+  addDay = i => this.state.remoteDayIndexes.concat(i);
+
+  removeDay = i => this.state.remoteDayIndexes.filter(x => x !== i);
+
+  updateIndex = async i => {
+    const newIndexes = this.state.remoteDayIndexes.includes(i)
+      ? this.removeDay(i)
+      : this.addDay(i);
+    if (newIndexes.length > 2) return;
+    await this.setState({
+      remoteDayIndexes: newIndexes,
+      remoteDay: newIndexes.map(x => WEEK_DAYS[x]),
+      change: true,
+    });
+    // this.saveRemote();
   };
 
   saveRemote = async () => {
     const { id, photo, remoteDay, startDate, endDate } = this.state;
-    // this.setState({ loadingSave: true });
+    this.setState({ loadingSave: true });
 
     const payload = {
       id_user: id,
-      photo: photo.substring(23),
+      photo: photo,
       remoteDay,
-      startDate,
-      endDate
+      startDate: moment(startDate).format("DD/MM/YYYY"),
+      endDate: moment(endDate).format("DD/MM/YYYY")
     };
 
     fetch(`${server.address}settings_user`, {
@@ -270,13 +282,13 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
       body: JSON.stringify(payload),
       headers: {
         "Content-Type": "application/json",
-        "authorization": `Bearer ${config.token}`
+        authorization: `Bearer ${config.token}`
       }
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
-      })
+        // console.log(data);
+      });
 
     // Wait until the photo is uploaded to Cloudinary and the link is provided to perform request
     setTimeout(async () => {
@@ -284,7 +296,7 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${config.token}`
+          authorization: `Bearer ${config.token}`
         }
       })
         .then(res => res.json())
@@ -301,121 +313,201 @@ export class SettingsScreen extends Component<SettingsScreenProps, SettingsScree
             )
           );
 
-          this.setState({ loadingSave: false });
+          this.setState({ loadingSave: false, change: this.state.change ? false : true });
         });
     }, 3000);
+    console.log('save')
   };
 
-  render() {
-    const { selectedIndex, name, fname, id, photo, loadingSave, userPlace, startDate, endDate } = this.state;
+ showAlert()
+{
+  alert("Vos modifications ont bien été prises en compte !");
+};
 
+
+  render() {
+    const { remoteDayIndexes, name, fname, id, photo, loadingSave, startDate, endDate, change } = this.state;
     return (
-      <div style={{
-        flex: 1,
-        backgroundColor: "white",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "stretch",
-        maxWidth: "100%",
-      }}>
+      <div style={styles.container}>
         <div style={styles.viewContainer}>
           <ModalComponent visible={loadingSave} ctx={this} />
-          <ProfileDescription name={name} fname={fname} id={id} />
-          <FilePicker
-            type="image/jpeg"
-            onChange={async image => {
-              if (image) {
-                await this.setState({ photo: image });
-                this.saveRemote();
-              }
+          <img
+            style={
+              photo
+                ? {
+                    width: "2.2rem",
+                    height: "2.2rem",
+                    borderRadius: "50%",
+                    objectFit: "cover"
+                  }
+                : {
+                    width: "2.2rem",
+                    height: "2.2rem",
+                    borderRadius: "50%",
+                    objectFit: "cover"
+                  }
+            }
+            src={photo ? photo : defaultProfile}
+          />
+          <div
+            style={{
+              marginLeft: "0.6rem",
+              marginTop: "0.24rem",
+              marginBottom: "0.24rem",
+              flex: 1,
+              display: "flex",
+              flexDirection: "column" as "column",
+              justifyContent: "space-between"
             }}
           >
-            <img
-              style={
-                photo
-                  ? {
-                    width: 70,
-                    height: 70,
-                    borderRadius: 35,
-                  }
-                  : {
-                    width: 70,
-                    height: 70,
-                  }
-              }
-              src={photo ? photo : defaultProfile}
-            />
-          </FilePicker>
+            <ProfileDescription name={name} fname={fname} id={id} />
+            <FilePicker
+              type="image/jpeg"
+              onChange={async image => {
+                if (image) {
+                  await this.setState({ photo: image, change: true });
+                  // this.saveRemote();
+                }
+              }}
+            >
+              <button
+                style={{
+                  flex: 1,
+                  background: "#295CB3",
+                  borderRadius: 7,
+                  border: "none",
+                  color: "white",
+                  fontSize: "0.9rem",
+                  padding: 2,
+                  width: 170,
+                  cursor: "pointer"
+                }}
+              >
+                Importer une photo de profil
+              </button>
+            </FilePicker>
+          </div>
         </div>
+
+        <DeconnectionButton
+          onPress={() => {
+            // LogOut current user
+            this.props.logOut("");
+            localStorage.removeItem("USER");
+            this.props.history.push("/login");
+          }}
+        />
+
         <div style={styles.viewContainerRemote}>
-          <div style={styles.remoteText}>Jour de télétravail </div>
+          <div style={styles.remoteText}>Télétravail </div>
           <ButtonGroup
             style={{
               margin: 10,
               alignItems: "center",
               display: "flex",
               flexDirection: "row",
+              flexWrap: "wrap",
               flex: 1,
               maxWidth: "100%",
+              justifyContent: "center"
             }}
           >
-            {WEEK_DAYS.map((day, i) =>
+            {WEEK_DAYS.map((day, i) => (
               <Button
                 onClick={() => this.updateIndex(i)}
                 key={i}
                 outline
-                style={Object.assign({...styles.button}, (i === selectedIndex) ? styles.buttonSelected : {})}
+                style={Object.assign(
+                  { ...styles.button },
+                  remoteDayIndexes.includes(i) && styles.buttonSelected
+                )}
               >
                 {day}
-              </Button>)}
+              </Button>
+            ))}
           </ButtonGroup>
         </div>
+  
 
-        {userPlace ? (
-          <div style={styles.viewContainerSemiFlex}>
-            <div style={styles.semiFlexText}>Je suis absent.e entre</div>
-            <div style={styles.semiFlexRow}>
-              <Input
-                onChange={e => this.setState({ startDate: e.target.value })}
-                onSubmit={() => this.saveRemote()}
-                placeholder={startDate}
-              />
-              <div style={styles.regularText}>et</div>
-              <Input
-                onChange={e => this.setState({ endDate: e.target.value })}
-                onSubmit={() => this.saveRemote()}
-                placeholder={endDate}
-              />
+      {startDate && endDate ? 
+        <div style={styles.viewContainerSemiFlex}>
+          <div style={styles.semiFlexRow}>
+            <div style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "100%",
+              alignItems: "baseline"
+            }}>
+              <div style={styles.semiFlexText}>Absent/e du</div>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container justify="space-around">
+                  <KeyboardDatePicker
+                 //  @ts-ignore
+                    disableToolbar
+                    format="dd/MM/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    value={this.state.startDate}
+                    onChange={this.handleDateChange}
+                    KeyboardButtonProps={{'aria-label': 'change date' }}
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
             </div>
-            <button
-              style={styles.semiFlexButton}
-              onClick={() => this.saveRemote()}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                width: "100%",
+                marginTop: "0.1rem",
+                marginBottom: "1.2rem"
+              }}
             >
-              <div style={styles.semiFlexButtonText}>Confirmer</div>
-            </button>
+              <div style={styles.semiFlexText}>au</div>
+
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container justify="space-around">
+                  <KeyboardDatePicker
+                  //  @ts-ignore
+                    disableToolbar
+                    format="dd/MM/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    value={this.state.endDate}
+                    onChange={this.handleEndDateChange}
+                    KeyboardButtonProps={{'aria-label': 'change date' }}
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
+
+            </div>
           </div>
-        ) : null}
+            {!loadingSave ? (
+              <button
+                style={{ backgroundColor: change ? '#295CB3'  :'grey', ...styles.semiFlexButton}}
+                onClick={() => !change ? null : this.saveRemote()}
+              >
+                <div style={styles.semiFlexButtonText}
+                 >Enregistrer
+                </div>
+              </button>
+            ) : (
+              <div style={styles.spinner}>
+                <Spinner style={{ margin: "1rem", color: "#E64417" }}/>
+              </div>
+            )}
+        </div> : null}
 
         {/* For future purpose */}
         {/* <Calendar /> */}
-
-        <div style={{flex: 1, alignSelf: "center"}}>
-          <DeconnectionButton
-            onPress={() => {
-              // LogOut current user
-              this.props.logOut("");
-              localStorage.removeItem("USER");
-              this.props.history.push("/login")
-            }}
-          />
-        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, _) => {
   return {
     photo: state.photo
   };

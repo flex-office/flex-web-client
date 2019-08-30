@@ -1,8 +1,8 @@
 import React from "react"
 import { append, filter } from "ramda";
 import { withRouter } from "react-router-dom"
-import config from "../../config/api.json";
-import server from "../../config/server.json";
+import config from "../../config/api.js";
+import server from "../../config/server.js";
 import UsersScreenSearch from "../../components/Users/UsersScreenSearch"
 import UsersScreenFavorites from "../../components/Users/UsersScreenFavorites"
 import NavElem from "../../components/Navigation/NavElem"
@@ -26,13 +26,16 @@ type UsersScreenState = {
 
 interface UsersScreenProps {
     history: any
+    location: any
+    setTitle: any
 }
 
 class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
     _isMounted = false;
 
-    constructor() {
-        super(undefined);
+
+    constructor(props) {
+        super(props);
         this.state = {
             users: [],
             userName: null,
@@ -41,9 +44,11 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
             arrayOfFriends: [],
             tabIndex: 1,
         };
+        props.setTitle("Utilisateurs")
     }
 
     redirect(x) {
+        if (this.props.location.pathname !== "/users") return
         if (!x || x.length === 0) {
             this.props.history.push("/users/search")
         } else {
@@ -207,23 +212,33 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
     };
 
     render() {
-        const { users, userName, arrayOfFriends, loading } = this.state
+        const { users, userName, loading } = this.state
         return (
-            <div>
+            <div style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column"
+            }}>
                 <div style={{
                     display: "flex",
                     flexDirection: "row",
-                    marginTop: 10,
+                    margin: "0.8rem 0.7rem 1.5rem 0rem",
+                    width: "100%",
                     justifyContent: "center",
+                    fontFamily: "Raleway",
+                    maxWidth: 900,
+                   
                 }}>
-                    <NavElem to="/users/favorites" icon="star">Mes Favoris</NavElem>
-                    <NavElem to="/users/search" icon="search">Rechercher</NavElem>
+                    <NavElem to="/users/favorites" src="" border>Favoris</NavElem>
+                    <NavElem to="/users/search" src="" border>Recherche</NavElem>
                 </div>
                 <Route path="/users/favorites" render={ () =>
                     <UsersScreenFavorites
-                        users={arrayOfFriends}
+                        users={users.filter(x => x.isFriend)}
                         removeFriend={this.removeFriend}
                         loading={loading}
+                        getUsers={this.getUsers}
                     />
                 }
                 />

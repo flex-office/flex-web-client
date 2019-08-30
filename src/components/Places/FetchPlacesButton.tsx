@@ -15,7 +15,6 @@ limitations under the License.
 */
 import React from "react";
 import styles from "./styles/FetchPlacesButtonStyles";
-import Icon from "react-fontawesome"
 
 const FetchPlacesButton = (props: { onPress: () => void }) => {
   const { onPress } = props;
@@ -24,15 +23,11 @@ const FetchPlacesButton = (props: { onPress: () => void }) => {
       <div onClick={onPress} style={styles.container}>
         <div
           style={{
-            color: "#2E89AD",
-            fontFamily: "Roboto",
+            color: "white",
+            fontFamily: "Raleway",
             // fontWeight: 500,
-            marginRight: 10
           }}
-        >
-          Actualiser
-        </div>
-        <Icon name="sync-alt" style={{ fontSize: 15, color: "#2E89AD"}}/>
+        >Rechercher</div>
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ import {
   NavItem
 } from 'reactstrap'
 
-import { Route } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";
@@ -39,6 +39,18 @@ import NavElem from "../components/Navigation/NavElem";
 
 import styles from "./NavigationAppStyles"
 
+
+import myPlaceActive from "../assets/Ma_place_bleue.svg"
+import foundPlaceActive from "../assets/Trouver_place_bleue.svg"
+import userActive from "../assets/Utilisateurs_bleue.svg"
+
+import myPlaceUnactive from "../assets/Ma_place_grise.svg"
+import foundPlaceUnactive from "../assets/Trouver_place_grise.svg"
+import userUnactive from "../assets/Utilisateurs_grise.svg"
+
+import { BrowserRouter as Router, Redirect, Switch } from "react-router-dom";
+
+
 const store = createStore(reducer, devToolsEnhancer());
 
 export class NavBar extends React.Component {
@@ -48,13 +60,13 @@ export class NavBar extends React.Component {
         <div style={styles.navBar}>
           <Nav style={styles.nav} navbar justify="true">
             <NavItem>
-              <NavElem exact to="/" icon="qrcode">Ma Place</NavElem>
+              <NavElem to="/home" src={myPlaceActive} unactiveSrc={myPlaceUnactive}>Ma place</NavElem>
             </NavItem>
             <NavItem>
-              <NavElem to="/places" icon="search">Places</NavElem>
+              <NavElem to="/places" src={foundPlaceActive} unactiveSrc={foundPlaceUnactive}>Trouver une place</NavElem>
             </NavItem>
             <NavItem>
-              <NavElem to="/users" icon="users">Utilisateurs</NavElem>
+              <NavElem to="/users" src={userActive} unactiveSrc={userUnactive}>Utilisateurs</NavElem>
             </NavItem>
           </Nav>
         </div>
@@ -63,16 +75,50 @@ export class NavBar extends React.Component {
   }
 }
 
-export class NavigationApp extends React.Component {
+interface NavigationAppState {
+  title: string
+}
+
+interface NavigationAppProps {
+  history: any
+  location: any
+}
+
+export class NavigationApp extends React.Component<NavigationAppProps, NavigationAppState> {
+  constructor(props) {
+    super(props)
+    this.state = {
+      title: "Flex-Office",
+    }
+  }
+
+  componentWillMount() {
+    if (this.props.location.pathname === "/") this.props.history.push("/home")
+  }
+
+  setTitle = x => this.setState({title: x})
+
   render() {
     return (
       <div style={styles.navApp}>
-        <HeaderBar/>
+        <HeaderBar title={this.state.title}/>
         <div style={styles.pageContainer}>
-          <Route exact path="/" component={ProfileScreen}/>
-          <Route path="/places" component={PlacesScreen}/>
-          <Route path="/users" component={UsersScreen}/>
-          <Route path="/settings" component={SettingsScreen}/>
+          <Route path="/home" render={() =>
+            <ProfileScreen setTitle={this.setTitle}/>
+          }/>
+          <Route path="/places" render={() =>
+            <PlacesScreen setTitle={this.setTitle}/>
+          }/>
+          <Route path="/users" render={() =>
+            <UsersScreen setTitle={this.setTitle}/>
+          }/>
+          <Route path="/settings" render={() =>
+            <SettingsScreen setTitle={this.setTitle}/>
+          }/>
+          <Route>
+            <Redirect to="/home"/>
+          </Route>
+          
         </div>
         <NavBar/>
       </div>
@@ -80,12 +126,12 @@ export class NavigationApp extends React.Component {
   }
 }
 
-const NetInfoWrapper = () => (
+const NetInfoWrapper = (props: {history: any, location: any}) => (
   <Provider store={store}>
     <div style={{ flex: 1, height: "100%" }}>
-      <NavigationApp />
+      <NavigationApp history={props.history} location={props.location}/>
     </div>
   </Provider>
 );
 
-export default NetInfoWrapper;
+export default withRouter(NetInfoWrapper);

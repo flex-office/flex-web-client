@@ -48,22 +48,22 @@ class ProfileImage extends Component<ProfileImageProps> {
     return (
       <img
         src={
-          photo === ""
+          !photo
             ? picProfile
             : photo
         }
         style={
           photo === ""
             ? {
-                width: 30,
-                height: 30,
-                margin: 8,
+                width: "2.2rem",
+                height: "2.2rem",
+                objectFit: "cover",
               }
             : {
-                width: 30,
-                height: 30,
-                borderRadius: 15,
-                margin: 8,
+                width: "2.2rem",
+                height: "2.2rem",
+                borderRadius: "1rem",
+                objectFit: "cover",
               }
         }
       />

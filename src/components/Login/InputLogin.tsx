@@ -32,6 +32,7 @@ const InputLogin = (props: {
       flexDirection: "column",
       display: "flex"
     }}>
+
       <Input
         onChange={onChangeID}
         onSubmit={onSubmitEditing}

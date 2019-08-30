@@ -16,33 +16,37 @@ limitations under the License.
 import React from "react";
 import styles from "../../views/Profile/ProfileScreenStyles";
 
-const LeaveButton = (props: { place: any, onPress: () => void }) => {
-  const { onPress, place } = props;
+const LeaveButton = (props: { onPress: () => void }) => {
+  const { onPress } = props;
   return (
-    <div style={styles.leave_button}>
-      <button
-        style={{
-          borderRadius: 100,
-          width: 180,
-          height: 180,
-          borderWidth: 1,
-          borderColor: "#3662A0",
-          backgroundColor: "#fff",
-          verticalAlign: "middle"
-        }}
-        onClick={onPress}
-      >
-        <div
+
+    <div
+      style={{
+        fontWeight: "bold",
+        fontFamily: "Raleway",
+        color: "#468BB6",
+        display: "flex",
+        justifyContent: "flex-start",
+        flexDirection: "column" as "column"
+      }}
+    >
+      <div style={styles.leave_button}>
+        <button
           style={{
+            width: 150,
+            padding: 10,
+            borderRadius: 7,
+            border: "none",
+            backgroundColor: "#468BB6",
+            verticalAlign: "middle",
+            color: "white",
             fontWeight: "bold",
-            fontFamily: "Roboto",
-            color: "#468BB6"
           }}
+          onClick={onPress}
         >
           <div>Libérer la place</div>
-          <div>{place}</div>
-        </div>
-      </button>
+        </button>
+      </div>
     </div>
   );
 };

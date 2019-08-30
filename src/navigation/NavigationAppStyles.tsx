@@ -1,10 +1,10 @@
 export default {
     navBar: {
-        alignSelf: "flex-end",
+        
         backgroundColor: "white",
-        borderTopColor: "lightgrey",
+        borderTopColor: "#1B3F7B",
         borderTopStyle: "solid" as "solid",
-        borderTopWidth: 1,
+        borderTopWidth:2 ,
         bottom: 0,
         display: "flex",
         flex: 1,
@@ -12,12 +12,19 @@ export default {
         position: "fixed" as "fixed",
         width: "100%",
         zIndex: 100,
+        justifyContent: "center"
+        
+        
     },
     nav: {
         flex: 1,
+        fontSize: "0.9rem",
         flexDirection: "row",
         justifyContent: "space-around",
-        marginTop: 5,
+        alignItems: "center",
+        height: "3.8rem",
+        maxWidth: 1000,
+        
     },
     navApp: {
         flex: 1,

@@ -16,12 +16,10 @@ limitations under the License.
 
 export default {
   view: {
-    alignItems: "center",
-    backgroundColor: "white",
+    alignItems: "stretch",
     display: "flex",
     flex: 1,
     flexDirection: "column" as "column",
-    justifyContent: "flex-start",
     width: "100%",
   },
   view_third: {
@@ -31,7 +29,7 @@ export default {
   sendContainer: {
     marginRight: 50,
     marginLeft: 50,
-    marginTop: 20
+    marginTop: 20,
   },
   view_fourth: {
     marginTop: 20,
@@ -53,13 +51,13 @@ export default {
   },
   logOut: {},
   places: {
-    fontSize: 15
+    fontSize: "0.7rem"
   },
   debug: {
     // textAlign: "center",
     color: "#2E89AD",
     margin: 10,
-    fontFamily: "Roboto",
+    fontFamily: "Raleway",
   },
   leave_button: {
     alignItems: "center",
@@ -67,6 +65,7 @@ export default {
     display: "flex",
     flex: 1,
     height: "100%",
-    justifyContent: "center",
+    justifyContent: "space-around",
+    flexDirection: "column" as "column",
   },
 };

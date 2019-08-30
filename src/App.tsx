@@ -1,11 +1,11 @@
-import React from "react"
-import NavigationApp from "./navigation/NavigationApp"
-// import config from "../config/api.json"
-// import server from "../config/server.json"
+import React from "react";
+import NavigationApp from "./navigation/NavigationApp";
+// import config from "../config/api.js"
+// import server from "../config/server.js"
 // import { pushNotifications } from "./utils/services/index"
-import "./App.css"
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import LoginScreen from "./views/Login/LoginScreen"
+import "./App.css";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import LoginScreen from "./views/Login/LoginScreen";
 
 // pushNotifications.configure()
 
@@ -44,12 +44,12 @@ export default class App extends React.Component {
     return (
       <Router>
         <Switch>
-          <Route path="/login" component={LoginScreen}/>
+          <Route path="/login" component={LoginScreen} />
           <Route path="/">
-            <NavigationApp/>
+            <NavigationApp />
           </Route>
         </Switch>
       </Router>
-    )
+    );
   }
 }

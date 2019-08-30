@@ -1,8 +1,8 @@
 import React from "react"
 import moment from "moment"
 import { withRouter } from "react-router-dom"
-import config from "../../config/api.json";
-import server from "../../config/server.json";
+import config from "../../config/api.js";
+import server from "../../config/server.js";
 import placesConfig from "../../config/places.json";
 import PlacesList from "../../components/Places/PlacesList"
 import PlacesSelector from "../../components/Places/PlacesSelector"
@@ -13,6 +13,7 @@ import styles from "./PlacesScreenStyles"
 type PlacesScreenState = {
     places: Array<any>,
     loading: boolean,
+    selectedBuildingIndex: number,
     selectedFloorIndex: number,
     selectedZoneIndex: number,
     selectedSideIndex: number
@@ -20,18 +21,21 @@ type PlacesScreenState = {
 
 interface PlacesScreenProps {
     history: any
+    setTitle: any
 }
 
 class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState> {
-    constructor() {
-        super(undefined);
+    constructor(props) {
+        super(props);
         this.state = {
             places: [],
             loading: true,
+            selectedBuildingIndex: 0,
             selectedFloorIndex: 0,
             selectedZoneIndex: 0,
             selectedSideIndex: 0
         };
+        props.setTitle("Trouver une place")
     }
 
     componentDidMount() {
@@ -43,7 +47,20 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
         }
     };
 
-    placeIsAllowed = place => place.start_date && place.end_date && moment().isBetween(place.start_date, place.end_date)
+    placeIsAllowed = async place => {
+        try {
+            const user = await fetch(`${server.address}users/${place.id_owner}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "authorization": `Bearer ${config.token}`
+                }
+            }).then(res => res.json()) // transform data to json
+            return user.start_date && user.end_date && moment().isBetween(user.start_date, user.end_date)
+        } catch (_) {
+            return false
+        }
+    }
 
     getPlaces = () => {
         this.setState({ loading: true });
@@ -55,14 +72,18 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
             }
         })
             .then(res => res.json())
-            .then(data => {
-                const result = data.filter(place => !place.using && (!place.semi_flex || this.placeIsAllowed(place)));
+            .then(async data => {
+                const result = await data.filter(async place => !place.using && (!place.semi_flex || await this.placeIsAllowed(place)));
                 this.setState({
                     places: result,
                     loading: false
                 });
             });
     }
+
+    updateBuildingIndex = selectedBuildingIndex => {
+        this.setState({ selectedBuildingIndex });
+    };
 
     updateFloorIndex = selectedFloorIndex => {
         this.setState({ selectedFloorIndex });
@@ -77,22 +98,25 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
     };
 
     filterPlaces = () => {
-        const { places, selectedFloorIndex, selectedZoneIndex, selectedSideIndex } = this.state;
+        const { places, selectedBuildingIndex, selectedFloorIndex, selectedZoneIndex, selectedSideIndex } = this.state;
 
+        const buildingCode = placesConfig.buildingCodes[selectedBuildingIndex];
         const floor = selectedFloorIndex === 0 ? "3" : "4";
-        const zoneCode = placesConfig.zoneCodes[selectedZoneIndex];
-        const side = placesConfig.sideIndexUpper[selectedSideIndex];
+        const zoneCode = placesConfig.buildings[selectedBuildingIndex].zoneCodes[selectedZoneIndex];
+        const side = placesConfig.buildings[selectedBuildingIndex].sideIndexUpper[selectedSideIndex];
+        const reg = new RegExp(`${buildingCode}-${floor}-${zoneCode}-${side}\\d{2}`)
 
-        return places.filter(place => place.id[0] === floor && place.id[2] === zoneCode && place.id.slice(4, -2) === side);
+        return places.filter(place => reg.test(place.id) && !place.using);
     };
 
     handleOnClickItem = place => {
-        this.props.history.push("/", {place})
+        this.props.history.push("/home", { place })
     }
 
     render() {
         const {
             loading,
+            selectedBuildingIndex,
             selectedFloorIndex,
             selectedZoneIndex,
             selectedSideIndex
@@ -103,27 +127,32 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
             <div style={styles.view}>
                 <div style={styles.selectorContainer}>
 
-                    <div style={styles.label}>Places disponibles</div>
+                    {/* Building selector */}
+                    <PlacesSelector
+                        buttons={placesConfig.buildingIndex}
+                        onPress={this.updateBuildingIndex}
+                        selectedIndex={selectedBuildingIndex}
+                    />
 
                     {/* Floor selector */}
                     <PlacesSelector
-                        buttons={placesConfig.floorIndex}
+                        buttons={placesConfig.buildings[this.state.selectedBuildingIndex].floorIndex}
                         onPress={this.updateFloorIndex}
                         selectedIndex={selectedFloorIndex}
                     />
 
-                    {/* Zone selector */}
-                    <PlacesSelector
-                        buttons={placesConfig.zoneIndex}
-                        onPress={this.updateZoneIndex}
-                        selectedIndex={selectedZoneIndex}
-                    />
-
                     {/* Side selector */}
                     <PlacesSelector
-                        buttons={placesConfig.sideIndex}
+                        buttons={placesConfig.buildings[this.state.selectedBuildingIndex].sideIndex}
                         onPress={this.updateSideIndex}
                         selectedIndex={selectedSideIndex}
+                    />
+
+                    {/* Zone selector */}
+                    <PlacesSelector
+                        buttons={placesConfig.buildings[this.state.selectedBuildingIndex].zoneIndex}
+                        onPress={this.updateZoneIndex}
+                        selectedIndex={selectedZoneIndex}
                     />
 
                     <FetchPlacesButton
@@ -131,16 +160,16 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
                     />
                 </div>
                 {!loading ? (
-                    <div style={{marginTop: 10}}>
-                        <div style={styles.label}>Nombre de places : {filteredPlaces.length}</div>
+                    <div style={{ marginTop: 10 }}>
+                        <div style={styles.label}>Places disponibles : {filteredPlaces.length}</div>
                         <PlacesList places={filteredPlaces} onClickItem={x => this.handleOnClickItem(x)} />
                     </div>
                 ) : (
-                    <Spinner
-                        style={{ marginTop: 20, color: "#2E89AD" }}
-                        size="large"
-                    />
-                )}
+                        <Spinner
+                            style={{ marginTop: "0.5rem", color: "#E64417" }}
+                            size="large"
+                        />
+                    )}
             </div>
         )
     }

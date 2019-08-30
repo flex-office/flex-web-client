@@ -20,11 +20,12 @@ class EmptyResult extends React.Component {
 		return (
 			<div
 				style={{
-					color: "black",
-					fontFamily: "Roboto",
-					fontSize: 16,
+					color: "#7F8184",
+					fontFamily: "Raleway",
+					fontSize: "1rem",
 					textAlign: "center",
-					marginTop: 20
+					marginTop: 70,
+					width: 280,
 				}}
 			>
 				Désolé, aucune place n'est disponible avec les critères sélectionnés pour le moment.

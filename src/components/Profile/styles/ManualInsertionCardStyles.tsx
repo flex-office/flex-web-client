@@ -17,22 +17,22 @@ limitations under the License.
 export default {
   view: {
     alignItems: "center",
-    justifyContent: "space-between",
-    margin: 15,
-    display: "flex"
+    justifyContent: "space-around",
+    margin: "2rem",
+    flexDirection: "column" as "column",
+    display: "flex",
+    height: "60vh"
   },
   button: {
-    backgroundColor: "#fff",
-    borderRadius: 15,
-    borderWidth: 0,
-    boxShadow: "1px 1px 1px 1px rgba(0, 0, 00, 0.2)",
-    paddingBottom: "0.5rem",
-    paddingTop: "0.5rem",
-    width: 100,
+    backgroundColor: "#295CB3",
+    borderRadius: 7,
+    border: "none",
+    width: "11rem",
+    height: "2.7rem",
   },
   text: {
-    color: "#2E89AD",
-    fontFamily: "Roboto",
-    fontWeight: "bold" as "bold",
+    color: "white",
+    fontFamily: "Raleway",
+    fontSize: "1.1rem",
   },
 }

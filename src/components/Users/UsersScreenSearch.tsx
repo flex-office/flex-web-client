@@ -1,6 +1,5 @@
 import React from "react"
 import { withRouter } from "react-router-dom"
-import Icon from "react-fontawesome"
 import { Spinner } from "reactstrap"
 import Input from "../../components/General/Input"
 import UsersList from "../../components/Users/UsersList"
@@ -45,19 +44,20 @@ class UsersScreenSearch extends React.Component<UsersScreenSearchProps, UsersScr
                     <Input
                         onChange={e => this._handleSearch(e.target.value)}
                         onSubmit={getUsers}
-                        placeholder="Recherche   ex: Prénom NOM"
+                        placeholder="Nom Prénom"
+                        clearable
                     />
                     <button
                         onClick={getUsers}
                         style={styles.searchButton}
                     >
-                        <Icon name="arrow-right" style={{ fontSize: 15, color: "#2E89AD" }} />
+                        Rechercher
                     </button>
                 </div>
                 {/* <FindPlacesCard users={getUsers} /> */}
                 {!loading ? (
-                <div style={{ alignSelf: "stretch" }}>
-                    {search !== "" && users !== [] && users.length > 0 ? (
+                <div style={{ alignSelf: "center", width: "80%", maxWidth: 700 }}>
+                    {search !== "" && users !== [] && users.length > 0 && (
                     <UsersList
                         users={users}
                         search={search}
@@ -65,11 +65,11 @@ class UsersScreenSearch extends React.Component<UsersScreenSearchProps, UsersScr
                         onClick={item => item.isFriend ? removeFriend(item) : addFriend(item)}
                         isFriend={item => item.isFriend}
                     />
-                    ) : null}
+                    )}
                 </div>
                 ) : (
                 <div style={styles.spinner}>
-                    <Spinner style={{ marginTop: 40, color: "#2E89AD" }}/>
+                    <Spinner style={{ marginTop: "0.5rem", color: "#E64417" }}/>
                 </div>
                 )}
             </div>
