@@ -141,8 +141,6 @@ type SettingsScreenState = {
   progress: any
   userPlace: string
   change: boolean
-  selectedStartDate: any
-  selectedEndDate: any
 };
 
 interface SettingsScreenProps {
@@ -168,15 +166,9 @@ export class SettingsScreen extends Component<
       loadingSave: false,
       progress: 0,
       userPlace: null,
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: null,
+      endDate: null,
       change: false,
-      selectedStartDate: new Date(),
-      selectedEndDate: new Date()
-
-
-      // const [selectedDate, setSelectedDate] = React.useState<Date | null>(
-      //   new Date('2014-08-18T21:11:54'),
     };
     props.setTitle("Profil");
   }
@@ -188,7 +180,6 @@ export class SettingsScreen extends Component<
     });
   }
   handleEndDateChange = (selectedEndDate) => {
-    console.log(selectedEndDate)
     this.setState({
       endDate: selectedEndDate,
       change : true
@@ -223,8 +214,8 @@ export class SettingsScreen extends Component<
             photo: data.photo,
             historical: data.historical,
             loadingSave: false,
-            startDate: moment(data.start_date).format("DD/MM/YYYY"),
-            endDate: moment(data.end_date).format("DD/MM/YYYY")
+            startDate: data.start_date,
+            endDate: data.end_date
           });
           const user = JSON.parse(localStorage.getItem("USER") || "");
           localStorage.setItem(
@@ -249,8 +240,8 @@ export class SettingsScreen extends Component<
         if (data) {
           this.setState({
             userPlace: data,
-            startDate: moment(data.start_date).format("dd/MM/yyyy"),
-            endDate: moment(data.end_date).format("dd/MM/yyyy")
+            startDate: data.start_date,
+            endDate: data.end_date
           });
         }
       })
@@ -268,9 +259,10 @@ export class SettingsScreen extends Component<
     if (newIndexes.length > 2) return;
     await this.setState({
       remoteDayIndexes: newIndexes,
-      remoteDay: newIndexes.map(x => WEEK_DAYS[x])
+      remoteDay: newIndexes.map(x => WEEK_DAYS[x]),
+      change: true,
     });
-    this.saveRemote();
+    // this.saveRemote();
   };
 
   saveRemote = async () => {
@@ -281,8 +273,8 @@ export class SettingsScreen extends Component<
       id_user: id,
       photo: photo,
       remoteDay,
-      startDate,
-      endDate
+      startDate: moment(startDate).format("DD/MM/YYYY"),
+      endDate: moment(endDate).format("DD/MM/YYYY")
     };
 
     fetch(`${server.address}settings_user`, {
@@ -437,6 +429,7 @@ export class SettingsScreen extends Component<
         </div>
   
 
+      {startDate && endDate ? 
         <div style={styles.viewContainerSemiFlex}>
           <div style={styles.semiFlexRow}>
             <div style={{
@@ -489,14 +482,6 @@ export class SettingsScreen extends Component<
                 </Grid>
               </MuiPickersUtilsProvider>
 
-
-              {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <DatePicker 
-                  emptyLabel=""
-                  format="dd/MM/yyyy"
-                  value={this.state.endDate} 
-                  onChange={this.handleEndDateChange} />
-              </MuiPickersUtilsProvider> */}
             </div>
           </div>
             {!loadingSave ? (
@@ -513,7 +498,7 @@ export class SettingsScreen extends Component<
                 <Spinner style={{ margin: "1rem", color: "#E64417" }}/>
               </div>
             )}
-        </div>
+        </div> : null}
 
         {/* For future purpose */}
         {/* <Calendar /> */}

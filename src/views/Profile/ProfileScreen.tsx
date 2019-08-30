@@ -4,7 +4,8 @@ import { omit } from "ramda"
 import config from "../../config/api.js";
 import server from "../../config/server.js";
 import styles from "./ProfileScreenStyles";
-import socketIOClient from "socket.io-client";
+// Socket comment
+// import socketIOClient from "socket.io-client";
 import HeaderCard from "../../components/Profile/HeaderCard"
 import LeaveButton from "../../components/Profile/LeaveButton"
 import History from "../../components/Profile/History"
@@ -67,7 +68,8 @@ type ProfileScreenState = {
     debug?: Array<any> | string,
     isWrongFormatPlace: boolean
     placeInput: string
-    socket: any
+    // Socket comment
+    // socket: any
     isScanning: boolean
     historical: Array<any>
     recentlyOccupied: boolean
@@ -84,7 +86,8 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         super(props);
         this.state = {
             placeInput: "",
-            socket: socketIOClient(server.sockets),
+            // Socket comment
+            // socket: socketIOClient(server.sockets),
             name: "",
             fname: "",
             id: "",
@@ -94,19 +97,24 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             historical: [],
             recentlyOccupied: false,
         };
-        this.state.socket.on('leavePlace', () => this.leavePlace());
+        // Socket comment
+        // this.state.socket.on('leavePlace', () => this.leavePlace());
         props.setTitle("Ma place")
     }
 
-    exclude = ["socket", "isWrongFormatPlace", "isScanning", "placeInput", "recentlyOccupied"]
+    // Socket comment
+    // exclude = ["socket", "isWrongFormatPlace", "isScanning", "placeInput", "recentlyOccupied"]
+
+    exclude = ["isWrongFormatPlace", "isScanning", "placeInput", "recentlyOccupied"]
 
     componentDidMount = async () => {
         const user = localStorage.getItem("USER")
         if (!user) this.props.history.push("/login")
         else {
             const result = JSON.parse(user);
-            if (result.place || result.pool)
-                this.state.socket.emit('checkPlace', result.id, result.place, config._id);
+            // Socket comment
+            // if (result.place || result.pool)
+            //     this.state.socket.emit('checkPlace', result.id, result.place, config._id);
             await this.setState(result);
             this.takePlaceExternal()
             this.redirect()
@@ -144,7 +152,8 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                 place: placeText,
                 isWrongFormatPlace: false
             });
-            this.state.socket.emit('joinRoom', placeText);
+            // Socket comment
+            // this.state.socket.emit('joinRoom', placeText);
             this.setState({ recentlyOccupied: true, historical: this.state.historical.concat([{id_place: placeText}]) })
             localStorage.setItem("USER", JSON.stringify(omit(this.exclude, this.state)))
             this.props.history.push("/home/leave")
@@ -192,7 +201,8 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                         place: ""
                     });
                     localStorage.setItem("USER", JSON.stringify(omit(this.exclude, this.state)))
-                    this.state.socket.emit('leaveRoom', place);
+                    // Socket comment
+                    // this.state.socket.emit('leaveRoom', place);
                     this.props.history.push("/home")
                     this.redirect()
                 }
@@ -212,6 +222,8 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             recentlyOccupied,
             historical,
         } = this.state
+
+        console.log(this.state, this.props)
 
         return (
             <div style={styles.view}>
