@@ -12,3 +12,5 @@ app.get("/*", function (req, res) {
 })
 
 app.listen(5000)
+
+app.use(router);

@@ -9,6 +9,7 @@ import HeaderBar from "../../components/Navigation/HeaderBar";
 import Input from "../../components/General/Input";
 import FilePicker from "../../components/General/FilePicker";
 import Button from "../../components/General/Button";
+import {logger} from "../../App";
 
 interface CompleteViewProps {
   onValidate: any;
@@ -239,25 +240,32 @@ class SendVerifView extends React.Component<
     };
   }
 
-  validate = async email => {
+  validate = async email => {    
+    logger.debug( 'Validating an email : ' + email);
+
     if (!(/@bred.fr$/.test(email))) return false;
     const payload = {
       email
     };
+    logger.debug("Email is correct");
 
     try {
-      const res = await fetch(`${server.address}login_user`, {
+      const res = await fetch(`${server.address}user/login`, {
         method: "POST",
         body: JSON.stringify(payload),
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${config.token}`
+          authorization: `${config.token}`
         }
       });
-      if (res.status !== 200) return false;
+      if (res.status !== 200) {
+        logger.debug("Server response status : " + res.statusText);
+        return false
+      };
       await this.setState({ email });
       return true;
     } catch (_) {
+      logger.debug("Technical error fetching : "+ server.address+"user/login");
       return false;
     }
   };
