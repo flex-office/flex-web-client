@@ -112,12 +112,12 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                 photo: item.photo
             };
 
-            return fetch(`${server.address}add_friend`, {
+            return fetch(`${server.address}friend/add`, {
                 method: "POST",
                 body: JSON.stringify(payload),
                 headers: {
                     "Content-Type": "application/json",
-                    "authorization": `Bearer ${config.token}`
+                    "authorization": `${config.token}`
                 }
             })
                 .then(res => res.json()) // transform data to json
@@ -137,7 +137,7 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "authorization": `Bearer ${config.token}`
+                "authorization": `${config.token}`
             }
         })
             .then(res => res.json())
@@ -165,7 +165,7 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
             method: "GET",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "authorization": `Bearer ${config.token}`
+                "authorization": `${config.token}`
             }
         })
             .then(res => res.json()) // transform data to json
@@ -192,12 +192,12 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                 id: friendToBeRemoved.id
             };
 
-            fetch(`${server.address}remove_friend`, {
+            fetch(`${server.address}friend/remove`, {
                 method: "POST",
                 body: JSON.stringify(payload),
                 headers: {
                     "Content-Type": "application/json",
-                    "authorization": `Bearer ${config.token}`
+                    "authorization": `${config.token}`
                 }
             })
                 .then(res => res.json()) // transform data to json

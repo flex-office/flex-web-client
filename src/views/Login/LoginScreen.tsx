@@ -68,12 +68,12 @@ class CompleteView extends React.Component<
     };
 
     try {
-      const res = await fetch(`${server.address}complete_user`, {
+      const res = await fetch(`${server.address}user/complete`, {
         method: "POST",
         body: JSON.stringify(payload),
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${config.token}`
+          authorization: `${config.token}`
         }
       });
       if (res.status !== 200)
@@ -194,7 +194,7 @@ class VerificationView extends React.Component<
         body: JSON.stringify(payload),
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${config.token}`
+          authorization: `${config.token}`
         }
       });
       if (res.status !== 200) return false;

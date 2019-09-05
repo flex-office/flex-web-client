@@ -205,7 +205,7 @@ export class SettingsScreen extends Component<
         method: "GET",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          authorization: `Bearer ${config.token}`
+          authorization: `${config.token}`
         }
       })
         .then(res => res.json()) // transform data to json
@@ -232,7 +232,7 @@ export class SettingsScreen extends Component<
       method: "GET",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        authorization: `Bearer ${config.token}`
+        authorization: `${config.token}`
       }
     })
       .then(res => res.json()) // transform data to json
@@ -277,12 +277,12 @@ export class SettingsScreen extends Component<
       endDate: moment(endDate).format("DD/MM/YYYY")
     };
 
-    fetch(`${server.address}settings_user`, {
+    fetch(`${server.address}user/settings`, {
       method: "POST",
       body: JSON.stringify(payload),
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${config.token}`
+        authorization: `${config.token}`
       }
     })
       .then(res => res.json())
@@ -296,7 +296,7 @@ export class SettingsScreen extends Component<
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${config.token}`
+          authorization: `${config.token}`
         }
       })
         .then(res => res.json())

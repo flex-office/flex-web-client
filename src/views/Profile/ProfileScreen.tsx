@@ -187,12 +187,12 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             id_place: place
         };
 
-        fetch(`${server.address}leave_place`, {
+        fetch(`${server.address}place/leave`, {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
                 "Content-Type": "application/json",
-                "authorization": `Bearer ${config.token}`
+                "authorization": `${config.token}`
             }
         })
             .then(res => {

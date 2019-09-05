@@ -20,11 +20,11 @@ export default async function takePlace(id: string, place: string) {
     id_place: place.toUpperCase()
   };
 
-  const res = await fetch(`${server.address}take_place`, {
+  const res = await fetch(`${server.address}places/take`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${config.token}`
+      authorization: `${config.token}`
     },
     body: JSON.stringify(payload)
   });

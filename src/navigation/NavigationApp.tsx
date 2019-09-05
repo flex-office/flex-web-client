@@ -24,7 +24,7 @@ import { Route, withRouter } from 'react-router-dom'
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 
-import devToolsEnhancer from "remote-redux-devtools";
+//import devToolsEnhancer from "remote-redux-devtools";
 
 // import SplashScreen from "../views/Splash/SplashScreen";
 import ProfileScreen from "../views/Profile/ProfileScreen";
@@ -51,7 +51,7 @@ import userUnactive from "../assets/Utilisateurs_grise.svg"
 import { BrowserRouter as Router, Redirect, Switch } from "react-router-dom";
 
 
-const store = createStore(reducer, devToolsEnhancer());
+const store = createStore(reducer);//, devToolsEnhancer());
 
 export class NavBar extends React.Component {
   render() {
