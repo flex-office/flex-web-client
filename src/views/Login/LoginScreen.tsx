@@ -448,7 +448,7 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
               marginTop: "5rem"
             }}
           >
-            Version O.2.6
+            Version O.2.8
           </div>
         </div>
       </div>
