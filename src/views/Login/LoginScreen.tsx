@@ -10,6 +10,7 @@ import Input from "../../components/General/Input";
 import FilePicker from "../../components/General/FilePicker";
 import Button from "../../components/General/Button";
 import {logger} from "../../App";
+const fetch = require('node-fetch');
 
 interface CompleteViewProps {
   onValidate: any;
@@ -250,6 +251,23 @@ class SendVerifView extends React.Component<
     logger.debug("Email is correct");
 
     try {
+      
+      const body = { email: email };
+    //  console.log("body : "+JSON.stringify(body));
+    //console.log(`${server.address}user/login`);
+    //console.log(`config token : ${config.token}`);
+
+    fetch(`${server.address}user/login`, {
+        method: 'post',
+        body:    JSON.stringify(body),
+        headers: {
+           'Content-Type': 'application/json',
+           authorization: `${config.token}`
+           },
+    })
+    .then(res => res.json())
+    .then(json => console.log(json));
+      /*
       const res = await fetch(`${server.address}user/login`, {
         method: "POST",
         body: JSON.stringify(payload),
@@ -258,14 +276,16 @@ class SendVerifView extends React.Component<
           authorization: `${config.token}`
         }
       });
+      
       if (res.status !== 200) {
         logger.debug("Server response status : " + res.statusText);
         return false
       };
+      
       await this.setState({ email });
-      return true;
-    } catch (_) {
-      logger.debug("Technical error fetching : "+ server.address+"user/login");
+      return true;*/
+    } catch (error) {
+      logger.debug("Technical error fetching : "+ server.address+"user/login -> " + error);
       return false;
     }
   };
@@ -428,7 +448,7 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
               marginTop: "5rem"
             }}
           >
-            Version O.2.O
+            Version O.2.6
           </div>
         </div>
       </div>

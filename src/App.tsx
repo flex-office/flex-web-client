@@ -9,6 +9,14 @@ import LoginScreen from "./views/Login/LoginScreen";
 import * as winston from 'winston';
 import { format } from "url";
 
+
+console.log("\nON LAUNCH >>>>> process.env.NODE_ENV             is "+process.env.NODE_ENV+"\n");
+console.log("\n          >>>>> process.env.REACT_APP_LOG_LEVEL  is "+process.env.REACT_APP_LOG_LEVEL+"\n");
+console.log("\n          >>>>> process.env.REACT_APP_ADDRESS    is "+process.env.REACT_APP_ADDRESS+"\n");
+console.log("\n          >>>>> process.env.REACT_APP_SOCKETS     is "+process.env.REACT_APP_SOCKETS+"\n");
+console.log("\n >>>>>>>>>  VERSION 0.2.7  <<<<<<<<<<<<<\n");
+
+
 export var LOG_LEVEL = process.env.REACT_APP_LOG_LEVEL || "info";
 
 if (process.env.NODE_ENV !== "production") {
