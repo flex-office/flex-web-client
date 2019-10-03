@@ -1,8 +1,5 @@
 import React from "react";
 import NavigationApp from "./navigation/NavigationApp";
-// import config from "../config/api.js"
-// import server from "../config/server.js"
-// import { pushNotifications } from "./utils/services/index"
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LoginScreen from "./views/Login/LoginScreen";
