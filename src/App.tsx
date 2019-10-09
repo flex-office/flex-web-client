@@ -13,6 +13,10 @@ console.log("\n          >>>>> process.env.REACT_APP_ADDRESS    is "+process.env
 console.log("\n          >>>>> process.env.REACT_APP_SOCKETS     is "+process.env.REACT_APP_SOCKETS+"\n");
 console.log("\n >>>>>>>>>  VERSION 0.2.8  <<<<<<<<<<<<<\n");
 
+if (process.env.NODE_ENV === 'development'){
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+  process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = "0";
+}
 
 export var LOG_LEVEL = process.env.REACT_APP_LOG_LEVEL || "info";
 

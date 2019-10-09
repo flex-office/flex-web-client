@@ -11,6 +11,9 @@ import FilePicker from "../../components/General/FilePicker";
 import Button from "../../components/General/Button";
 import {logger} from "../../App";
 
+
+// need to add in case of self-signed certificate connection
+
 interface CompleteViewProps {
   onValidate: any;
   email: string;
@@ -432,7 +435,7 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
               marginTop: "5rem"
             }}
           >
-            Version O.2.8
+            Version O.2.9
           </div>
         </div>
       </div>
