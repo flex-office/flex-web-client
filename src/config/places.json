@@ -1,20 +1,20 @@
 {
-    "buildingIndex": ["Joinsville", "La Rapée"],
-    "buildingCodes": ["JO", "LR"],
+    "buildingIndex": ["Joinville", "La Rapée"],
+    "buildingCodes": ["JO", "RA"],
     "buildings": [
         {
             "zoneCodes": ["V", "B", "R"],
             "sideIndexUpper": ["RER", "BOIS", "MILIEU"],
-            "floorIndex": ["3ème étage", "4ème étage"],
+            "floorIndex": ["3", "4"],
             "zoneIndex": ["Zone verte", "Zone bleue", "Zone rouge"],
             "sideIndex": ["RER", "Bois", "Milieu"]
         },
         {
-            "zoneCodes": ["V", "B", "R"],
-            "sideIndexUpper": ["SEINE", "COURS", "MILIEU"],
-            "floorIndex": ["5ème étage", "6ème étage"],
-            "zoneIndex": ["Zone verte", "Zone bleue", "Zone rouge"],
-            "sideIndex": ["Seine", "Cours", "Milieu"]
+            "zoneCodes": ["A"],
+            "sideIndexUpper": ["SEINE", "COUR"],
+            "floorIndex": ["10", "11"],
+            "zoneIndex": ["Etage entier"],
+            "sideIndex": ["Seine", "Cour"]
         }
     ]
 }

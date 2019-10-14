@@ -187,12 +187,12 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             id_place: place
         };
 
-        fetch(`${server.address}leave_place`, {
+        fetch(`${server.address}places/leave`, {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
                 "Content-Type": "application/json",
-                "authorization": `Bearer ${config.token}`
+                "authorization": `${config.token}`
             }
         })
             .then(res => {
@@ -202,7 +202,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                     });
                     localStorage.setItem("USER", JSON.stringify(omit(this.exclude, this.state)))
                     // Socket comment
-                    // this.state.socket.emit('leaveRoom', place);
+                    //this.state.socket.emit('leaveRoom', place);
                     this.props.history.push("/home")
                     this.redirect()
                 }

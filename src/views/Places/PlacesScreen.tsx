@@ -53,7 +53,7 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
                 method: "GET",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
-                    "authorization": `Bearer ${config.token}`
+                    "authorization": `${config.token}`
                 }
             }).then(res => res.json()) // transform data to json
             return user.start_date && user.end_date && moment().isBetween(user.start_date, user.end_date)
@@ -68,7 +68,7 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
             method: "GET",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "authorization": `Bearer ${config.token}`
+                "authorization": `${config.token}`
             }
         })
             .then(res => res.json())
@@ -98,13 +98,16 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
     };
 
     filterPlaces = () => {
+        console.log("selectedBuildingIndex, selectedFloorIndex, selectedZoneIndex, selectedSideIndex ");
         const { places, selectedBuildingIndex, selectedFloorIndex, selectedZoneIndex, selectedSideIndex } = this.state;
+        console.log(selectedBuildingIndex+ ","+ selectedFloorIndex+ ","+ selectedZoneIndex+ ","+ selectedSideIndex );
 
         const buildingCode = placesConfig.buildingCodes[selectedBuildingIndex];
-        const floor = selectedFloorIndex === 0 ? "3" : "4";
+        const floor = selectedFloorIndex === 0 ? placesConfig.buildings[selectedBuildingIndex].floorIndex[0]:placesConfig.buildings[selectedBuildingIndex].floorIndex[1];
         const zoneCode = placesConfig.buildings[selectedBuildingIndex].zoneCodes[selectedZoneIndex];
         const side = placesConfig.buildings[selectedBuildingIndex].sideIndexUpper[selectedSideIndex];
         const reg = new RegExp(`${buildingCode}-${floor}-${zoneCode}-${side}\\d{2}`)
+        console.log("reg"+reg);
 
         return places.filter(place => reg.test(place.id) && !place.using);
     };
@@ -136,7 +139,10 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
 
                     {/* Floor selector */}
                     <PlacesSelector
-                        buttons={placesConfig.buildings[this.state.selectedBuildingIndex].floorIndex}
+                        buttons={placesConfig.buildings[this.state.selectedBuildingIndex].floorIndex
+                            .map(function(item){
+                                return item+"e étage"
+                            })}
                         onPress={this.updateFloorIndex}
                         selectedIndex={selectedFloorIndex}
                     />

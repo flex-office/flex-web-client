@@ -185,7 +185,7 @@ export class SettingsScreen extends Component<
       change : true
     }); 
   }
-  componentDidMount() {
+  async componentDidMount() {
     const result = localStorage.getItem("USER");
     if (!result) this.props.history.push("/login");
     else {
@@ -201,29 +201,31 @@ export class SettingsScreen extends Component<
         place: ""
       });
       const userId = JSON.parse(result).id;
-      fetch(`${server.address}users/${userId}`, {
+      const response = await fetch(`${server.address}users/${userId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          authorization: `Bearer ${config.token}`
+          authorization: `${config.token}`
         }
-      })
-        .then(res => res.json()) // transform data to json
-        .then(data => {
+      });
+      const json = await response.json();
+      console.log(json);
+
           this.setState({
-            photo: data.photo,
-            historical: data.historical,
+            photo: json.photo,
+            historical: json.historical,
             loadingSave: false,
-            startDate: data.start_date,
-            endDate: data.end_date
+            startDate: json.start_date,
+            endDate: json.end_date
           });
+
           const user = JSON.parse(localStorage.getItem("USER") || "");
           localStorage.setItem(
             "USER",
-            JSON.stringify(Object.assign({ ...user }, { photo: data.photo }))
+            JSON.stringify(Object.assign({ ...user }, { photo: json.photo }))
           );
           this.getUserPlace(userId);
-        });
+        
     }
   }
 
@@ -232,7 +234,7 @@ export class SettingsScreen extends Component<
       method: "GET",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        authorization: `Bearer ${config.token}`
+        authorization: `${config.token}`
       }
     })
       .then(res => res.json()) // transform data to json
@@ -262,7 +264,7 @@ export class SettingsScreen extends Component<
       remoteDay: newIndexes.map(x => WEEK_DAYS[x]),
       change: true,
     });
-    // this.saveRemote();
+    this.saveRemote();
   };
 
   saveRemote = async () => {
@@ -277,12 +279,12 @@ export class SettingsScreen extends Component<
       endDate: moment(endDate).format("DD/MM/YYYY")
     };
 
-    fetch(`${server.address}settings_user`, {
+    fetch(`${server.address}user/settings`, {
       method: "POST",
       body: JSON.stringify(payload),
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${config.token}`
+        authorization: `${config.token}`
       }
     })
       .then(res => res.json())
@@ -291,12 +293,13 @@ export class SettingsScreen extends Component<
       });
 
     // Wait until the photo is uploaded to Cloudinary and the link is provided to perform request
+    // Jan 06092019 : uploaded with a GET ? downloaded instead ?
     setTimeout(async () => {
       fetch(`${server.address}users/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${config.token}`
+          authorization: `${config.token}`
         }
       })
         .then(res => res.json())
@@ -366,7 +369,7 @@ export class SettingsScreen extends Component<
               onChange={async image => {
                 if (image) {
                   await this.setState({ photo: image, change: true });
-                  // this.saveRemote();
+                  this.saveRemote();
                 }
               }}
             >
