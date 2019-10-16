@@ -31,7 +31,13 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
 
     getPlaces() {
         this.setState({ loading: true });
-        fetch(`${server.address}places/`, {
+        const result = localStorage.getItem("USER");
+        const userId = JSON.parse(result).id;
+        //fetch(`${server.address}places/`, {
+            // /users/:user_id/place
+        //fetch(`${server.address}places/${userId}/place`, {
+        fetch(`${server.address}users/${userId}/place`, {
+
             method: "GET",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -49,11 +55,21 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
 
     isFree = place => {
         if (!this.state.places || this.state.places.length < 1) return false
-        return !!this.state.places.find(x => x.id === place && !x.using)
+        //return this.state.places.find(x => x.id === place.id && !x.using)
+        return this.state.places
+
     }
 
     getHistory(historical) {
-        return Array.from(new Set(historical.map(x => x.id_place))).sort().filter(this.isFree).map(x => {return{id: x}})
+        return Array
+        .from(
+            new Set(
+                historical.map(x => x.id_place)
+                )
+            )
+        .sort()
+        .filter(this.isFree)
+        .map(x => {return{id: x}})
     }
 
     onClick = async x => {
