@@ -117,7 +117,7 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                 body: JSON.stringify(payload),
                 headers: {
                     "Content-Type": "application/json",
-                    "authorization": `${config.token}`
+                    "authorization": `Bearer ${config.token}`
                 }
             })
                 .then(res => res.json()) // transform data to json
@@ -137,7 +137,7 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "authorization": `${config.token}`
+                "authorization": `Bearer ${config.token}`
             }
         })
             .then(res => res.json())
@@ -165,7 +165,7 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
             method: "GET",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "authorization": `${config.token}`
+                "authorization": `Bearer ${config.token}`
             }
         })
             .then(res => res.json()) // transform data to json
@@ -197,7 +197,7 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                 body: JSON.stringify(payload),
                 headers: {
                     "Content-Type": "application/json",
-                    "authorization": `${config.token}`
+                    "authorization": `Bearer ${config.token}`
                 }
             })
                 .then(res => res.json()) // transform data to json

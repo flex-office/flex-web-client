@@ -76,7 +76,7 @@ class CompleteView extends React.Component<
         body: JSON.stringify(payload),
         headers: {
           "Content-Type": "application/json",
-          authorization: `${config.token}`
+          "authorization": `Bearer ${config.token}`
         }
       });
       if (res.status !== 200)
@@ -197,7 +197,7 @@ class VerificationView extends React.Component<
         body: JSON.stringify(payload),
         headers: {
           "Content-Type": "application/json",
-          authorization: `${config.token}`
+          "authorization": `Bearer ${config.token}`
         }
       });
       if (res.status !== 200) return false;
@@ -259,7 +259,7 @@ class SendVerifView extends React.Component<
         body: JSON.stringify(payload),
         headers: {
           "Content-Type": "application/json",
-          authorization: `${config.token}`
+          "authorization": `Bearer ${config.token}`
         }
       });
       

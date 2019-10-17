@@ -196,7 +196,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             body: JSON.stringify(payload),
             headers: {
                 "Content-Type": "application/json",
-                "authorization": `${config.token}`
+                "authorization": `Bearer ${config.token}`
             }
         })
             .then(res => {

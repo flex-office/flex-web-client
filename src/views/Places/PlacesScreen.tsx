@@ -53,7 +53,7 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
                 method: "GET",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
-                    "authorization": `${config.token}`
+                    "authorization": `Bearer ${config.token}`
                 }
             }).then(res => res.json()) // transform data to json
             return user.start_date && user.end_date && moment().isBetween(user.start_date, user.end_date)
@@ -68,7 +68,7 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
             method: "GET",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "authorization": `${config.token}`
+                "authorization": `Bearer ${config.token}`
             }
         })
             .then(res => res.json())

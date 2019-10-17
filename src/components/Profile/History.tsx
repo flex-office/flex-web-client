@@ -45,7 +45,7 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
                 method: "GET",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
-                    "authorization": `${config.token}`
+                    "authorization": `Bearer ${config.token}`
                 }
             })
             .then(res => res.json())
