@@ -205,7 +205,7 @@ export class SettingsScreen extends Component<
         method: "GET",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          authorization: `${config.token}`
+          "authorization": `Bearer ${config.token}`
         }
       });
       const json = await response.json();
@@ -234,7 +234,7 @@ export class SettingsScreen extends Component<
       method: "GET",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        authorization: `${config.token}`
+        "authorization": `Bearer ${config.token}`
       }
     })
       .then(res => res.json()) // transform data to json
@@ -284,7 +284,7 @@ export class SettingsScreen extends Component<
       body: JSON.stringify(payload),
       headers: {
         "Content-Type": "application/json",
-        authorization: `${config.token}`
+        "authorization": `Bearer ${config.token}`
       }
     })
       .then(res => res.json())
@@ -299,7 +299,7 @@ export class SettingsScreen extends Component<
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          authorization: `${config.token}`
+          "authorization": `Bearer ${config.token}`
         }
       })
         .then(res => res.json())
@@ -330,6 +330,7 @@ export class SettingsScreen extends Component<
 
   render() {
     const { remoteDayIndexes, name, fname, id, photo, loadingSave, startDate, endDate, change } = this.state;
+
     return (
       <div style={styles.container}>
         <div style={styles.viewContainer}>

@@ -24,7 +24,7 @@ export default async function takePlace(id: string, place: string) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      authorization: `${config.token}`
+      "authorization": `Bearer ${config.token}`
     },
     body: JSON.stringify(payload)
   });
