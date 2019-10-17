@@ -56,12 +56,12 @@ export default class NavElem extends React.Component<NavElemProps> {
                 activeStyle={Object.assign({
                     textDecoration: "none",
                     color: "#1B3F7B",
+                    pointerEvents: "none",
                 }, (border) && {
                     borderBottom: "solid" as "solid",
                     borderWidth: 1.5,
                     textDecoration: "none",
                     paddingBottom: "0.4rem",
-                    pointerEvents: "none",
                     fontWeight: 600,
                 })}
             >

@@ -17,6 +17,8 @@ interface HistoryState {
 }
 
 export class HistoryComponent extends React.Component<HistoryProps, HistoryState> {
+    _isMounted = false;
+
     constructor(props) {
         super(props)
         this.state = {
@@ -26,41 +28,69 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
     }
 
     componentDidMount() {
+        this._isMounted = true
         this.getPlaces()
     }
+    componentWillUnmount() {
+        this._isMounted = false;
+      }
 
     getPlaces() {
-        this.setState({ loading: true });
-        const result = localStorage.getItem("USER");
-        const userId = JSON.parse(result).id;
-        //fetch(`${server.address}places/`, {
-            // /users/:user_id/place
-        //fetch(`${server.address}places/${userId}/place`, {
-        fetch(`${server.address}users/${userId}/place`, {
-
-            method: "GET",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "authorization": `${config.token}`
-            }
-        })
+        if (this._isMounted) {
+            console.log("HISTORYYYYYYYY");
+            this.setState({ loading: true });
+            const result = localStorage.getItem("USER");
+            const userId = JSON.parse(result).id;
+            fetch(`${server.address}users/${userId}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "authorization": `${config.token}`
+                }
+            })
             .then(res => res.json())
             .then(data => {
+                console.log("AZERTY");
+                console.log("data : "+data);
+
                 this.setState({
-                    places: data,
+                    places: data.historical,
                     loading: false
                 });
             });
+            /*
+
+            fetch(`${server.address}users/${userId}/place`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "authorization": `${config.token}`
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log("AZERTY");
+                    console.log("data : "+data);
+
+                    this.setState({
+                        places: data,
+                        loading: false
+                    });
+                });
+                */
+        }
     }
 
     isFree = place => {
         if (!this.state.places || this.state.places.length < 1) return false
         //return this.state.places.find(x => x.id === place.id && !x.using)
+        console.log("this.state.places : "+this.state.places);
         return this.state.places
-
     }
 
     getHistory(historical) {
+        console.log("42 historical : "+historical);
+
         return Array
         .from(
             new Set(
@@ -80,6 +110,8 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
     render () {
         const history = this.getHistory(this.props.historical)
         const { loading } = this.state
+        console.log("42 historical 2 : "+history);
+        console.log("LOADING : "+loading);
 
         return (
             <div style={{

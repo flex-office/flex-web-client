@@ -133,8 +133,12 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
     redirect() {
         const { place, historical } = this.state
         const pathname = this.props.location.pathname
+        console.log("pathname : "+pathname);
+        console.log("place : "+place);
+        console.log("historical : "+historical);
 
         if (pathname !== "/home") return
+        console.log("HOHOHOHOHOHOHOH");
         const goTo = x => (x !== pathname) && this.props.history.push(x)
 
         if (place) goTo("/home/leave")
@@ -224,53 +228,68 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         } = this.state
 
         console.log(this.state, this.props)
-
-        return (
-            <div style={styles.view}>
-                <Switch>
-                    <Route path="/home/leave" render={() =>
-                        <LeaveComponent name={name} fname={fname} place={place} leavePlace={this.leavePlace} showMessage={recentlyOccupied} />
-                    }
-                    />
-                    <Route>
-                        <div style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            width: "100%",
-                            justifyContent: "center",
-                            fontFamily: "Raleway",
-                            maxWidth: 900,
-                            alignSelf: "center"
-                        }}>
-                            <NavElem to="/home/scan" src="" border>Scan du <br></br> QR Code</NavElem>
-                            <NavElem to="/home/input" src="" border>Saisie <br></br> Manuelle</NavElem>
-                            <NavElem to="/home/history" src="" border>Mes dernières <br></br> places</NavElem>
-                        </div>
-                        <HeaderCard fname={fname} name={name} />
-                        <Route path="/home/scan" render={() =>
-                            <QRCodeComponent onRead={this.onRead} />
+        /*
+        if (place){
+            const pathname = this.props.location.pathname
+            const goTo = x => (x !== pathname) && this.props.history.push(x)
+            goTo("/home/leave")
+        }*/
+        
+        /*
+        const pathname = this.props.location.pathname
+        const goTo = x => (x !== pathname) && this.props.history.push(x)
+        if (place) {
+            goTo("/home/leave")
+            return
+        }else{*/
+            return (
+                <div style={styles.view}>
+                    <Switch>
+                        <Route path="/home/leave" render={() =>
+                            <LeaveComponent name={name} fname={fname} place={place} leavePlace={this.leavePlace} showMessage={recentlyOccupied} />
                         }
                         />
-                        <Route path="/home/input" render={() =>
-                            <ManualInsertionCard
-                                onChangeText={e => this.setState({ placeInput: e.target.value.toUpperCase().trim() })}
-                                placeInput={placeInput}
-                                onSubmitEditing={() => this.insertPlace(this.state.placeInput)}
-                                onPress={() => this.insertPlace(this.state.placeInput)}
+                        <Route>
+                            <div style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                width: "100%",
+                                justifyContent: "center",
+                                fontFamily: "Raleway",
+                                maxWidth: 900,
+                                alignSelf: "center"
+                            }}>
+                                <NavElem to="/home/scan" src="" border>Scan du <br></br> QR Code</NavElem>
+                                <NavElem to="/home/input" src="" border>Saisie <br></br> Manuelle</NavElem>
+                                <NavElem to="/home/history" src="" border>Mes dernières <br></br> places</NavElem>
+                            </div>
+                            <HeaderCard fname={fname} name={name} />
+                            <Route path="/home/scan" render={() =>
+                                <QRCodeComponent onRead={this.onRead} />
+                            }
                             />
-                        }
-                        />
-                        <Route path="/home/history" render={() =>
-                            <History historical={historical} takePlace={this.takePlace} />
-                        }
-                        />
-                        {isWrongFormatPlace && (
-                            <p style={styles.debug}>Mauvais format de place</p>
-                        )}
-                    </Route>
-                </Switch>
-            </div>
-        )
+                            <Route path="/home/input" render={() =>
+                                <ManualInsertionCard
+                                    onChangeText={e => this.setState({ placeInput: e.target.value.toUpperCase().trim() })}
+                                    placeInput={placeInput}
+                                    onSubmitEditing={() => this.insertPlace(this.state.placeInput)}
+                                    onPress={() => this.insertPlace(this.state.placeInput)}
+                                />
+                            }
+                            />
+                            <Route path="/home/history" render={() =>
+                                <History historical={historical} takePlace={this.takePlace} />
+                            }
+                            />
+                            {isWrongFormatPlace && (
+                                <p style={styles.debug}>Mauvais format de place</p>
+                            )}
+                        </Route>
+                    </Switch>
+                </div>
+                )
+        //}
+
     }
 }
 
