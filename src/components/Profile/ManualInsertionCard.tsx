@@ -16,6 +16,10 @@ limitations under the License.
 import React from "react";
 import styles from "./styles/ManualInsertionCardStyles";
 import Input from "../General/Input"
+import PlacesScreen from "../../views/Places/PlacesScreen"
+import server from "../../config/server.js";
+import config from "../../config/api.js";
+
 
 const ManualInsertionCard = (props: {
   onChangeText: any,
@@ -24,9 +28,17 @@ const ManualInsertionCard = (props: {
   placeInput: string,
 }) => {
   const { onSubmitEditing, onChangeText, onPress, placeInput } = props;
+  
+ 
+  const Places=asyncCall();
+
+  
+
+  
+ 
   return (
     <div style={styles.view}>
-      <Input
+      <Input id="PlaceSearch"
         placeholder="Place"
         onChange={onChangeText}
         onSubmit={onSubmitEditing}
@@ -45,4 +57,29 @@ const ManualInsertionCard = (props: {
   );
 };
 
+async function asyncCall(){
+    var result=await getPlaces();
+    console.log("titi");
+    return result;
+}
+
+function getPlaces (){
+  return new Promise(result=>{
+  fetch(`${server.address}places/`, {
+      method: "GET",
+      headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "authorization": `Bearer ${config.token}`
+      }
+  })
+      .then(res => res.json())
+      .then(async data => {
+           result(await data.filter(async place => !place.using && (!place.semi_flex )));
+        console.log("toto");
+        });
+    });
+}
+
 export default ManualInsertionCard;
+
+

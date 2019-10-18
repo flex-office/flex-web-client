@@ -24,7 +24,7 @@ interface PlacesScreenProps {
     setTitle: any
 }
 
-class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState> {
+export class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState> {
     constructor(props) {
         super(props);
         this.state = {
