@@ -19,6 +19,8 @@ import Input from "../General/Input"
 import PlacesScreen from "../../views/Places/PlacesScreen"
 import server from "../../config/server.js";
 import config from "../../config/api.js";
+import {render} from 'react-dom'
+import Downshift from 'downshift'
 
 
 const ManualInsertionCard = (props: {
@@ -30,22 +32,74 @@ const ManualInsertionCard = (props: {
   const { onSubmitEditing, onChangeText, onPress, placeInput } = props;
   
  
-  const Places=asyncCall();
+  var ListPlaces;
+
+    // fetch(`${server.address}places/`, {
+    //     method: "GET",
+    //     headers: {
+    //         "Content-Type": "application/x-www-form-urlencoded",
+    //         "authorization": `Bearer ${config.token}`
+    //     }
+    // })
+    //     .then(res => res.json())
+    //     .then(async data => {
+    //          ListPlaces=await data.filter(async place => !place.using && (!place.semi_flex ));
+    //       console.log("toto");
+    //       });
+
+        ListPlaces=[{id:"JO-3-V-RER34"},{id:"RA-3-V-RER34"},{id:"JO-3-V-RER10"},{id:"JO-3-V-RER04"}]
+
 
   
 
   
  
   return (
-    <div style={styles.view}>
-      <Input id="PlaceSearch"
+    <Downshift
+    itemToString={item => (item ? item.id : '')}
+  >
+    {({
+      getInputProps,
+      getItemProps,
+      getLabelProps,
+      getMenuProps,
+      isOpen,
+      inputValue,
+      highlightedIndex,
+      selectedItem,
+    }) => (
+      <div>
+        <label {...getLabelProps()}>Enter a fruit</label>
+        <Input id="PlaceSearch"
         placeholder="Place"
         onChange={onChangeText}
         onSubmit={onSubmitEditing}
         value={placeInput}
         clearable
-      />
-      <button
+      {...getInputProps()} />
+        <ul {...getMenuProps()}>
+          {isOpen
+            ? ListPlaces
+                .filter(item => !inputValue || item.id.includes(inputValue))
+                .map((item, index) => (
+                  <li
+                    {...getItemProps({
+                      key: item.id,
+                      index,
+                      item,
+                      style: {
+                        backgroundColor:
+                          highlightedIndex === index ? 'lightgray' : 'white',
+                        fontWeight: selectedItem === item ? 'bold' : 'normal',
+                      },
+                    })}
+                  >
+                    {item.id}
+                  </li>
+                ))
+            : null}
+        </ul>
+        <button
         style={styles.button}
         onClick={onPress}
       >
@@ -53,7 +107,9 @@ const ManualInsertionCard = (props: {
           Réserver
         </div>
       </button>
-    </div>
+      </div>
+    )}
+  </Downshift>
   );
 };
 
@@ -64,20 +120,7 @@ async function asyncCall(){
 }
 
 function getPlaces (){
-  return new Promise(result=>{
-  fetch(`${server.address}places/`, {
-      method: "GET",
-      headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "authorization": `Bearer ${config.token}`
-      }
-  })
-      .then(res => res.json())
-      .then(async data => {
-           result(await data.filter(async place => !place.using && (!place.semi_flex )));
-        console.log("toto");
-        });
-    });
+  
 }
 
 export default ManualInsertionCard;
