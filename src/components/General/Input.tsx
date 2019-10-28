@@ -37,6 +37,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     error?: string
     style?: any
     clearable?: boolean
+    onClickOnX?: any
 }
 
 class Input extends React.Component<InputProps> {
@@ -51,6 +52,11 @@ class Input extends React.Component<InputProps> {
         if (e.key === "Enter") {
             this.props.onSubmit()
         }
+    }
+
+    handleClickOnX = () => {
+        this.inputRef.current.value = "";
+        this.props.onClickOnX();
     }
 
     errorView(error) {
@@ -72,7 +78,7 @@ class Input extends React.Component<InputProps> {
     }
 
     render() {
-        const { onSubmit, ariaLabel, type, style, error,clearable, ...rest } = this.props
+        const { onSubmit, ariaLabel, type, style, error, clearable, onClickOnX, ...rest } = this.props
         return (
             <div
                 style={Object.assign({ ...styles.container }, style || {})}
@@ -104,7 +110,7 @@ class Input extends React.Component<InputProps> {
                                 cursor: "pointer",
                                 color: "#295CB3",
                             }}
-                            onClick={() => this.inputRef.current.value = ""}
+                            onClick={this.handleClickOnX}
                         >
                             X
                     </span>
