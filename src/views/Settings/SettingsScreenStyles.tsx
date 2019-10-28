@@ -164,7 +164,7 @@ export default {
     paddingLeft: "2rem",
     paddingRight: "2rem",
     border: "none",
-    marginTop: "0.5rem",
+    marginTop: "0.5rem"
   },
   semiFlexButtonText: {
     flex: 1,

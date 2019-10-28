@@ -216,7 +216,8 @@ export class SettingsScreen extends Component<
             historical: json.historical,
             loadingSave: false,
             startDate: json.start_date,
-            endDate: json.end_date
+            endDate: json.end_date,
+            change: false
           });
 
           const user = JSON.parse(localStorage.getItem("USER") || "");
@@ -443,7 +444,7 @@ export class SettingsScreen extends Component<
               width: "100%",
               alignItems: "baseline"
             }}>
-              <div style={styles.semiFlexText}>Absent/e du</div>
+              <div style={styles.semiFlexText}>Absent.e du</div>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <Grid container justify="space-around">
                   <KeyboardDatePicker
@@ -490,7 +491,7 @@ export class SettingsScreen extends Component<
           </div>
             {!loadingSave ? (
               <button
-                style={{ backgroundColor: change ? '#295CB3'  :'grey', ...styles.semiFlexButton}}
+                style={{ display: change ? 'block':'none', backgroundColor: 'grey', ...styles.semiFlexButton}}
                 onClick={() => !change ? null : this.saveRemote()}
               >
                 <div style={styles.semiFlexButtonText}

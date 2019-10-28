@@ -24,7 +24,7 @@ interface PlacesScreenProps {
     setTitle: any
 }
 
-class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState> {
+export class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -98,16 +98,16 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
     };
 
     filterPlaces = () => {
-        console.log("selectedBuildingIndex, selectedFloorIndex, selectedZoneIndex, selectedSideIndex ");
-        const { places, selectedBuildingIndex, selectedFloorIndex, selectedZoneIndex, selectedSideIndex } = this.state;
-        console.log(selectedBuildingIndex+ ","+ selectedFloorIndex+ ","+ selectedZoneIndex+ ","+ selectedSideIndex );
 
+        const { places, selectedBuildingIndex, selectedFloorIndex, selectedZoneIndex, selectedSideIndex } = this.state;
         const buildingCode = placesConfig.buildingCodes[selectedBuildingIndex];
         const floor = selectedFloorIndex === 0 ? placesConfig.buildings[selectedBuildingIndex].floorIndex[0]:placesConfig.buildings[selectedBuildingIndex].floorIndex[1];
-        const zoneCode = placesConfig.buildings[selectedBuildingIndex].zoneCodes[selectedZoneIndex];
-        const side = placesConfig.buildings[selectedBuildingIndex].sideIndexUpper[selectedSideIndex];
+        const zoneCode = selectedBuildingIndex === 1 ? placesConfig.buildings[selectedBuildingIndex].zoneCodes[0] : placesConfig.buildings[selectedBuildingIndex].zoneCodes[selectedZoneIndex];
+        const side = this.state.selectedBuildingIndex === 1 ? 
+            (this.state.selectedSideIndex === 2 ? placesConfig.buildings[selectedBuildingIndex].sideIndexUpper[0] : placesConfig.buildings[selectedBuildingIndex].sideIndexUpper[selectedSideIndex]) : placesConfig.buildings[selectedBuildingIndex].sideIndexUpper[selectedSideIndex]
+        
+        
         const reg = new RegExp(`${buildingCode}-${floor}-${zoneCode}-${side}\\d{2}`)
-        console.log("reg"+reg);
 
         return places.filter(place => reg.test(place.id) && !place.using);
     };
@@ -151,14 +151,17 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
                     <PlacesSelector
                         buttons={placesConfig.buildings[this.state.selectedBuildingIndex].sideIndex}
                         onPress={this.updateSideIndex}
-                        selectedIndex={selectedSideIndex}
+                        selectedIndex={
+                            this.state.selectedBuildingIndex === 1 ? 
+                                (this.state.selectedSideIndex === 2 ? 0 : selectedSideIndex) : selectedSideIndex
+                        }
                     />
 
                     {/* Zone selector */}
                     <PlacesSelector
                         buttons={placesConfig.buildings[this.state.selectedBuildingIndex].zoneIndex}
                         onPress={this.updateZoneIndex}
-                        selectedIndex={selectedZoneIndex}
+                        selectedIndex={this.state.selectedBuildingIndex === 1 ? 0 : selectedZoneIndex}
                     />
 
                     <FetchPlacesButton
