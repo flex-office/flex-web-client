@@ -12,7 +12,7 @@ const styles = {
         display: "flex",
         flexDirection: "row" as "row",
         justifyContent: "space-between",
-    fontSize: "0.8rem"
+        fontSize: "0.8rem"
     },
     container: {
         display: "flex",
@@ -89,6 +89,14 @@ class Input extends React.Component<InputProps> {
                     <Style scopeSelector='.my-input::placeholder' rules={{
                         color: '#7F8184'
                     }} />
+                    <Style scopeSelector='input[type=number]::-webkit-outer-spin-button,
+                            input[type=number]::-webkit-inner-spin-button' rules={{
+                                '-webkit-appearance': 'none',
+                                margin: 0
+                    }} />
+                    <Style scopeSelector='input[type=number]' rules={{
+                                '-moz-appearance':'textfield'
+                    }} />
                     <input
                         {...rest}
                         className="my-input"
@@ -102,6 +110,7 @@ class Input extends React.Component<InputProps> {
                             outline: "none",
                             fontSize: "1rem",
                             flex: 1,
+                            
                         }}
                     />
                     {clearable && (

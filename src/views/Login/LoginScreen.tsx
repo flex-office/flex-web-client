@@ -319,8 +319,6 @@ class CommonView extends React.Component<CommonViewProps, CommonViewState> {
     const { validate, onValidate } = this.props;
     if (await validate(this.state.value)) {
       this.setState({ error: "" });
-      console.log("OUCH");
-      console.log(this.state.value);
       onValidate(this.state.value);
     } else {
       this.setState({ error: this.props.errorMessage });
@@ -359,9 +357,6 @@ class CommonView extends React.Component<CommonViewProps, CommonViewState> {
           onChange={e => 
             {
               this.setState({ value: e.target.value });
-              console.log("HOIOOOOOOOOOO");
-              console.log(e.target.value);
-              console.log();
             }
           }
           error={error}
