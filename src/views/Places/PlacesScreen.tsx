@@ -98,16 +98,13 @@ class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScreenState>
     };
 
     filterPlaces = () => {
-        console.log("selectedBuildingIndex, selectedFloorIndex, selectedZoneIndex, selectedSideIndex ");
-        const { places, selectedBuildingIndex, selectedFloorIndex, selectedZoneIndex, selectedSideIndex } = this.state;
-        console.log(selectedBuildingIndex+ ","+ selectedFloorIndex+ ","+ selectedZoneIndex+ ","+ selectedSideIndex );
 
+        const { places, selectedBuildingIndex, selectedFloorIndex, selectedZoneIndex, selectedSideIndex } = this.state;
         const buildingCode = placesConfig.buildingCodes[selectedBuildingIndex];
         const floor = selectedFloorIndex === 0 ? placesConfig.buildings[selectedBuildingIndex].floorIndex[0]:placesConfig.buildings[selectedBuildingIndex].floorIndex[1];
         const zoneCode = placesConfig.buildings[selectedBuildingIndex].zoneCodes[selectedZoneIndex];
         const side = placesConfig.buildings[selectedBuildingIndex].sideIndexUpper[selectedSideIndex];
         const reg = new RegExp(`${buildingCode}-${floor}-${zoneCode}-${side}\\d{2}`)
-        console.log("reg"+reg);
 
         return places.filter(place => reg.test(place.id) && !place.using);
     };
