@@ -12,7 +12,7 @@ const styles = {
         display: "flex",
         flexDirection: "row" as "row",
         justifyContent: "space-between",
-    fontSize: "0.8rem"
+        fontSize: "0.8rem"
     },
     container: {
         display: "flex",
@@ -37,6 +37,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     error?: string
     style?: any
     clearable?: boolean
+    onClickOnX?: any
 }
 
 class Input extends React.Component<InputProps> {
@@ -51,6 +52,11 @@ class Input extends React.Component<InputProps> {
         if (e.key === "Enter") {
             this.props.onSubmit()
         }
+    }
+
+    handleClickOnX = () => {
+        this.inputRef.current.value = "";
+        this.props.onClickOnX();
     }
 
     errorView(error) {
@@ -72,7 +78,7 @@ class Input extends React.Component<InputProps> {
     }
 
     render() {
-        const { onSubmit, ariaLabel, type, style, error,clearable, ...rest } = this.props
+        const { onSubmit, ariaLabel, type, style, error, clearable, onClickOnX, ...rest } = this.props
         return (
             <div
                 style={Object.assign({ ...styles.container }, style || {})}
@@ -82,6 +88,14 @@ class Input extends React.Component<InputProps> {
                 >
                     <Style scopeSelector='.my-input::placeholder' rules={{
                         color: '#7F8184'
+                    }} />
+                    <Style scopeSelector='input[type=number]::-webkit-outer-spin-button,
+                            input[type=number]::-webkit-inner-spin-button' rules={{
+                                '-webkit-appearance': 'none',
+                                margin: 0
+                    }} />
+                    <Style scopeSelector='input[type=number]' rules={{
+                                '-moz-appearance':'textfield'
                     }} />
                     <input
                         {...rest}
@@ -96,6 +110,7 @@ class Input extends React.Component<InputProps> {
                             outline: "none",
                             fontSize: "1rem",
                             flex: 1,
+                            
                         }}
                     />
                     {clearable && (
@@ -104,7 +119,7 @@ class Input extends React.Component<InputProps> {
                                 cursor: "pointer",
                                 color: "#295CB3",
                             }}
-                            onClick={() => this.inputRef.current.value = ""}
+                            onClick={this.handleClickOnX}
                         >
                             X
                     </span>

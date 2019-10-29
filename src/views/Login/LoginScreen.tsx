@@ -236,6 +236,7 @@ class SendVerifView extends React.Component<
   SendVerifViewProps,
   SendVerifViewState
 > {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -250,7 +251,7 @@ class SendVerifView extends React.Component<
     const payload = {
       email
     };
-    logger.debug("Email is correct");
+    logger.debug("Email is correct ! ");
 
     try {
       
@@ -281,7 +282,7 @@ class SendVerifView extends React.Component<
     return (
       <CommonView
         validate={this.validate}
-        onValidate={() => this.props.onValidate(this.state.email)}
+        onValidate={(email) => this.props.onValidate(email)}
         errorMessage="Adresse mail non valide"
         title="Adresse mail BRED"
         text="Envoyer le code"
@@ -318,11 +319,19 @@ class CommonView extends React.Component<CommonViewProps, CommonViewState> {
     const { validate, onValidate } = this.props;
     if (await validate(this.state.value)) {
       this.setState({ error: "" });
-      onValidate();
+      onValidate(this.state.value);
     } else {
       this.setState({ error: this.props.errorMessage });
     }
   };
+
+  onClickOnX = async () => {
+    this.setState(
+      { 
+        value: "",
+        error: "" 
+      });
+  }
 
   render() {
     const { error } = this.state;
@@ -344,7 +353,12 @@ class CommonView extends React.Component<CommonViewProps, CommonViewState> {
             justifySelf: "flex-start"
           }}
           onSubmit={this.onSubmit}
-          onChange={e => this.setState({ value: e.target.value })}
+          onClickOnX={this.onClickOnX}
+          onChange={e => 
+            {
+              this.setState({ value: e.target.value });
+            }
+          }
           error={error}
           placeholder={this.props.title}
           type={this.props.inputType}
@@ -435,7 +449,7 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
               marginTop: "5rem"
             }}
           >
-            Version O.3.3
+            Version O.3.5
           </div>
         </div>
       </div>
