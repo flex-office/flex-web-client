@@ -65,7 +65,6 @@ const ManualInsertionCard = (props: {
       
     }) => (
       <div style={styles.view}>
-        <label>{inputValue.toUpperCase()}</label>
         <Input
         id="PlaceSearch"
         placeholder="Place"
