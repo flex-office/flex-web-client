@@ -15,12 +15,11 @@ limitations under the License.
 */
 import React from "react";
 import styles from "./styles/ManualInsertionCardStyles";
-import Input from "../General/Input"
-import PlacesScreen from "../../views/Places/PlacesScreen"
+import Input from "../General/Input";
+import Downshift from 'downshift';
+import { any } from "prop-types";
 import server from "../../config/server.js";
 import config from "../../config/api.js";
-import {render} from 'react-dom'
-import Downshift from 'downshift'
 
 
 const ManualInsertionCard = (props: {
@@ -34,28 +33,24 @@ const ManualInsertionCard = (props: {
  
   var ListPlaces;
 
-    // fetch(`${server.address}places/`, {
-    //     method: "GET",
-    //     headers: {
-    //         "Content-Type": "application/x-www-form-urlencoded",
-    //         "authorization": `Bearer ${config.token}`
-    //     }
-    // })
-    //     .then(res => res.json())
-    //     .then(async data => {
-    //          ListPlaces=await data.filter(async place => !place.using && (!place.semi_flex ));
-    //       console.log("toto");
-    //       });
-
-        ListPlaces=[{id:"JO-3-V-RER34"},{id:"RA-3-V-RER34"},{id:"JO-3-V-RER10"},{id:"JO-3-V-RER04"}]
-
-
-  
-
+  fetch(`${server.address}places/`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "authorization": `Bearer ${config.token}`
+        }
+    })
+        .then(res => res.json())
+        .then(async data => {
+             ListPlaces=await data.filter(async place => !place.using && (!place.semi_flex ));
+          console.log("toto");
+    });
   
  
   return (
     <Downshift
+    onInputValueChange={e=>e.toUpperCase()}
+    onChange={onChangeText}
     itemToString={item => (item ? item.id : '')}
   >
     {({
@@ -67,20 +62,25 @@ const ManualInsertionCard = (props: {
       inputValue,
       highlightedIndex,
       selectedItem,
+      
     }) => (
-      <div>
-        <label {...getLabelProps()}>Enter a fruit</label>
-        <Input id="PlaceSearch"
+      <div style={styles.view}>
+        <label>{inputValue.toUpperCase()}</label>
+        <Input
+        id="PlaceSearch"
         placeholder="Place"
         onChange={onChangeText}
         onSubmit={onSubmitEditing}
         value={placeInput}
         clearable
       {...getInputProps()} />
-        <ul {...getMenuProps()}>
+      
+      
+        <ul style={styles.ul}
+        {...getMenuProps()}>
           {isOpen
             ? ListPlaces
-                .filter(item => !inputValue || item.id.includes(inputValue))
+                .filter(item => !inputValue.toUpperCase() || item.id.includes(inputValue.toUpperCase()))
                 .map((item, index) => (
                   <li
                     {...getItemProps({
@@ -112,16 +112,6 @@ const ManualInsertionCard = (props: {
   </Downshift>
   );
 };
-
-async function asyncCall(){
-    var result=await getPlaces();
-    console.log("titi");
-    return result;
-}
-
-function getPlaces (){
-  
-}
 
 export default ManualInsertionCard;
 
