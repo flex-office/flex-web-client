@@ -24,33 +24,34 @@ import config from "../../config/api.js";
 
 const ManualInsertionCard = (props: {
   onChangeText: any,
-  onPress: any,
-  onSubmitEditing: any,
-  placeInput: string,
+  // onPress: any,
+  // onSubmitEditing: any,
+  // placeInput: string,
 }) => {
-  const { onSubmitEditing, onChangeText, onPress, placeInput } = props;
+  const { onChangeText} = props;
+
+
   
  
-  var ListPlaces;
-
-  fetch(`${server.address}places/`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "authorization": `Bearer ${config.token}`
-        }
-    })
-        .then(res => res.json())
-        .then(async data => {
-             ListPlaces=await data.filter(async place => !place.using && (!place.semi_flex ));
-          console.log("toto");
-    });
+  var ListPlaces=[];
+    fetch(`${server.address}places/`, {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "authorization": `Bearer ${config.token}`
+          }
+      })
+          .then(res => res.json())
+          .then(async data => {
+              ListPlaces=await data.filter(async place => !place.using && (!place.semi_flex ));
+            console.log("toto");
+      });
   
  
   return (
     <Downshift
-    onInputValueChange={e=>e.toUpperCase()}
     onChange={onChangeText}
+    // onInputValueChange={onChangeText}
     itemToString={item => (item ? item.id : '')}
   >
     {({
@@ -65,21 +66,19 @@ const ManualInsertionCard = (props: {
       
     }) => (
       <div style={styles.view}>
+        
         <Input
         id="PlaceSearch"
         placeholder="Place"
-        onChange={onChangeText}
-        onSubmit={onSubmitEditing}
-        value={placeInput}
+        onSubmit={e=>e}
+        onClickOnX={e=>e}
         clearable
-      {...getInputProps()} />
-      
-      
+       {...getInputProps()} />
         <ul style={styles.ul}
         {...getMenuProps()}>
           {isOpen
             ? ListPlaces
-                .filter(item => !inputValue.toUpperCase() || item.id.includes(inputValue.toUpperCase()))
+                .filter((item => !inputValue.toUpperCase() || item.id.includes(inputValue.toUpperCase()) && !item.using))
                 .map((item, index) => (
                   <li
                     {...getItemProps({
@@ -98,14 +97,6 @@ const ManualInsertionCard = (props: {
                 ))
             : null}
         </ul>
-        <button
-        style={styles.button}
-        onClick={onPress}
-      >
-        <div style={styles.text}>
-          Réserver
-        </div>
-      </button>
       </div>
     )}
   </Downshift>
