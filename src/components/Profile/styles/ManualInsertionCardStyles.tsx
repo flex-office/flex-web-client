@@ -35,4 +35,10 @@ export default {
     fontFamily: "Raleway",
     fontSize: "1.1rem",
   },
+  ul:{
+    margin:"Opx",
+    width: "300px", 
+    height: "200px", 
+    overflow: "auto", 
+  }
 }

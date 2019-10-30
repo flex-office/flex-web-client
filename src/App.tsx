@@ -11,7 +11,7 @@ console.log("\nON LAUNCH >>>>> process.env.NODE_ENV             is "+process.env
 console.log("\n          >>>>> process.env.REACT_APP_LOG_LEVEL  is "+process.env.REACT_APP_LOG_LEVEL+"\n");
 console.log("\n          >>>>> process.env.REACT_APP_ADDRESS    is "+process.env.REACT_APP_ADDRESS+"\n");
 console.log("\n          >>>>> process.env.REACT_APP_SOCKETS     is "+process.env.REACT_APP_SOCKETS+"\n");
-console.log("\n >>>>>>>>>  VERSION 0.3.5  <<<<<<<<<<<<<\n");
+console.log("\n >>>>>>>>>  VERSION 0.3.6  <<<<<<<<<<<<<\n");
 
 if (process.env.NODE_ENV === 'development'){
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";

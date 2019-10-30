@@ -270,10 +270,14 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                             />
                             <Route path="/home/input" render={() =>
                                 <ManualInsertionCard
-                                    onChangeText={e => this.setState({ placeInput: e.target.value.toUpperCase().trim() })}
-                                    placeInput={placeInput}
-                                    onSubmitEditing={() => this.insertPlace(this.state.placeInput)}
-                                    onPress={() => this.insertPlace(this.state.placeInput)}
+                                    onChangeText={e =>{this.insertPlace(e.id.toUpperCase().trim())
+                                                        this.setState({placeInput:''})}}
+                                    // onChangeText={e => this.setState({ placeInput:e.inputValue.toUpperCase() })}
+                                    // placeInput={placeInput}
+                                    // onSubmitEditing={() =>{this.insertPlace(this.state.placeInput)
+                                    // this.setState({placeInput:''})}}
+                                    // onPress={() => {this.insertPlace(this.state.placeInput)
+                                    // this.setState({placeInput:''})}}
                                 />
                             }
                             />
