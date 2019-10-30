@@ -453,6 +453,7 @@ export class SettingsScreen extends Component<
                     format="dd/MM/yyyy"
                     margin="normal"
                     id="date-picker-inline"
+                    maxDate={this.state.endDate ? this.state.endDate:null}
                     value={this.state.startDate}
                     onChange={this.handleDateChange}
                     KeyboardButtonProps={{'aria-label': 'change date' }}
@@ -480,6 +481,7 @@ export class SettingsScreen extends Component<
                     format="dd/MM/yyyy"
                     margin="normal"
                     id="date-picker-inline"
+                    minDate={this.state.startDate}
                     value={this.state.endDate}
                     onChange={this.handleEndDateChange}
                     KeyboardButtonProps={{'aria-label': 'change date' }}
