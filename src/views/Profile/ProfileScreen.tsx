@@ -228,6 +228,24 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         } = this.state
 
         console.log(this.state, this.props)
+        if(this.state.placeInput!='lol'){
+            fetch(`${server.address}places/`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "authorization": `Bearer ${config.token}`
+                }
+            })
+                .then(res => res.json())
+                .then(async data => {
+                    var ListPlaces=await (data.filter(async place => !place.using && (!place.semi_flex ))
+                    );
+                    localStorage.setItem("PLACES", JSON.stringify(ListPlaces));
+                    console.log("toto");
+            });
+        }
+
+
         /*
         if (place){
             const pathname = this.props.location.pathname
@@ -271,7 +289,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                             <Route path="/home/input" render={() =>
                                 <ManualInsertionCard
                                     onChangeText={e =>{this.insertPlace(e.id.toUpperCase().trim())
-                                                        this.setState({placeInput:''})}}
+                                                        this.setState({placeInput:'lol'})}}
                                     // onChangeText={e => this.setState({ placeInput:e.inputValue.toUpperCase() })}
                                     // placeInput={placeInput}
                                     // onSubmitEditing={() =>{this.insertPlace(this.state.placeInput)
