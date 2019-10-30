@@ -30,22 +30,24 @@ const ManualInsertionCard = (props: {
 }) => {
   const { onChangeText} = props;
 
-
+  var ListPlaces= JSON.parse(localStorage.getItem("PLACES"));
   
+
+
  
-  var ListPlaces=[];
-    fetch(`${server.address}places/`, {
-          method: "GET",
-          headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              "authorization": `Bearer ${config.token}`
-          }
-      })
-          .then(res => res.json())
-          .then(async data => {
-              ListPlaces=await data.filter(async place => !place.using && (!place.semi_flex ));
-            console.log("toto");
-      });
+  // var ListPlaces=[];
+  //   fetch(`${server.address}places/`, {
+  //         method: "GET",
+  //         headers: {
+  //             "Content-Type": "application/x-www-form-urlencoded",
+  //             "authorization": `Bearer ${config.token}`
+  //         }
+  //     })
+  //         .then(res => res.json())
+  //         .then(async data => {
+  //             ListPlaces=await data.filter(async place => !place.using && (!place.semi_flex ));
+  //           console.log("toto");
+  //     });
   
  
   return (
