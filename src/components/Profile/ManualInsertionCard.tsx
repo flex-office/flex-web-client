@@ -15,70 +15,93 @@ limitations under the License.
 */
 import React from "react";
 import styles from "./styles/ManualInsertionCardStyles";
-import Input from "../General/Input"
-import PlacesScreen from "../../views/Places/PlacesScreen"
+import Input from "../General/Input";
+import Downshift from 'downshift';
+import { any } from "prop-types";
 import server from "../../config/server.js";
 import config from "../../config/api.js";
 
 
 const ManualInsertionCard = (props: {
   onChangeText: any,
-  onPress: any,
-  onSubmitEditing: any,
-  placeInput: string,
+  // onPress: any,
+  // onSubmitEditing: any,
+  // placeInput: string,
 }) => {
-  const { onSubmitEditing, onChangeText, onPress, placeInput } = props;
+  const { onChangeText} = props;
+
+
   
  
-  const Places=asyncCall();
-
-  
-
+  var ListPlaces=[];
+    fetch(`${server.address}places/`, {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "authorization": `Bearer ${config.token}`
+          }
+      })
+          .then(res => res.json())
+          .then(async data => {
+              ListPlaces=await data.filter(async place => !place.using && (!place.semi_flex ));
+            console.log("toto");
+      });
   
  
   return (
-    <div style={styles.view}>
-      <Input id="PlaceSearch"
+    <Downshift
+    onChange={onChangeText}
+    // onInputValueChange={onChangeText}
+    itemToString={item => (item ? item.id : '')}
+  >
+    {({
+      getInputProps,
+      getItemProps,
+      getLabelProps,
+      getMenuProps,
+      isOpen,
+      inputValue,
+      highlightedIndex,
+      selectedItem,
+      
+    }) => (
+      <div style={styles.view}>
+        
+        <Input
+        id="PlaceSearch"
         placeholder="Place"
-        onChange={onChangeText}
-        onSubmit={onSubmitEditing}
-        value={placeInput}
+        onSubmit={e=>e}
+        onClickOnX={e=>e}
         clearable
-      />
-      <button
-        style={styles.button}
-        onClick={onPress}
-      >
-        <div style={styles.text}>
-          Réserver
-        </div>
-      </button>
-    </div>
+       {...getInputProps()} />
+        <ul style={styles.ul}
+        {...getMenuProps()}>
+          {isOpen
+            ? ListPlaces
+                .filter((item => !inputValue.toUpperCase() || item.id.includes(inputValue.toUpperCase()) && !item.using))
+                .map((item, index) => (
+                  <li
+                    {...getItemProps({
+                      key: item.id,
+                      index,
+                      item,
+                      style: {
+                        backgroundColor:
+                          highlightedIndex === index ? 'lightgray' : 'white',
+                        fontWeight: selectedItem === item ? 'bold' : 'normal',
+                      },
+                    })}
+                  >
+                    {item.id}
+                  </li>
+                ))
+            : null}
+        </ul>
+      </div>
+    )}
+  </Downshift>
   );
 };
-
-async function asyncCall(){
-    var result=await getPlaces();
-    console.log("titi");
-    return result;
-}
-
-function getPlaces (){
-  return new Promise(result=>{
-  fetch(`${server.address}places/`, {
-      method: "GET",
-      headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "authorization": `Bearer ${config.token}`
-      }
-  })
-      .then(res => res.json())
-      .then(async data => {
-           result(await data.filter(async place => !place.using && (!place.semi_flex )));
-        console.log("toto");
-        });
-    });
-}
 
 export default ManualInsertionCard;
 
