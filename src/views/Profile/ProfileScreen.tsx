@@ -133,12 +133,8 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
     redirect() {
         const { place, historical } = this.state
         const pathname = this.props.location.pathname
-        console.log("pathname : "+pathname);
-        console.log("place : "+place);
-        console.log("historical : "+historical);
 
         if (pathname !== "/home") return
-        console.log("HOHOHOHOHOHOHOH");
         const goTo = x => (x !== pathname) && this.props.history.push(x)
 
         if (place) goTo("/home/leave")
