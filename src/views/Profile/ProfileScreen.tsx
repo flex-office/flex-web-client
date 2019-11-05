@@ -15,6 +15,7 @@ import NavElem from "../../components/Navigation/NavElem"
 import takePlace from "../../utils/takePlace";
 import isMobile from "../../utils/isMobile";
 import { Route, Switch } from 'react-router-dom'
+import {logger} from "../../App";
 
 interface LeaveComponentProps {
     place: string
@@ -207,7 +208,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                     this.redirect()
                 }
                 else if (res.status === 400) {
-                    res.text().then(message => console.log(message));
+                    res.text().then(message => logger.error(message));
                 }
             });
     }
@@ -223,7 +224,8 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             historical,
         } = this.state
 
-        console.log(this.state, this.props)
+        logger.debug("STATE : " + this.state);
+        logger.debug("PROPS : " + this.props);
         if(this.state.placeInput!='lol'){
             fetch(`${server.address}places/`, {
                 method: "GET",
@@ -232,15 +234,14 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                     "authorization": `Bearer ${config.token}`
                 }
             })
-                .then(res => res.json())
-                .then(async data => {
-                    var ListPlaces=await (data.filter(async place => !place.using && (!place.semi_flex ))
-                    );
-                    localStorage.setItem("PLACES", JSON.stringify(ListPlaces));
-                    console.log("toto");
+            .then(res => res.json())
+            .then(async data => {
+                var ListPlaces=await (data.filter(async place => !place.using && (!place.semi_flex ))
+                );
+                localStorage.setItem("PLACES", JSON.stringify(ListPlaces));
+                logger.info("GOT PLACES");
             });
         }
-
 
         /*
         if (place){
