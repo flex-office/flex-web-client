@@ -16,6 +16,7 @@ import takePlace from "../../utils/takePlace";
 import isMobile from "../../utils/isMobile";
 import { Route, Switch } from 'react-router-dom'
 import { getDate } from "date-fns";
+import ListPlaces from "../../components/Users/ListPlaces.jsx";
 
 interface LeaveComponentProps {
     place: string
@@ -215,7 +216,8 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                 }
             });
     }
-    storeList=()=>{
+    storeList=()=>{   
+        var history=Array.from(new Set((JSON.parse(localStorage.getItem("USER")).historical).map(x=>x.id_place))); 
         var doLoad=false;
         var now= new Date();
         if(sessionStorage.getItem("DATE")==null){
@@ -243,8 +245,12 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                 })
                     .then(res => res.json())
                     .then(async data => {
-                        var ListPlaces=await (data.filter(async place => !place.using && (!place.semi_flex ))
-                        );
+                        var ListPlaces=(await (data));
+                        var ListTemp=ListPlaces.filter(place => !place.using && (!place.semi_flex) && history.includes(place.id))
+                        ListPlaces=Array.from(new Set(ListTemp.concat(ListPlaces)))
+
+
+
                         sessionStorage.setItem("PLACES", JSON.stringify(ListPlaces));
                 });
         }
