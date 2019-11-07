@@ -17,6 +17,7 @@ import React from "react";
 import styles from "./styles/ManualInsertionCardStyles";
 import Input from "../General/Input";
 import Downshift from 'downshift';
+import Icon from "react-fontawesome";
 
 const ManualInsertionCard = (props: {
   onChangeText: any,
@@ -74,27 +75,41 @@ const ManualInsertionCard = (props: {
        {...getInputProps()} />
         <ul style={styles.ul}
         {...getMenuProps()}>
-          {isOpen
-            ? ListPlaces
-                .filter((item => (!inputValue.toUpperCase() || item.id.includes(inputValue.toUpperCase())) && !item.using))
-                .map((item, index) => (
-                  <li
-                    {...getItemProps({
-                      key: item.id,
-                      index,
-                      item,
-                      style: {
-                        backgroundColor:
-                          highlightedIndex === index ? 'lightgray' : 'white',
-                        fontWeight: selectedItem === item ? 'bold' : 'normal',
-                      },
-                    })}
-                  ><span style={styles.test}> 
-                    {item.id}
-                    </span>
-                  </li>
+          <div
+          style={styles.div}>
+            {isOpen
+              ? ListPlaces
+                  .filter((item => (!inputValue.toUpperCase() || item.id.includes(inputValue.toUpperCase())) && !item.using))
+                  .map((item, index) => (
+                    <li
+                      {...getItemProps({
+                        key: item.id,
+                        index,
+                        item,
+                        style: {
+                          alignItems: "center",
+                          width: "15rem",
+                          listStyleType:"none",
+                          backgroundColor:
+                          highlightedIndex === index ? '#007bff' : '#fff',
+                          fontWeight: selectedItem === item ? 'bold' : 'normal',
+                        },
+                      })}
+                    ><Icon
+                    name="circle"
+                    style={{
+                      fontSize: 10,
+                      color: item.id[5] === "V" ? "green" : (item.id[5] === "B" ? "blue" : "red")
+                    }}
+                  />
+                      <span style={styles.test}> 
+                      {item.id}
+                      </span>
+                    </li>
+                  
                 ))
-            : null}
+              : null}
+            </div>
         </ul>
       </div>
     )}

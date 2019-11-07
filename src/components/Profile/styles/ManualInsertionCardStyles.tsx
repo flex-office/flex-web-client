@@ -36,13 +36,22 @@ export default {
     fontSize: "1.1rem",
   },
   ul:{
+    maxWidth:"300px",
+    width:"20rem",
+    padding:"0px",
+    alignItems: "center",
+    listStyleType:"none",
     color:"#295CB3",
-    margin:"Opx",
-    width: "300px", 
+    margin:"Opx", 
     height: "200px", 
     overflow: "auto", 
   },
   test:{
     color:"black",
+  },
+  div:{
+    alignItems: "center",
+    borderRadius:".25rem",
+    border:"1px solid rgba(0,0,0,.15)"
   }
 }

@@ -139,7 +139,6 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         console.log("historical : "+historical);
 
         if (pathname !== "/home") return
-        console.log("HOHOHOHOHOHOHOH");
         const goTo = x => (x !== pathname) && this.props.history.push(x)
 
         if (place) goTo("/home/leave")
@@ -225,14 +224,16 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         }
         else{
             var date =JSON.parse(sessionStorage.getItem("DATE"));
-            if(date[0]!=now.getDate() || date[1]!=now.getHours()){
+            if(date[0]!==now.getDate() || date[1]!==now.getHours()){
                 doLoad=true;
             }
          
         }
+        if(sessionStorage.getItem("PLACES")==null){
+            doLoad=true;
+        }
         if(doLoad){
             sessionStorage.setItem("DATE",JSON.stringify([now.getDate(),now.getHours(),now.getMinutes()]));
-            if(sessionStorage.getItem("PLACES")==null){
                 fetch(`${server.address}places/`, {
                     method: "GET",
                     headers: {
@@ -246,7 +247,6 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                         );
                         sessionStorage.setItem("PLACES", JSON.stringify(ListPlaces));
                 });
-            }
         }
     }
 
