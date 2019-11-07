@@ -15,6 +15,7 @@ import NavElem from "../../components/Navigation/NavElem"
 import takePlace from "../../utils/takePlace";
 import isMobile from "../../utils/isMobile";
 import { Route, Switch } from 'react-router-dom'
+import { getDate } from "date-fns";
 
 interface LeaveComponentProps {
     place: string
@@ -215,6 +216,39 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                 }
             });
     }
+    storeList=()=>{
+        var doLoad=false;
+        var now= new Date();
+        if(sessionStorage.getItem("DATE")==null){
+            sessionStorage.setItem("DATE",JSON.stringify([now.getDate(),now.getHours(),now.getMinutes()]));
+            doLoad=true;
+        }
+        else{
+            var date =JSON.parse(sessionStorage.getItem("DATE"));
+            if(date[0]!=now.getDate() || date[1]!=now.getHours()){
+                doLoad=true;
+            }
+         
+        }
+        if(doLoad){
+            sessionStorage.setItem("DATE",JSON.stringify([now.getDate(),now.getHours(),now.getMinutes()]));
+            if(sessionStorage.getItem("PLACES")==null){
+                fetch(`${server.address}places/`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "authorization": `Bearer ${config.token}`
+                    }
+                })
+                    .then(res => res.json())
+                    .then(async data => {
+                        var ListPlaces=await (data.filter(async place => !place.using && (!place.semi_flex ))
+                        );
+                        sessionStorage.setItem("PLACES", JSON.stringify(ListPlaces));
+                });
+            }
+        }
+    }
 
     render() {
         const {
@@ -228,22 +262,9 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         } = this.state
 
         console.log(this.state, this.props)
-        if(this.state.placeInput!='lol'){
-            fetch(`${server.address}places/`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                    "authorization": `Bearer ${config.token}`
-                }
-            })
-                .then(res => res.json())
-                .then(async data => {
-                    var ListPlaces=await (data.filter(async place => !place.using && (!place.semi_flex ))
-                    );
-                    localStorage.setItem("PLACES", JSON.stringify(ListPlaces));
-                    console.log("toto");
-            });
-        }
+
+        this.storeList();
+
 
 
         /*
@@ -288,8 +309,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                             />
                             <Route path="/home/input" render={() =>
                                 <ManualInsertionCard
-                                    onChangeText={e =>{this.insertPlace(e.id.toUpperCase().trim())
-                                                        this.setState({placeInput:'lol'})}}
+                                    onChangeText={e =>{this.insertPlace(e.id.toUpperCase().trim())}}
                                     // onChangeText={e => this.setState({ placeInput:e.inputValue.toUpperCase() })}
                                     // placeInput={placeInput}
                                     // onSubmitEditing={() =>{this.insertPlace(this.state.placeInput)

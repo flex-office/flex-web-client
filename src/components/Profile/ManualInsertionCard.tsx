@@ -17,10 +17,6 @@ import React from "react";
 import styles from "./styles/ManualInsertionCardStyles";
 import Input from "../General/Input";
 import Downshift from 'downshift';
-import { any } from "prop-types";
-import server from "../../config/server.js";
-import config from "../../config/api.js";
-
 
 const ManualInsertionCard = (props: {
   onChangeText: any,
@@ -30,7 +26,7 @@ const ManualInsertionCard = (props: {
 }) => {
   const { onChangeText} = props;
 
-  var ListPlaces= JSON.parse(localStorage.getItem("PLACES"));
+  var ListPlaces= JSON.parse(sessionStorage.getItem("PLACES"));
   
 
 
@@ -80,7 +76,7 @@ const ManualInsertionCard = (props: {
         {...getMenuProps()}>
           {isOpen
             ? ListPlaces
-                .filter((item => !inputValue.toUpperCase() || item.id.includes(inputValue.toUpperCase()) && !item.using))
+                .filter((item => (!inputValue.toUpperCase() || item.id.includes(inputValue.toUpperCase())) && !item.using))
                 .map((item, index) => (
                   <li
                     {...getItemProps({
@@ -93,8 +89,9 @@ const ManualInsertionCard = (props: {
                         fontWeight: selectedItem === item ? 'bold' : 'normal',
                       },
                     })}
-                  >
+                  ><span style={styles.test}> 
                     {item.id}
+                    </span>
                   </li>
                 ))
             : null}
