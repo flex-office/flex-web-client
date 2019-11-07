@@ -35,12 +35,7 @@ import DeconnectionButton from "../../components/Settings/DeconnectionButton";
 
 import Input from "../../components/General/Input";
 import FilePicker from "../../components/General/FilePicker";
-
-
-// import {
-//   DatePicker,
-//   MuiPickersUtilsProvider,
-// } from "@material-ui/pickers";
+import {logger} from "../../App";
 
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
@@ -209,7 +204,7 @@ export class SettingsScreen extends Component<
         }
       });
       const json = await response.json();
-      console.log(json);
+      logger.debug(json);
 
           this.setState({
             photo: json.photo,
@@ -248,7 +243,7 @@ export class SettingsScreen extends Component<
           });
         }
       })
-      .catch(error => console.log(error))
+      .catch(error => logger.error(error))
   };
 
   addDay = i => this.state.remoteDayIndexes.concat(i);
@@ -320,7 +315,7 @@ export class SettingsScreen extends Component<
           this.setState({ loadingSave: false, change: this.state.change ? false : true });
         });
     }, 3000);
-    console.log('save')
+    logger.debug('save')
   };
 
  showAlert()
@@ -453,6 +448,7 @@ export class SettingsScreen extends Component<
                     format="dd/MM/yyyy"
                     margin="normal"
                     id="date-picker-inline"
+                    maxDate={this.state.endDate ? this.state.endDate:null}
                     value={this.state.startDate}
                     onChange={this.handleDateChange}
                     KeyboardButtonProps={{'aria-label': 'change date' }}
@@ -480,6 +476,7 @@ export class SettingsScreen extends Component<
                     format="dd/MM/yyyy"
                     margin="normal"
                     id="date-picker-inline"
+                    minDate={this.state.startDate}
                     value={this.state.endDate}
                     onChange={this.handleEndDateChange}
                     KeyboardButtonProps={{'aria-label': 'change date' }}

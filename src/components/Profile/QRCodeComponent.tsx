@@ -16,6 +16,7 @@ limitations under the License.
 import React from "react";
 // import { NavigationEvents } from "react-navigation";
 import QrReader from "react-qr-reader";
+import {logger} from "../../App";
 
 type Props = {
   onRead: any
@@ -43,7 +44,7 @@ class QRCodeComponent extends React.Component<Props> {
           Scannez le QR code
         </div>
         <QrReader
-          onError={err => console.log(err)}
+          onError={err => logger.error(err)}
           onScan={onRead}
           style={{width: "100%", maxWidth: "40rem", color: "white"}}
         />
