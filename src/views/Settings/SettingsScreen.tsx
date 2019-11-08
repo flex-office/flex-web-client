@@ -210,8 +210,8 @@ export class SettingsScreen extends Component<
             photo: json.photo,
             historical: json.historical,
             loadingSave: false,
-            start_date: json.start_date,
-            end_date: json.end_date,
+            start_date:JSON.parse(localStorage.getItem("USER")).start_date,
+            end_date: JSON.parse(localStorage.getItem("USER")).end_date,
             change: false
           });
 
@@ -263,6 +263,11 @@ export class SettingsScreen extends Component<
     this.saveRemote();
   };
 
+
+
+
+
+
   saveRemote = async () => {
     const { id, photo, remoteDay, start_date, end_date } = this.state;
     this.setState({ loadingSave: true });
@@ -285,7 +290,7 @@ export class SettingsScreen extends Component<
     })
       .then(res => res.json())
       .then(data => {
-        // console.log(data);
+        //console.log(data);
       });
 
     // Wait until the photo is uploaded to Cloudinary and the link is provided to perform request
@@ -318,15 +323,36 @@ export class SettingsScreen extends Component<
     logger.debug('save')
   };
 
+
+
+
+
+
+
+
+
+
+
+
  showAlert()
 {
   alert("Vos modifications ont bien été prises en compte !");
 };
 
+verifyIfItPossible(start_date,end_date){
+  if(start_date!==null && end_date !==null ){
+    this.setState({start_date:start_date});
+    this.setState({end_date:end_date});
+    this.saveRemote();
+  }
+    else{
+      console.log("date pas enregistre");
+    }
+}
+
 
   render() {
     const { remoteDayIndexes, name, fname, id, photo, loadingSave, start_date, end_date, change } = this.state;
-
     return (
       <div style={styles.container}>
         <div style={styles.viewContainer}>
@@ -487,7 +513,7 @@ export class SettingsScreen extends Component<
             {!loadingSave ? (
               <button
                 style={{ display: change ? 'block':'none', backgroundColor: 'grey', ...styles.semiFlexButton}}
-                onClick={() => !change ? null : this.saveRemote()}
+                onClick={() => !change ? null : this.verifyIfItPossible(start_date,end_date)}
               >
                 <div style={styles.semiFlexButtonText}
                  >Enregistrer
