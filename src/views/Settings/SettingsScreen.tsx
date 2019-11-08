@@ -129,8 +129,8 @@ type SettingsScreenState = {
   debug?: Array<any> | string,
   remoteDay?: Array<string>,
   arrayOfFriends: Array<any>
-  startDate: any
-  endDate: any
+  start_date: any
+  end_date: any
   remoteDayIndexes: Array<number>
   loadingSave: boolean
   progress: any
@@ -161,8 +161,8 @@ export class SettingsScreen extends Component<
       loadingSave: false,
       progress: 0,
       userPlace: null,
-      startDate: null,
-      endDate: null,
+      start_date: null,
+      end_date: null,
       change: false,
     };
     props.setTitle("Profil");
@@ -170,13 +170,13 @@ export class SettingsScreen extends Component<
 
   handleDateChange = (selectedStartDate) => {
     this.setState({
-      startDate: selectedStartDate,
+      start_date: selectedStartDate,
       change : true
     });
   }
   handleEndDateChange = (selectedEndDate) => {
     this.setState({
-      endDate: selectedEndDate,
+      end_date: selectedEndDate,
       change : true
     }); 
   }
@@ -210,8 +210,8 @@ export class SettingsScreen extends Component<
             photo: json.photo,
             historical: json.historical,
             loadingSave: false,
-            startDate: json.start_date,
-            endDate: json.end_date,
+            start_date: json.start_date,
+            end_date: json.end_date,
             change: false
           });
 
@@ -238,8 +238,8 @@ export class SettingsScreen extends Component<
         if (data) {
           this.setState({
             userPlace: data,
-            startDate: data.start_date,
-            endDate: data.end_date
+            start_date: data.start_date,
+            end_date: data.end_date
           });
         }
       })
@@ -264,15 +264,15 @@ export class SettingsScreen extends Component<
   };
 
   saveRemote = async () => {
-    const { id, photo, remoteDay, startDate, endDate } = this.state;
+    const { id, photo, remoteDay, start_date, end_date } = this.state;
     this.setState({ loadingSave: true });
 
     const payload = {
       id_user: id,
       photo: photo,
       remoteDay,
-      startDate: moment(startDate).format("DD/MM/YYYY"),
-      endDate: moment(endDate).format("DD/MM/YYYY")
+      start_date: moment(start_date).format("DD/MM/YYYY"),
+      end_date: moment(end_date).format("DD/MM/YYYY")
     };
 
     fetch(`${server.address}user/settings`, {
@@ -325,7 +325,7 @@ export class SettingsScreen extends Component<
 
 
   render() {
-    const { remoteDayIndexes, name, fname, id, photo, loadingSave, startDate, endDate, change } = this.state;
+    const { remoteDayIndexes, name, fname, id, photo, loadingSave, start_date, end_date, change } = this.state;
 
     return (
       <div style={styles.container}>
@@ -427,9 +427,7 @@ export class SettingsScreen extends Component<
             ))}
           </ButtonGroup>
         </div>
-  
-
-      {startDate && endDate ? 
+   
         <div style={styles.viewContainerSemiFlex}>
           <div style={styles.semiFlexRow}>
             <div style={{
@@ -448,8 +446,8 @@ export class SettingsScreen extends Component<
                     format="dd/MM/yyyy"
                     margin="normal"
                     id="date-picker-inline"
-                    maxDate={this.state.endDate ? this.state.endDate:null}
-                    value={this.state.startDate}
+                    maxDate={this.state.end_date ? this.state.end_date:null}
+                    value={this.state.start_date}
                     onChange={this.handleDateChange}
                     KeyboardButtonProps={{'aria-label': 'change date' }}
                   />
@@ -476,8 +474,8 @@ export class SettingsScreen extends Component<
                     format="dd/MM/yyyy"
                     margin="normal"
                     id="date-picker-inline"
-                    minDate={this.state.startDate}
-                    value={this.state.endDate}
+                    minDate={this.state.start_date}
+                    value={this.state.end_date}
                     onChange={this.handleEndDateChange}
                     KeyboardButtonProps={{'aria-label': 'change date' }}
                   />
@@ -500,7 +498,7 @@ export class SettingsScreen extends Component<
                 <Spinner style={{ margin: "1rem", color: "#E64417" }}/>
               </div>
             )}
-        </div> : null}
+        </div>
 
         {/* For future purpose */}
         {/* <Calendar /> */}
