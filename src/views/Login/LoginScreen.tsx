@@ -81,7 +81,7 @@ class CompleteView extends React.Component<
       });
       if (res.status !== 200)
         return this.setState({ errorID: "Problème d'authentification" });
-      const user = await res.json();
+      const user = await res.json()+{historical:[]};
       localStorage.setItem("USER", JSON.stringify(user));
       this.props.onValidate();
     } catch (_) {
