@@ -46,6 +46,11 @@ const ManualInsertionCard = (props: {
   //           console.log("toto");
   //     });
   
+
+  
+  /* 
+  Generate the manual entry research with autocomplete, call by ProfileScreen
+  */
  
   return (
     <Downshift

@@ -216,43 +216,51 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                 }
             });
     }
-    storeList=()=>{   
-        var history=Array.from(new Set((JSON.parse(localStorage.getItem("USER")).historical).map(x=>x.id_place))); 
-        var doLoad=false;
-        var now= new Date();
-        if(sessionStorage.getItem("DATE")==null){
-            sessionStorage.setItem("DATE",JSON.stringify([now.getDate(),now.getHours(),now.getMinutes()]));
-            doLoad=true;
-        }
-        else{
-            var date =JSON.parse(sessionStorage.getItem("DATE"));
-            if(date[0]!==now.getDate() || date[1]!==now.getHours()){
+    /*
+    this function generate a list of free place and store it into the session storage.
+    if the session storage are already load and not to old he use it else this function update the list.
+    */
+    storeList=()=>{  
+        if(localStorage.getItem("USER")!==null){ 
+            var history=Array.from(new Set((JSON.parse(localStorage.getItem("USER")).historical).map(x=>x.id_place))); 
+        
+
+            var doLoad=false;
+            var now= new Date();
+            if(sessionStorage.getItem("DATE")==null){
+                sessionStorage.setItem("DATE",JSON.stringify([now.getDate(),now.getHours(),now.getMinutes()]));
                 doLoad=true;
             }
-         
-        }
-        if(sessionStorage.getItem("PLACES")==null){
-            doLoad=true;
-        }
-        if(doLoad){
-            sessionStorage.setItem("DATE",JSON.stringify([now.getDate(),now.getHours(),now.getMinutes()]));
-                fetch(`${server.address}places/`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                        "authorization": `Bearer ${config.token}`
-                    }
-                })
-                    .then(res => res.json())
-                    .then(async data => {
-                        var ListPlaces=(await (data));
-                        var ListTemp=ListPlaces.filter(place => !place.using && (!place.semi_flex) && history.includes(place.id))
-                        ListPlaces=Array.from(new Set(ListTemp.concat(ListPlaces)))
+            else{
+                var date =JSON.parse(sessionStorage.getItem("DATE"));
+                if(date[0]!==now.getDate() || date[1]!==now.getHours()){
+                    doLoad=true;
+                }
+            
+            }
+            if(sessionStorage.getItem("PLACES")==null){
+                doLoad=true;
+            }
+            if(doLoad){
+                sessionStorage.setItem("DATE",JSON.stringify([now.getDate(),now.getHours(),now.getMinutes()]));
+                    fetch(`${server.address}places/`, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded",
+                            "authorization": `Bearer ${config.token}`
+                        }
+                    })
+                        .then(res => res.json())
+                        .then(async data => {
+                            var ListPlaces=(await (data));
+                            var ListTemp=ListPlaces.filter(place => !place.using && (!place.semi_flex) && history.includes(place.id))
+                            ListPlaces=Array.from(new Set(ListTemp.concat(ListPlaces)))
 
 
 
-                        sessionStorage.setItem("PLACES", JSON.stringify(ListPlaces));
-                });
+                            sessionStorage.setItem("PLACES", JSON.stringify(ListPlaces));
+                    });
+            }
         }
     }
 
@@ -287,6 +295,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             goTo("/home/leave")
             return
         }else{*/
+            
             return (
                 <div style={styles.view}>
                     <Switch>
