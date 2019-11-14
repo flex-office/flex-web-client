@@ -258,7 +258,6 @@ export class SettingsScreen extends Component<
     await this.setState({
       remoteDayIndexes: newIndexes,
       remoteDay: newIndexes.map(x => WEEK_DAYS[x]),
-      change: true,
     });
     this.saveRemote();
   };
