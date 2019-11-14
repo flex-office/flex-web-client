@@ -206,6 +206,7 @@ export class SettingsScreen extends Component<
       const json = await response.json();
       logger.debug(json);
 
+          
           this.setState({
             photo: json.photo,
             historical: json.historical,
@@ -214,7 +215,7 @@ export class SettingsScreen extends Component<
             end_date: JSON.parse(localStorage.getItem("USER")).end_date,
             change: false
           });
-
+          
           const user = JSON.parse(localStorage.getItem("USER") || "");
           localStorage.setItem(
             "USER",
@@ -272,12 +273,21 @@ export class SettingsScreen extends Component<
     const { id, photo, remoteDay, start_date, end_date } = this.state;
     this.setState({ loadingSave: true });
 
+    if(typeof start_date==typeof 'string' && typeof end_date==typeof 'string' && JSON.parse(localStorage.getItem("USER")).start_date!=null){
+      var start_date2=null;
+      var end_date2=null;
+    }
+    else{
+      var start_date2=start_date;
+      var end_date2=end_date;
+    }
+
     const payload = {
       id_user: id,
       photo: photo,
       remoteDay,
-      start_date: moment(start_date).format("DD/MM/YYYY"),
-      end_date: moment(end_date).format("DD/MM/YYYY")
+      start_date: moment(start_date2).format("DD/MM/YYYY"),
+      end_date: moment(end_date2).format("DD/MM/YYYY")
     };
 
     fetch(`${server.address}user/settings`, {
@@ -476,6 +486,7 @@ verifyIfItPossible(start_date,end_date){
                 <Grid container justify="space-around">
                   <KeyboardDatePicker
                  //  @ts-ignore
+                    emptyLabel="XX/XX/XXXX"
                     disableToolbar
                     format="dd/MM/yyyy"
                     margin="normal"
@@ -504,6 +515,7 @@ verifyIfItPossible(start_date,end_date){
                 <Grid container justify="space-around">
                   <KeyboardDatePicker
                   //  @ts-ignore
+                    emptyLabel="XX/XX/XXXX"
                     disableToolbar
                     format="dd/MM/yyyy"
                     margin="normal"
