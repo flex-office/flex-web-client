@@ -325,6 +325,16 @@ export class SettingsScreen extends Component<
   };
 
 
+
+
+
+
+
+
+
+
+
+
  showAlert()
 {
   alert("Vos modifications ont bien été prises en compte !");
@@ -337,9 +347,11 @@ verifyIfItPossible(start_date,end_date){
     start_date=new Date(start_date);
   }
   if(typeof end_date==typeof 'string'){
-    console.log("coucou");
+    end_date=new Date(end_date);
+  }
 
-  }        
+   
+          
   if((start_date!==null && end_date !==null)&& (end_date>=start_date)){
             this.setState({start_date:start_date});
             this.setState({end_date:end_date});
@@ -349,7 +361,6 @@ verifyIfItPossible(start_date,end_date){
       console.log("date pas enregistre");
     }
 }
-
 
   render() {
     const { remoteDayIndexes, name, fname, id, photo, loadingSave, start_date, end_date, change } = this.state;
