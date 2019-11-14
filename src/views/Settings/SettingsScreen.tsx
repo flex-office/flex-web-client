@@ -295,31 +295,32 @@ export class SettingsScreen extends Component<
 
     // Wait until the photo is uploaded to Cloudinary and the link is provided to perform request
     // Jan 06092019 : uploaded with a GET ? downloaded instead ?
-    setTimeout(async () => {
-      fetch(`${server.address}users/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "authorization": `Bearer ${config.token}`
-        }
-      })
-        .then(res => res.json())
-        .then(data => {
-          this.props.fetchPhoto(data.photo);
-          localStorage.setItem(
-            "USER",
-            JSON.stringify(
-              assoc(
-                "place",
-                data.id_place,
-                omit(["loadingSave"], assoc("photo", data.photo, this.state))
-              )
-            )
-          );
 
-          this.setState({ loadingSave: false, change: this.state.change ? false : true });
-        });
-    }, 3000);
+      setTimeout(async () => {
+        fetch(`${server.address}users/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "authorization": `Bearer ${config.token}`
+          }
+        })
+          .then(res => res.json())
+          .then(data => {
+            this.props.fetchPhoto(data.photo);
+            localStorage.setItem(
+              "USER",
+              JSON.stringify(
+                assoc(
+                  "place",
+                  data.id_place,
+                  omit(["loadingSave"], assoc("photo", data.photo, this.state))
+                )
+              )
+            );
+
+            this.setState({ loadingSave: false, change: this.state.change ? false : true });
+          });
+      }, 3000);
     logger.debug('save')
   };
 
@@ -339,16 +340,42 @@ export class SettingsScreen extends Component<
   alert("Vos modifications ont bien été prises en compte !");
 };
 
+
+
+
+
+
 verifyIfItPossible(start_date,end_date){
-  if(start_date!==null && end_date !==null ){
-    this.setState({start_date:start_date});
-    this.setState({end_date:end_date});
-    this.saveRemote();
+  console.log(typeof start_date);
+  if(typeof start_date==typeof 'string'){
+    start_date=new Date(start_date);
+  }
+  if(typeof end_date==typeof 'string'){
+    console.log("coucou");
+    end_date=new Date(end_date);
+  }
+  console.log(end_date.getMonth()>=start_date.getMonth());
+   console.log(end_date.getYear()>=start_date.getYear());
+   console.log(end_date.getDay()>=start_date.getDay());
+   console.log(end_date>=start_date);
+   console.log(end_date.getDate());
+   console.log(start_date.getDate());
+   
+          
+  if((start_date!==null && end_date !==null)&& (end_date>=start_date)){
+            this.setState({start_date:start_date});
+            this.setState({end_date:end_date});
+            this.saveRemote();
   }
     else{
       console.log("date pas enregistre");
     }
 }
+
+
+
+
+
 
 
   render() {
@@ -512,7 +539,7 @@ verifyIfItPossible(start_date,end_date){
           </div>
             {!loadingSave ? (
               <button
-                style={{ display: change ? 'block':'none', backgroundColor: 'grey', ...styles.semiFlexButton}}
+                style={{ display: change ? 'block':'none', backgroundColor: '#295CB3', ...styles.semiFlexButton}}
                 onClick={() => !change ? null : this.verifyIfItPossible(start_date,end_date)}
               >
                 <div style={styles.semiFlexButtonText}
