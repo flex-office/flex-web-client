@@ -325,24 +325,10 @@ export class SettingsScreen extends Component<
   };
 
 
-
-
-
-
-
-
-
-
-
-
  showAlert()
 {
   alert("Vos modifications ont bien été prises en compte !");
 };
-
-
-
-
 
 
 verifyIfItPossible(start_date,end_date){
@@ -352,16 +338,8 @@ verifyIfItPossible(start_date,end_date){
   }
   if(typeof end_date==typeof 'string'){
     console.log("coucou");
-    end_date=new Date(end_date);
-  }
-  console.log(end_date.getMonth()>=start_date.getMonth());
-   console.log(end_date.getYear()>=start_date.getYear());
-   console.log(end_date.getDay()>=start_date.getDay());
-   console.log(end_date>=start_date);
-   console.log(end_date.getDate());
-   console.log(start_date.getDate());
-   
-          
+
+  }        
   if((start_date!==null && end_date !==null)&& (end_date>=start_date)){
             this.setState({start_date:start_date});
             this.setState({end_date:end_date});
@@ -371,11 +349,6 @@ verifyIfItPossible(start_date,end_date){
       console.log("date pas enregistre");
     }
 }
-
-
-
-
-
 
 
   render() {
