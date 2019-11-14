@@ -28,6 +28,11 @@ const ManualInsertionCard = (props: {
 }) => {
   const { onChangeText} = props;
   var ListPlaces= JSON.parse(sessionStorage.getItem("PLACES"));
+  if(localStorage.getItem("USER")!==null){ 
+    var history=Array.from(new Set((JSON.parse(localStorage.getItem("USER")).historical).map(x=>x.id_place))); 
+    var ListTemp=ListPlaces.filter(place => !place.using && (!place.semi_flex) && history.includes(place.id))
+    ListPlaces=Array.from(new Set(ListTemp.concat(ListPlaces)))
+  }
 
  
   // var ListPlaces=[];

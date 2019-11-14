@@ -302,7 +302,7 @@ export class SettingsScreen extends Component<
       .then(data => {
         //console.log(data);
       });
-
+      
     // Wait until the photo is uploaded to Cloudinary and the link is provided to perform request
     // Jan 06092019 : uploaded with a GET ? downloaded instead ?
 
@@ -333,17 +333,6 @@ export class SettingsScreen extends Component<
       }, 3000);
     logger.debug('save')
   };
-
-
-
-
-
-
-
-
-
-
-
 
  showAlert()
 {
