@@ -328,7 +328,7 @@ export class SettingsScreen extends Component<
               )
             );
 
-            this.setState({ loadingSave: false, change: this.state.change ? false : true });
+            this.setState({ loadingSave: false, change: this.state.change ? false : false });
           });
       }, 3000);
     logger.debug('save')
