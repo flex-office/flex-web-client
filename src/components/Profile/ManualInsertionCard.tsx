@@ -18,6 +18,7 @@ import styles from "./styles/ManualInsertionCardStyles";
 import Input from "../General/Input";
 import Downshift from 'downshift';
 import Icon from "react-fontawesome";
+import ListPlaces from "../Users/ListPlaces";
 
 const ManualInsertionCard = (props: {
   onChangeText: any,
@@ -26,10 +27,7 @@ const ManualInsertionCard = (props: {
   // placeInput: string,
 }) => {
   const { onChangeText} = props;
-
   var ListPlaces= JSON.parse(sessionStorage.getItem("PLACES"));
-  
-
 
  
   // var ListPlaces=[];
@@ -55,7 +53,9 @@ const ManualInsertionCard = (props: {
   return (
     <Downshift
     onChange={onChangeText}
-    // onInputValueChange={onChangeText}
+    onInputValueChange={x=>{if(ListPlaces.length==0){
+      ListPlaces= JSON.parse(sessionStorage.getItem("PLACES"));
+    }}}
     itemToString={item => (item ? item.id : '')}
   >
     {({

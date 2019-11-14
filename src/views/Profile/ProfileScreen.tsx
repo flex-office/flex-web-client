@@ -239,6 +239,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             
             }
             if(sessionStorage.getItem("PLACES")==null){
+                sessionStorage.setItem("PLACES", JSON.stringify([]));
                 doLoad=true;
             }
             if(doLoad){

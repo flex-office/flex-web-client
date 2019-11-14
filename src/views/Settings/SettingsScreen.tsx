@@ -258,6 +258,7 @@ export class SettingsScreen extends Component<
     await this.setState({
       remoteDayIndexes: newIndexes,
       remoteDay: newIndexes.map(x => WEEK_DAYS[x]),
+      change: true,
     });
     this.saveRemote();
   };
@@ -341,16 +342,13 @@ export class SettingsScreen extends Component<
 
 
 verifyIfItPossible(start_date,end_date){
-  console.log(typeof start_date);
   if(typeof start_date==typeof 'string'){
     start_date=new Date(start_date);
   }
   if(typeof end_date==typeof 'string'){
     end_date=new Date(end_date);
   }
-
-   
-          
+     
   if((start_date!==null && end_date !==null)&& (end_date>=start_date)){
             this.setState({start_date:start_date});
             this.setState({end_date:end_date});
