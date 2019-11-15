@@ -272,6 +272,7 @@ export class SettingsScreen extends Component<
   saveRemote = async () => {
     const { id, photo, remoteDay, start_date, end_date } = this.state;
     this.setState({ loadingSave: true });
+    console.log(photo);
 
     if(typeof start_date==typeof 'string' && typeof end_date==typeof 'string' && JSON.parse(localStorage.getItem("USER")).start_date!=null){
       var start_date2=null;
@@ -281,6 +282,7 @@ export class SettingsScreen extends Component<
       var start_date2=start_date;
       var end_date2=end_date;
     }
+    
 
     const payload = {
       id_user: id,
@@ -330,7 +332,7 @@ export class SettingsScreen extends Component<
 
             this.setState({ loadingSave: false, change: this.state.change ? false : false });
           });
-      }, 3000);
+      });
     logger.debug('save')
   };
 
@@ -395,7 +397,7 @@ verifyIfItPossible(start_date,end_date){
           >
             <ProfileDescription name={name} fname={fname} id={id} />
             <FilePicker
-              type="image/jpeg"
+              type="image/*"
               onChange={async image => {
                 if (image) {
                   await this.setState({ photo: image, change: true });
