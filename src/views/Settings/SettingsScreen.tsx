@@ -238,9 +238,7 @@ export class SettingsScreen extends Component<
       .then(data => {
         if (data) {
           this.setState({
-            userPlace: data,
-            start_date: data.start_date,
-            end_date: data.end_date
+            userPlace: data
           });
         }
       })
