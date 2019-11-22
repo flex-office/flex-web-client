@@ -1,3 +1,5 @@
+import { logger } from "./App";
+
 /*
  * @license
  * Your First PWA Codelab (https://g.co/codelabs/pwa)
@@ -34,7 +36,6 @@ function saveBeforeInstallPromptEvent(evt) {
   installButton.removeAttribute('hidden')
 }
 
-
 /**
  * Event handler for butInstall - Does the PWA installation.
  *
@@ -50,9 +51,9 @@ function installPWA(evt) {
   deferredInstallPrompt.userChoice
     .then(choice => {
       if (choice.outcome === 'accepted') {
-        console.log('User accepted the A2HS prompt', choice)
+        logger.info('User accepted the A2HS prompt', choice)
       } else {
-        console.log('User dismissed the A2HS prompt', choice)
+        logger.error('User dismissed the A2HS prompt', choice)
       }
       deferredInstallPrompt = null
     })
@@ -69,7 +70,7 @@ window.addEventListener('appinstalled', logAppInstalled)
  */
 function logAppInstalled(evt) {
   // CODELAB: Add code to log the event
-  console.log('Weather App was installed.', evt)
+  logger.info('Weather App was installed.', evt)
 }
 
 export {}

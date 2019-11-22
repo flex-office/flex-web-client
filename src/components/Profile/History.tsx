@@ -3,7 +3,8 @@ import PlacesList from "../../components/Places/PlacesList"
 import { withRouter } from "react-router-dom"
 import server from "../../config/server.js";
 import config from "../../config/api.js";
-import { Spinner } from "reactstrap"
+import { Spinner } from "reactstrap";
+import {logger} from "../../App";
 
 interface HistoryProps {
     historical: Array<any>
@@ -37,7 +38,7 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
 
     getPlaces() {
         if (this._isMounted) {
-            console.log("HISTORYYYYYYYY");
+            logger.debug("PLACES HISTORY");
             this.setState({ loading: true });
             const result = localStorage.getItem("USER");
             const userId = JSON.parse(result).id;
@@ -50,46 +51,24 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
             })
             .then(res => res.json())
             .then(data => {
-                console.log("AZERTY");
-                console.log("data : "+data);
-
+                logger.debug("data : "+data);
                 this.setState({
                     places: data.historical,
                     loading: false
                 });
             });
-            /*
-
-            fetch(`${server.address}users/${userId}/place`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                    "authorization": `${config.token}`
-                }
-            })
-                .then(res => res.json())
-                .then(data => {
-                    console.log("AZERTY");
-                    console.log("data : "+data);
-
-                    this.setState({
-                        places: data,
-                        loading: false
-                    });
-                });
-                */
         }
     }
 
     isFree = place => {
         if (!this.state.places || this.state.places.length < 1) return false
         //return this.state.places.find(x => x.id === place.id && !x.using)
-        console.log("this.state.places : "+this.state.places);
+        logger.debug("this.state.places : "+this.state.places);
         return this.state.places
     }
 
     getHistory(historical) {
-        console.log("42 historical : "+historical);
+        logger.debug("historical : "+historical);
 
         return Array
         .from(
@@ -110,9 +89,7 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
     render () {
         const history = this.getHistory(this.props.historical)
         const { loading } = this.state
-        console.log("42 historical 2 : "+history);
-        console.log("LOADING : "+loading);
-
+        
         return (
             <div style={{
                 display: "flex",

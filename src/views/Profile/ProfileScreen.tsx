@@ -15,6 +15,8 @@ import NavElem from "../../components/Navigation/NavElem"
 import takePlace from "../../utils/takePlace";
 import isMobile from "../../utils/isMobile";
 import { Route, Switch } from 'react-router-dom'
+import { getDate } from "date-fns";
+import ListPlaces from "../../components/Users/ListPlaces.jsx";
 
 interface LeaveComponentProps {
     place: string
@@ -133,6 +135,9 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
     redirect() {
         const { place, historical } = this.state
         const pathname = this.props.location.pathname
+        console.log("pathname : "+pathname);
+        console.log("place : "+place);
+        console.log("historical : "+historical);
 
         if (pathname !== "/home") return
         const goTo = x => (x !== pathname) && this.props.history.push(x)
@@ -211,6 +216,54 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                 }
             });
     }
+    /*
+    this function generate a list of free place and store it into the session storage.
+    if the session storage are already load and not to old he use it else this function update the list.
+    */
+    storeList=()=>{  
+        if(localStorage.getItem("USER")!==null){ 
+            var history=Array.from(new Set((JSON.parse(localStorage.getItem("USER")).historical).map(x=>x.id_place))); 
+        
+
+            var doLoad=false;
+            var now= new Date();
+            if(sessionStorage.getItem("DATE")==null){
+                sessionStorage.setItem("DATE",JSON.stringify([now.getDate(),now.getHours(),now.getMinutes()]));
+                doLoad=true;
+            }
+            else{
+                var date =JSON.parse(sessionStorage.getItem("DATE"));
+                if(date[0]!==now.getDate() || date[1]!==now.getHours()){
+                    doLoad=true;
+                }
+            
+            }
+            if(sessionStorage.getItem("PLACES")==null){
+                sessionStorage.setItem("PLACES", JSON.stringify([]));
+                doLoad=true;
+            }
+            if(doLoad){
+                sessionStorage.setItem("DATE",JSON.stringify([now.getDate(),now.getHours(),now.getMinutes()]));
+                    fetch(`${server.address}places/`, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded",
+                            "authorization": `Bearer ${config.token}`
+                        }
+                    })
+                        .then(res => res.json())
+                        .then(async data => {
+                            var ListPlaces=(await (data));
+                            var ListTemp=ListPlaces.filter(place => !place.using && (!place.semi_flex) && history.includes(place.id))
+                            ListPlaces=Array.from(new Set(ListTemp.concat(ListPlaces)))
+
+
+
+                            sessionStorage.setItem("PLACES", JSON.stringify(ListPlaces));
+                    });
+            }
+        }
+    }
 
     render() {
         const {
@@ -224,22 +277,9 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         } = this.state
 
         console.log(this.state, this.props)
-        if(this.state.placeInput!='lol'){
-            fetch(`${server.address}places/`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                    "authorization": `Bearer ${config.token}`
-                }
-            })
-                .then(res => res.json())
-                .then(async data => {
-                    var ListPlaces=await (data.filter(async place => !place.using && (!place.semi_flex ))
-                    );
-                    localStorage.setItem("PLACES", JSON.stringify(ListPlaces));
-                    console.log("toto");
-            });
-        }
+
+        this.storeList();
+
 
 
         /*
@@ -256,6 +296,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             goTo("/home/leave")
             return
         }else{*/
+            
             return (
                 <div style={styles.view}>
                     <Switch>
@@ -284,8 +325,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                             />
                             <Route path="/home/input" render={() =>
                                 <ManualInsertionCard
-                                    onChangeText={e =>{this.insertPlace(e.id.toUpperCase().trim())
-                                                        this.setState({placeInput:'lol'})}}
+                                    onChangeText={e =>{this.insertPlace(e.id.toUpperCase().trim())}}
                                     // onChangeText={e => this.setState({ placeInput:e.inputValue.toUpperCase() })}
                                     // placeInput={placeInput}
                                     // onSubmitEditing={() =>{this.insertPlace(this.state.placeInput)

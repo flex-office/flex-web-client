@@ -7,12 +7,6 @@ import * as winston from 'winston';
 import { format } from "url";
 
 
-console.log("\nON LAUNCH >>>>> process.env.NODE_ENV             is "+process.env.NODE_ENV+"\n");
-console.log("\n          >>>>> process.env.REACT_APP_LOG_LEVEL  is "+process.env.REACT_APP_LOG_LEVEL+"\n");
-console.log("\n          >>>>> process.env.REACT_APP_ADDRESS    is "+process.env.REACT_APP_ADDRESS+"\n");
-console.log("\n          >>>>> process.env.REACT_APP_SOCKETS     is "+process.env.REACT_APP_SOCKETS+"\n");
-console.log("\n >>>>>>>>>  VERSION 0.3.8  <<<<<<<<<<<<<\n");
-
 if (process.env.NODE_ENV === 'development'){
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = "0";
@@ -30,9 +24,13 @@ var logger = winston.createLogger({
   transports: [new winston.transports.Console()]
 });
 export {logger};
-logger.info("LOG_LEVEL IS : "+LOG_LEVEL);
 
-// pushNotifications.configure()
+logger.info("ON LAUNCH >>>>> NODE_ENV             is "+process.env.NODE_ENV);
+logger.info("          >>>>> REACT_APP_LOG_LEVEL  is "+process.env.REACT_APP_LOG_LEVEL);
+logger.info("          >>>>> REACT_APP_ADDRESS    is "+process.env.REACT_APP_ADDRESS);
+logger.info("          >>>>> REACT_APP_SOCKETS    is "+process.env.REACT_APP_SOCKETS);
+logger.info("          >>>>> LOG_LEVEL            is "+LOG_LEVEL);
+logger.info(" >>>>>>>>>  VERSION 0.3.8  <<<<<<<<<<<<<\n");
 
 export default class App extends React.Component {
     

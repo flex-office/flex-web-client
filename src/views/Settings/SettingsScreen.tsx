@@ -35,12 +35,7 @@ import DeconnectionButton from "../../components/Settings/DeconnectionButton";
 
 import Input from "../../components/General/Input";
 import FilePicker from "../../components/General/FilePicker";
-
-
-// import {
-//   DatePicker,
-//   MuiPickersUtilsProvider,
-// } from "@material-ui/pickers";
+import {logger} from "../../App";
 
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
@@ -134,8 +129,8 @@ type SettingsScreenState = {
   debug?: Array<any> | string,
   remoteDay?: Array<string>,
   arrayOfFriends: Array<any>
-  startDate: any
-  endDate: any
+  start_date: any
+  end_date: any
   remoteDayIndexes: Array<number>
   loadingSave: boolean
   progress: any
@@ -166,8 +161,8 @@ export class SettingsScreen extends Component<
       loadingSave: false,
       progress: 0,
       userPlace: null,
-      startDate: null,
-      endDate: null,
+      start_date: null,
+      end_date: null,
       change: false,
     };
     props.setTitle("Profil");
@@ -175,13 +170,13 @@ export class SettingsScreen extends Component<
 
   handleDateChange = (selectedStartDate) => {
     this.setState({
-      startDate: selectedStartDate,
+      start_date: selectedStartDate,
       change : true
     });
   }
   handleEndDateChange = (selectedEndDate) => {
     this.setState({
-      endDate: selectedEndDate,
+      end_date: selectedEndDate,
       change : true
     }); 
   }
@@ -209,17 +204,18 @@ export class SettingsScreen extends Component<
         }
       });
       const json = await response.json();
-      console.log(json);
+      logger.debug(json);
 
+          
           this.setState({
             photo: json.photo,
             historical: json.historical,
             loadingSave: false,
-            startDate: json.start_date,
-            endDate: json.end_date,
+            start_date:JSON.parse(localStorage.getItem("USER")).start_date,
+            end_date: JSON.parse(localStorage.getItem("USER")).end_date,
             change: false
           });
-
+          
           const user = JSON.parse(localStorage.getItem("USER") || "");
           localStorage.setItem(
             "USER",
@@ -243,12 +239,12 @@ export class SettingsScreen extends Component<
         if (data) {
           this.setState({
             userPlace: data,
-            startDate: data.start_date,
-            endDate: data.end_date
+            start_date: data.start_date,
+            end_date: data.end_date
           });
         }
       })
-      .catch(error => console.log(error))
+      .catch(error => logger.error(error))
   };
 
   addDay = i => this.state.remoteDayIndexes.concat(i);
@@ -265,19 +261,35 @@ export class SettingsScreen extends Component<
       remoteDay: newIndexes.map(x => WEEK_DAYS[x]),
       change: true,
     });
-    this.saveRemote();
+
   };
 
+
+
+
+
+
   saveRemote = async () => {
-    const { id, photo, remoteDay, startDate, endDate } = this.state;
+    const { id, photo, remoteDay, start_date, end_date } = this.state;
     this.setState({ loadingSave: true });
+    console.log(photo);
+
+    if(typeof start_date==typeof 'string' && typeof end_date==typeof 'string' && JSON.parse(localStorage.getItem("USER")).start_date!=null){
+      var start_date2=null;
+      var end_date2=null;
+    }
+    else{
+      var start_date2=start_date;
+      var end_date2=end_date;
+    }
+    
 
     const payload = {
       id_user: id,
       photo: photo,
       remoteDay,
-      startDate: moment(startDate).format("DD/MM/YYYY"),
-      endDate: moment(endDate).format("DD/MM/YYYY")
+      start_date: moment.utc(start_date2).format("DD/MM/YYYY"),
+      end_date: moment.utc(end_date2).format("DD/MM/YYYY")
     };
 
     fetch(`${server.address}user/settings`, {
@@ -290,37 +302,38 @@ export class SettingsScreen extends Component<
     })
       .then(res => res.json())
       .then(data => {
-        // console.log(data);
+        //console.log(data);
       });
-
+      
     // Wait until the photo is uploaded to Cloudinary and the link is provided to perform request
     // Jan 06092019 : uploaded with a GET ? downloaded instead ?
-    setTimeout(async () => {
-      fetch(`${server.address}users/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "authorization": `Bearer ${config.token}`
-        }
-      })
-        .then(res => res.json())
-        .then(data => {
-          this.props.fetchPhoto(data.photo);
-          localStorage.setItem(
-            "USER",
-            JSON.stringify(
-              assoc(
-                "place",
-                data.id_place,
-                omit(["loadingSave"], assoc("photo", data.photo, this.state))
-              )
-            )
-          );
 
-          this.setState({ loadingSave: false, change: this.state.change ? false : true });
-        });
-    }, 3000);
-    console.log('save')
+      setTimeout(async () => {
+        fetch(`${server.address}users/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "authorization": `Bearer ${config.token}`
+          }
+        })
+          .then(res => res.json())
+          .then(data => {
+            this.props.fetchPhoto(data.photo);
+            localStorage.setItem(
+              "USER",
+              JSON.stringify(
+                assoc(
+                  "place",
+                  data.id_place,
+                  omit(["loadingSave"], assoc("photo", data.photo, this.state))
+                )
+              )
+            );
+
+            this.setState({ loadingSave: false, change: this.state.change ? false : false });
+          });
+      });
+    logger.debug('save')
   };
 
  showAlert()
@@ -329,9 +342,27 @@ export class SettingsScreen extends Component<
 };
 
 
-  render() {
-    const { remoteDayIndexes, name, fname, id, photo, loadingSave, startDate, endDate, change } = this.state;
+verifyIfItPossible(start_date,end_date){
+  if(typeof start_date==typeof 'string'){
+    start_date=new Date(start_date);
+  }
+  if(typeof end_date==typeof 'string'){
+    end_date=new Date(end_date);
+  }
+  console.log(start_date, end_date);
+     
+  if((start_date!==null && end_date !==null)&&(end_date>=start_date)){
+            this.setState({start_date:start_date});
+            this.setState({end_date:end_date});
+            this.saveRemote();
+  }
+    else{
+      console.log("date pas enregistre");
+    }
+}
 
+  render() {
+    const { remoteDayIndexes, name, fname, id, photo, loadingSave, start_date, end_date, change } = this.state;
     return (
       <div style={styles.container}>
         <div style={styles.viewContainer}>
@@ -367,7 +398,7 @@ export class SettingsScreen extends Component<
           >
             <ProfileDescription name={name} fname={fname} id={id} />
             <FilePicker
-              type="image/jpeg"
+              type="image/*"
               onChange={async image => {
                 if (image) {
                   await this.setState({ photo: image, change: true });
@@ -432,9 +463,7 @@ export class SettingsScreen extends Component<
             ))}
           </ButtonGroup>
         </div>
-  
-
-      {startDate && endDate ? 
+   
         <div style={styles.viewContainerSemiFlex}>
           <div style={styles.semiFlexRow}>
             <div style={{
@@ -449,12 +478,13 @@ export class SettingsScreen extends Component<
                 <Grid container justify="space-around">
                   <KeyboardDatePicker
                  //  @ts-ignore
+                    emptyLabel="XX/XX/XXXX"
                     disableToolbar
                     format="dd/MM/yyyy"
                     margin="normal"
                     id="date-picker-inline"
-                    maxDate={this.state.endDate ? this.state.endDate:null}
-                    value={this.state.startDate}
+                    maxDate={this.state.end_date ? this.state.end_date:null}
+                    value={this.state.start_date}
                     onChange={this.handleDateChange}
                     KeyboardButtonProps={{'aria-label': 'change date' }}
                   />
@@ -477,12 +507,13 @@ export class SettingsScreen extends Component<
                 <Grid container justify="space-around">
                   <KeyboardDatePicker
                   //  @ts-ignore
+                    emptyLabel="XX/XX/XXXX"
                     disableToolbar
                     format="dd/MM/yyyy"
                     margin="normal"
                     id="date-picker-inline"
-                    minDate={this.state.startDate}
-                    value={this.state.endDate}
+                    minDate={this.state.start_date}
+                    value={this.state.end_date}
                     onChange={this.handleEndDateChange}
                     KeyboardButtonProps={{'aria-label': 'change date' }}
                   />
@@ -493,8 +524,8 @@ export class SettingsScreen extends Component<
           </div>
             {!loadingSave ? (
               <button
-                style={{ display: change ? 'block':'none', backgroundColor: 'grey', ...styles.semiFlexButton}}
-                onClick={() => !change ? null : this.saveRemote()}
+                style={{ display: change ? 'block':'none', backgroundColor: '#295CB3', ...styles.semiFlexButton}}
+                onClick={() => !change ? null : this.verifyIfItPossible(start_date,end_date)}
               >
                 <div style={styles.semiFlexButtonText}
                  >Enregistrer
@@ -505,7 +536,7 @@ export class SettingsScreen extends Component<
                 <Spinner style={{ margin: "1rem", color: "#E64417" }}/>
               </div>
             )}
-        </div> : null}
+        </div>
 
         {/* For future purpose */}
         {/* <Calendar /> */}
