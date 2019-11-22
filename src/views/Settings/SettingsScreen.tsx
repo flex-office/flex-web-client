@@ -261,7 +261,7 @@ export class SettingsScreen extends Component<
       remoteDay: newIndexes.map(x => WEEK_DAYS[x]),
       change: true,
     });
-    this.saveRemote();
+
   };
 
 
@@ -288,8 +288,8 @@ export class SettingsScreen extends Component<
       id_user: id,
       photo: photo,
       remoteDay,
-      start_date: moment(start_date2).format("DD/MM/YYYY"),
-      end_date: moment(end_date2).format("DD/MM/YYYY")
+      start_date: moment.utc(start_date2).format("DD/MM/YYYY"),
+      end_date: moment.utc(end_date2).format("DD/MM/YYYY")
     };
 
     fetch(`${server.address}user/settings`, {
@@ -349,8 +349,9 @@ verifyIfItPossible(start_date,end_date){
   if(typeof end_date==typeof 'string'){
     end_date=new Date(end_date);
   }
+  console.log(start_date, end_date);
      
-  if((start_date!==null && end_date !==null)&& (end_date>=start_date)){
+  if((start_date!==null && end_date !==null)&&(end_date>=start_date)){
             this.setState({start_date:start_date});
             this.setState({end_date:end_date});
             this.saveRemote();
