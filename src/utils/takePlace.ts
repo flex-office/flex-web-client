@@ -12,7 +12,11 @@ export class PlaceError extends Error {
 }
 
 export default async function takePlace(id: string, place: string) {
-  if (place === "" || place.match(regex.placeRegex) === null) {
+  console.log("coucou cette fois je vais la sans raison");
+  var ListPlaces= JSON.parse(sessionStorage.getItem("PLACES"));
+  ListPlaces=ListPlaces.filter(placeList=>placeList.id==place);
+  console.log(ListPlaces);
+  if (place === "" || place.match(regex.placeRegex) === null || ListPlaces.length===0) {
     throw new PlaceError("WrongFormatPlace");
   }
   const payload = {
@@ -21,6 +25,7 @@ export default async function takePlace(id: string, place: string) {
   };
 
   const res = await fetch(`${server.address}places/take`, {
+    
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -28,6 +33,7 @@ export default async function takePlace(id: string, place: string) {
     },
     body: JSON.stringify(payload)
   });
+  
   if (res.status === 500) {
     const user = await res.json();
     throw new PlaceError("AlreadyTaken", user);
