@@ -276,8 +276,8 @@ export class SettingsScreen extends Component<
   saveRemote = async () => {
     const { id, photo, remoteDay, start_date, end_date } = this.state;
     this.setState({ loadingSave: true });
-    console.log(photo);
 
+    
     if(typeof start_date==typeof 'string' && typeof end_date==typeof 'string' && JSON.parse(localStorage.getItem("USER")).start_date!=null){
       var start_date2=null;
       var end_date2=null;
@@ -360,6 +360,10 @@ verifyIfItPossible(start_date,end_date){
             this.saveRemote();
   }
     else{
+      this.setState({start_date:null});
+      this.setState({end_date:null});
+      this.saveRemote();
+      
       console.log("date pas enregistre");
     }
 }
