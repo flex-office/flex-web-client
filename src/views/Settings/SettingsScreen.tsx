@@ -170,6 +170,7 @@ export class SettingsScreen extends Component<
 
   handleDateChange = (selectedStartDate) => {
     this.setState({
+      
       start_date: selectedStartDate,
       change : true
     });
@@ -205,7 +206,7 @@ export class SettingsScreen extends Component<
       });
       const json = await response.json();
       logger.debug(json);
-
+      
           
           this.setState({
             photo: json.photo,
@@ -215,13 +216,18 @@ export class SettingsScreen extends Component<
             end_date: JSON.parse(localStorage.getItem("USER")).end_date,
             change: false
           });
-          
           const user = JSON.parse(localStorage.getItem("USER") || "");
           localStorage.setItem(
             "USER",
             JSON.stringify(Object.assign({ ...user }, { photo: json.photo }))
           );
           this.getUserPlace(userId);
+          if(this.state.start_date === undefined){
+            this.setState({start_date:null});
+          }
+          if(this.state.end_date === undefined){
+            this.setState({end_date:null});
+          }
         
     }
   }
@@ -289,7 +295,6 @@ export class SettingsScreen extends Component<
       start_date: moment.utc(start_date2).format("DD/MM/YYYY"),
       end_date: moment.utc(end_date2).format("DD/MM/YYYY")
     };
-
     fetch(`${server.address}user/settings`, {
       method: "POST",
       body: JSON.stringify(payload),
