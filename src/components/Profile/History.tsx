@@ -41,7 +41,10 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
             logger.debug("PLACES HISTORY");
             this.setState({ loading: true });
             const result = localStorage.getItem("USER");
-            const userId = JSON.parse(result).id;
+            const userId = JSON.parse(result).id
+            this.setState({places:JSON.parse(result).historical, loading:false});
+            
+            /*
             fetch(`${server.address}users/${userId}`, {
                 method: "GET",
                 headers: {
@@ -57,6 +60,7 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
                     loading: false
                 });
             });
+            */
         }
     }
 
