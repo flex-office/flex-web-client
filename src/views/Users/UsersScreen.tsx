@@ -125,8 +125,9 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                     // this.setState({
                     //   arrayOfFriends: append(item, friend.user.friend)
                     // });
-                    localStorage.setItem("USER", JSON.stringify(this.state));
                     this.setState({ friendLoading: false });
+                    localStorage.setItem("USER", JSON.stringify(this.state));
+                   
                 });
         }
     };

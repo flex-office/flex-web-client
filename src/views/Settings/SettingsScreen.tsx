@@ -48,6 +48,7 @@ import {
 import { fetchPhoto, logOut } from "../../components/Navigation/reducer";
 
 import defaultProfile from "../../assets/profile.png";
+import { any } from "prop-types";
 
 const WEEK_DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
 
@@ -170,6 +171,7 @@ export class SettingsScreen extends Component<
 
   handleDateChange = (selectedStartDate) => {
     this.setState({
+      
       start_date: selectedStartDate,
       change : true
     });
@@ -205,7 +207,7 @@ export class SettingsScreen extends Component<
       });
       const json = await response.json();
       logger.debug(json);
-
+      
           
           this.setState({
             photo: json.photo,
@@ -215,13 +217,18 @@ export class SettingsScreen extends Component<
             end_date: JSON.parse(localStorage.getItem("USER")).end_date,
             change: false
           });
-          
           const user = JSON.parse(localStorage.getItem("USER") || "");
           localStorage.setItem(
             "USER",
             JSON.stringify(Object.assign({ ...user }, { photo: json.photo }))
           );
           this.getUserPlace(userId);
+          if(this.state.start_date === undefined){
+            this.setState({start_date:null});
+          }
+          if(this.state.end_date === undefined){
+            this.setState({end_date:null});
+          }
         
     }
   }
@@ -270,26 +277,28 @@ export class SettingsScreen extends Component<
   saveRemote = async () => {
     const { id, photo, remoteDay, start_date, end_date } = this.state;
     this.setState({ loadingSave: true });
-    console.log(photo);
-
-    if(typeof start_date==typeof 'string' && typeof end_date==typeof 'string' && JSON.parse(localStorage.getItem("USER")).start_date!=null){
-      var start_date2=null;
-      var end_date2=null;
+    console.log(start_date);
+    var start_date2;
+    var end_date2;
+    if((typeof start_date==typeof 'string' && typeof end_date==typeof 'string' ) || start_date==null ||end_date==null || (end_date<start_date)){
+       start_date2=null;
+       end_date2=null;
+       console.log("je passe la ok !");
+       
     }
     else{
-      var start_date2=start_date;
-      var end_date2=end_date;
+       start_date2=moment.utc(start_date).format("DD/MM/YYYY");
+       end_date2=moment.utc(end_date).format("DD/MM/YYYY");
     }
+    console
     
-
     const payload = {
       id_user: id,
       photo: photo,
       remoteDay,
-      start_date: moment.utc(start_date2).format("DD/MM/YYYY"),
-      end_date: moment.utc(end_date2).format("DD/MM/YYYY")
+      start_date: start_date2,
+      end_date: end_date2
     };
-
     fetch(`${server.address}user/settings`, {
       method: "POST",
       body: JSON.stringify(payload),
@@ -347,14 +356,20 @@ verifyIfItPossible(start_date,end_date){
   if(typeof end_date==typeof 'string'){
     end_date=new Date(end_date);
   }
-  console.log(start_date, end_date);
+  
      
   if((start_date!==null && end_date !==null)&&(end_date>=start_date)){
+    console.log(start_date, end_date);
             this.setState({start_date:start_date});
             this.setState({end_date:end_date});
+
             this.saveRemote();
   }
     else{
+      this.setState({start_date:null});
+      this.setState({end_date:null});
+      this.saveRemote();
+      
       console.log("date pas enregistre");
     }
 }

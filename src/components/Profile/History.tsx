@@ -24,7 +24,7 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
         super(props)
         this.state = {
             places: [],
-            loading: false,
+            loading: true,
         }
     }
 
@@ -42,6 +42,10 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
             this.setState({ loading: true });
             const result = localStorage.getItem("USER");
             const userId = JSON.parse(result).id;
+            this.setState({places:JSON.parse(result).historical});
+  
+            
+            /*
             fetch(`${server.address}users/${userId}`, {
                 method: "GET",
                 headers: {
@@ -57,6 +61,7 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
                     loading: false
                 });
             });
+            */
         }
     }
 
@@ -68,8 +73,31 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
     }
 
     getHistory(historical) {
+        console.log(JSON.parse(localStorage.getItem("USER"))+"looooooool");  
+        if(this.state.loading) {
+            var histori=Array.from(new Set((JSON.parse(localStorage.getItem("USER")).historical).map(x=>x.id_place))); 
+            fetch(`${server.address}places/`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "authorization": `Bearer ${config.token}`
+                }
+            })
+                .then(res => res.json())
+                .then(async data => {
+                    
+                    var ListPlaces=(await (data));
+                    sessionStorage.setItem("PLACES_USE",JSON.stringify(ListPlaces.filter(place=>place.using)));
+                    var ListTemp=ListPlaces.filter(place => !place.using && (!place.semi_flex) && histori.includes(place.id))
+                    ListPlaces=Array.from(new Set(ListTemp.concat(ListPlaces)));
+                    sessionStorage.setItem("PLACES", JSON.stringify(ListPlaces));
+                    console.log("je suis bine passe");
+                    this.setState({loading:false});
+                    
+            });
+        }
         logger.debug("historical : "+historical);
-
+       // var history=historical.filter(x=>!JSON.parse(sessionStorage.getItem("PLACES_USE")).map(x=>x.id).includes(x.id_place));
         return Array
         .from(
             new Set(
@@ -77,7 +105,6 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
                 )
             )
         .sort()
-        .filter(this.isFree)
         .map(x => {return{id: x}})
     }
 
@@ -85,18 +112,18 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
         if (await this.props.takePlace(x))
             this.props.history.push("/home/leave")
     }
-
+   
     render () {
+
         const history = this.getHistory(this.props.historical)
-        const { loading } = this.state
-        
         return (
             <div style={{
                 display: "flex",
                 flexDirection: "column" as "column",
                 alignItems: "center",
             }}>
-                {!loading ? (
+                {!this.state.loading ? (
+
                     <PlacesList places={history} onClickItem={this.props.takePlace} />
                 ) : (
                     <Spinner
