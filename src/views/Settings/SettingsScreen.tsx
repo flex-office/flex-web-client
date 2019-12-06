@@ -277,17 +277,20 @@ export class SettingsScreen extends Component<
   saveRemote = async () => {
     const { id, photo, remoteDay, start_date, end_date } = this.state;
     this.setState({ loadingSave: true });
-
+    console.log(start_date);
     var start_date2;
     var end_date2;
-    if(typeof start_date==typeof 'string' && typeof end_date==typeof 'string' && JSON.parse(localStorage.getItem("USER")).start_date!=null){
+    if((typeof start_date==typeof 'string' && typeof end_date==typeof 'string' ) || start_date==null ||end_date==null || (end_date<start_date)){
        start_date2=null;
        end_date2=null;
+       console.log("je passe la ok !");
+       
     }
     else{
-       start_date2=moment.utc(start_date2).format("DD/MM/YYYY");
-       end_date2=moment.utc(start_date2).format("DD/MM/YYYY");
+       start_date2=moment.utc(start_date).format("DD/MM/YYYY");
+       end_date2=moment.utc(end_date).format("DD/MM/YYYY");
     }
+    console
     
     const payload = {
       id_user: id,
@@ -353,11 +356,13 @@ verifyIfItPossible(start_date,end_date){
   if(typeof end_date==typeof 'string'){
     end_date=new Date(end_date);
   }
-  console.log(start_date, end_date);
+  
      
   if((start_date!==null && end_date !==null)&&(end_date>=start_date)){
+    console.log(start_date, end_date);
             this.setState({start_date:start_date});
             this.setState({end_date:end_date});
+
             this.saveRemote();
   }
     else{
