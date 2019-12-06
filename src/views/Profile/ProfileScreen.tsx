@@ -220,7 +220,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
     this function generate a list of free place and store it into the session storage.
     if the session storage are already load and not to old he use it else this function update the list.
     */
-    storeList=()=>{  
+    storeList=async()=>{  
         if(localStorage.getItem("USER")!==null){ 
             var history=Array.from(new Set((JSON.parse(localStorage.getItem("USER")).historical).map(x=>x.id_place))); 
         

@@ -23,9 +23,10 @@ interface PlaceItemProps {
 
 class PlaceItem extends React.Component<PlaceItemProps> {
 	
-	render() {
+	 render() {
 		
 		const { place, onClick } = this.props;
+
 		
 		var placeUse=JSON.parse(sessionStorage.getItem("PLACES_USE")).map(x=>x.id);
 		console.log(placeUse);
