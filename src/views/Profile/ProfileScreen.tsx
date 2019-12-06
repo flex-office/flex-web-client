@@ -239,6 +239,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             
             }
             if(sessionStorage.getItem("PLACES")==null){
+                sessionStorage.setItem("PLACES_USE",JSON.stringify([]));
                 sessionStorage.setItem("PLACES", JSON.stringify([]));
                 doLoad=true;
             }
@@ -253,12 +254,11 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                     })
                         .then(res => res.json())
                         .then(async data => {
+                            
                             var ListPlaces=(await (data));
+                            sessionStorage.setItem("PLACES_USE",JSON.stringify(ListPlaces.filter(place=>place.using)));
                             var ListTemp=ListPlaces.filter(place => !place.using && (!place.semi_flex) && history.includes(place.id))
                             ListPlaces=Array.from(new Set(ListTemp.concat(ListPlaces)))
-
-
-
                             sessionStorage.setItem("PLACES", JSON.stringify(ListPlaces));
                     });
             }

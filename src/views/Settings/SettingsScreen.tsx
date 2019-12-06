@@ -48,6 +48,7 @@ import {
 import { fetchPhoto, logOut } from "../../components/Navigation/reducer";
 
 import defaultProfile from "../../assets/profile.png";
+import { any } from "prop-types";
 
 const WEEK_DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
 
@@ -277,23 +278,23 @@ export class SettingsScreen extends Component<
     const { id, photo, remoteDay, start_date, end_date } = this.state;
     this.setState({ loadingSave: true });
 
-    
+    var start_date2;
+    var end_date2;
     if(typeof start_date==typeof 'string' && typeof end_date==typeof 'string' && JSON.parse(localStorage.getItem("USER")).start_date!=null){
-      var start_date2=null;
-      var end_date2=null;
+       start_date2=null;
+       end_date2=null;
     }
     else{
-      var start_date2=start_date;
-      var end_date2=end_date;
+       start_date2=moment.utc(start_date2).format("DD/MM/YYYY");
+       end_date2=moment.utc(start_date2).format("DD/MM/YYYY");
     }
     
-
     const payload = {
       id_user: id,
       photo: photo,
       remoteDay,
-      start_date: moment.utc(start_date2).format("DD/MM/YYYY"),
-      end_date: moment.utc(end_date2).format("DD/MM/YYYY")
+      start_date: start_date2,
+      end_date: end_date2
     };
     fetch(`${server.address}user/settings`, {
       method: "POST",

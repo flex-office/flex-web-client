@@ -73,7 +73,7 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
 
     getHistory(historical) {
         logger.debug("historical : "+historical);
-
+       // var history=historical.filter(x=>!JSON.parse(sessionStorage.getItem("PLACES_USE")).map(x=>x.id).includes(x.id_place));
         return Array
         .from(
             new Set(
@@ -81,7 +81,6 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
                 )
             )
         .sort()
-        .filter(this.isFree)
         .map(x => {return{id: x}})
     }
 
