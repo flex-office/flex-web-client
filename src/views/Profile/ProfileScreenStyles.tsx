@@ -68,4 +68,10 @@ export default {
     justifyContent: "space-around",
     flexDirection: "column" as "column",
   },
+  spinner: {
+    alignItems: "center",
+    backgroundColor: "white",
+    flex: 1,
+    justifyContent: "center",
+}
 };

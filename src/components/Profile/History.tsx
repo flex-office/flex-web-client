@@ -72,8 +72,7 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
         return this.state.places
     }
 
-    getHistory(historical) {
-        console.log(JSON.parse(localStorage.getItem("USER"))+"looooooool");  
+    getHistory(historical) { 
         if(this.state.loading) {
             var histori=Array.from(new Set((JSON.parse(localStorage.getItem("USER")).historical).map(x=>x.id_place))); 
             fetch(`${server.address}places/`, {
@@ -91,7 +90,6 @@ export class HistoryComponent extends React.Component<HistoryProps, HistoryState
                     var ListTemp=ListPlaces.filter(place => !place.using && (!place.semi_flex) && histori.includes(place.id))
                     ListPlaces=Array.from(new Set(ListTemp.concat(ListPlaces)));
                     sessionStorage.setItem("PLACES", JSON.stringify(ListPlaces));
-                    console.log("je suis bine passe");
                     this.setState({loading:false});
                     
             });

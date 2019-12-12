@@ -29,9 +29,7 @@ class PlaceItem extends React.Component<PlaceItemProps> {
 
 		
 		var placeUse=JSON.parse(sessionStorage.getItem("PLACES_USE")).map(x=>x.id);
-		console.log(placeUse);
 		if(placeUse.includes(place.id)){
-			console.log(place.id +"loooooooool");
 			return (
 				
 				<div

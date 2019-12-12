@@ -7,6 +7,7 @@ import UsersScreenSearch from "../../components/Users/UsersScreenSearch"
 import UsersScreenFavorites from "../../components/Users/UsersScreenFavorites"
 import NavElem from "../../components/Navigation/NavElem"
 import { Route } from 'react-router-dom'
+import {logger, correlation_id} from "../../App";
 
 type UsersScreenState = {
     users: Array<any>
@@ -117,7 +118,8 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                 body: JSON.stringify(payload),
                 headers: {
                     "Content-Type": "application/json",
-                    "authorization": `Bearer ${config.token}`
+                    "authorization": `Bearer ${config.token}`,
+                    "X-Correlation-ID": correlation_id
                 }
             })
                 .then(res => res.json()) // transform data to json
@@ -138,7 +140,8 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "authorization": `Bearer ${config.token}`
+                "authorization": `Bearer ${config.token}`,
+                "X-Correlation-ID": correlation_id
             }
         })
             .then(res => res.json())
@@ -166,7 +169,8 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
             method: "GET",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "authorization": `Bearer ${config.token}`
+                "authorization": `Bearer ${config.token}`,
+                "X-Correlation-ID": correlation_id
             }
         })
             .then(res => res.json()) // transform data to json
@@ -198,7 +202,8 @@ class UsersScreen extends React.Component<UsersScreenProps, UsersScreenState> {
                 body: JSON.stringify(payload),
                 headers: {
                     "Content-Type": "application/json",
-                    "authorization": `Bearer ${config.token}`
+                    "authorization": `Bearer ${config.token}`,
+                    "X-Correlation-ID": correlation_id
                 }
             })
                 .then(res => res.json()) // transform data to json

@@ -15,8 +15,12 @@ import NavElem from "../../components/Navigation/NavElem"
 import takePlace from "../../utils/takePlace";
 import isMobile from "../../utils/isMobile";
 import { Route, Switch } from 'react-router-dom'
+<<<<<<< HEAD
+import {logger, correlation_id} from "../../App";
+=======
 import { getDate } from "date-fns";
 import ListPlaces from "../../components/Users/ListPlaces.jsx";
+>>>>>>> e2dca957aaf5ec620a8cd250bcb1679fb6aca113
 
 interface LeaveComponentProps {
     place: string
@@ -171,7 +175,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                 case "AlreadyTaken":
                     alert(`Impossible, Place déjà utilisée par : ${err.user.fname} ${err.user.name}`); break
                 default:
-                    alert("Erreur inconnu"); break
+                    alert("Cette place n'est pas disponnible"); break
             }
             this.setState({ isScanning: false })
             return false
@@ -188,6 +192,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         const { id, place } = this.state;
 
         const payload = {
+            correlation_id: correlation_id,
             id_user: id,
             id_place: place
         };
@@ -197,7 +202,8 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             body: JSON.stringify(payload),
             headers: {
                 "Content-Type": "application/json",
-                "authorization": `Bearer ${config.token}`
+                "authorization": `Bearer ${config.token}`,
+                "X-Correlation-ID": correlation_id
             }
         })
             .then(res => {
@@ -276,6 +282,28 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             historical,
         } = this.state
 
+<<<<<<< HEAD
+        logger.debug("STATE : " + this.state);
+        logger.debug("PROPS : " + this.props);
+        if(this.state.placeInput!='lol'){
+            fetch(`${server.address}places/`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "authorization": `Bearer ${config.token}`,
+                    "X-Correlation-ID": correlation_id
+                }
+            })
+            .then(res => res.json())
+            .then(async data => {
+                var ListPlaces=await (data.filter(async place => !place.using && (!place.semi_flex ))
+                );
+                localStorage.setItem("PLACES", JSON.stringify(ListPlaces));
+                logger.info("GOT PLACES");
+            });
+        }
+
+=======
         console.log(this.state, this.props)
 
         this.storeList();
@@ -297,6 +325,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             return
         }else{*/
             
+>>>>>>> e2dca957aaf5ec620a8cd250bcb1679fb6aca113
             return (
                 <div style={styles.view}>
                     <Switch>
@@ -325,6 +354,10 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                             />
                             <Route path="/home/input" render={() =>
                                 <ManualInsertionCard
+<<<<<<< HEAD
+                                    onChangeText={e =>{this.insertPlace(e.id.toUpperCase().trim())
+                                                        this.setState({placeInput:'lol'})}}
+=======
                                     onChangeText={e =>{this.insertPlace(e.id.toUpperCase().trim())}}
                                     // onChangeText={e => this.setState({ placeInput:e.inputValue.toUpperCase() })}
                                     // placeInput={placeInput}
@@ -332,6 +365,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                                     // this.setState({placeInput:''})}}
                                     // onPress={() => {this.insertPlace(this.state.placeInput)
                                     // this.setState({placeInput:''})}}
+>>>>>>> e2dca957aaf5ec620a8cd250bcb1679fb6aca113
                                 />
                             }
                             />
@@ -346,8 +380,6 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                     </Switch>
                 </div>
                 )
-        //}
-
     }
 }
 

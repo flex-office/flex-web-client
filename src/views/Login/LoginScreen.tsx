@@ -9,7 +9,7 @@ import HeaderBar from "../../components/Navigation/HeaderBar";
 import Input from "../../components/General/Input";
 import FilePicker from "../../components/General/FilePicker";
 import Button from "../../components/General/Button";
-import {logger} from "../../App";
+import {logger, correlation_id} from "../../App";
 
 
 // need to add in case of self-signed certificate connection
@@ -63,6 +63,7 @@ class CompleteView extends React.Component<
       return this.setState({ errorFname: "Veuillez saisir votre prénom" });
 
     const payload = {
+      correlation_id,
       id_user: id,
       name,
       fname,
@@ -76,7 +77,8 @@ class CompleteView extends React.Component<
         body: JSON.stringify(payload),
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${config.token}`
+          "authorization": `Bearer ${config.token}`,
+          "X-Correlation-ID": correlation_id
         }
       });
       if (res.status !== 200)
@@ -188,6 +190,7 @@ class VerificationView extends React.Component<
 > {
   validate = async code => {
     const payload = {
+      correlation_id,
       code
     };
 
@@ -197,7 +200,8 @@ class VerificationView extends React.Component<
         body: JSON.stringify(payload),
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${config.token}`
+          "authorization": `Bearer ${config.token}`,
+          "X-Correlation-ID": correlation_id
         }
       });
       if (res.status !== 200) return false;
@@ -249,6 +253,7 @@ class SendVerifView extends React.Component<
 
     if (!(/@bred.fr$/.test(email))) return false;
     const payload = {
+      correlation_id,
       email
     };
     logger.debug("Email is correct ! ");
@@ -260,7 +265,8 @@ class SendVerifView extends React.Component<
         body: JSON.stringify(payload),
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${config.token}`
+          "authorization": `Bearer ${config.token}`,
+          "X-Correlation-ID": correlation_id
         }
       });
       
@@ -356,7 +362,7 @@ class CommonView extends React.Component<CommonViewProps, CommonViewState> {
           onClickOnX={this.onClickOnX}
           onChange={e => 
             {
-              this.setState({ value: e.target.value });
+              this.setState({ value: e.target.value.toLowerCase() });
             }
           }
           error={error}
@@ -449,7 +455,7 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
               marginTop: "5rem"
             }}
           >
-            Version O.4.6
+            Version O.4.8
           </div>
         </div>
       </div>
