@@ -35,7 +35,6 @@ import DeconnectionButton from "../../components/Settings/DeconnectionButton";
 
 import Input from "../../components/General/Input";
 import FilePicker from "../../components/General/FilePicker";
-import {logger} from "../../App";
 
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
@@ -48,7 +47,11 @@ import {
 import { fetchPhoto, logOut } from "../../components/Navigation/reducer";
 
 import defaultProfile from "../../assets/profile.png";
+<<<<<<< HEAD
+import {logger, correlation_id} from "../../App";
+=======
 import { any } from "prop-types";
+>>>>>>> e2dca957aaf5ec620a8cd250bcb1679fb6aca113
 
 const WEEK_DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
 
@@ -202,7 +205,8 @@ export class SettingsScreen extends Component<
         method: "GET",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          "authorization": `Bearer ${config.token}`
+          "authorization": `Bearer ${config.token}`,
+          "X-Correlation-ID": correlation_id
         }
       });
       const json = await response.json();
@@ -238,7 +242,8 @@ export class SettingsScreen extends Component<
       method: "GET",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "authorization": `Bearer ${config.token}`
+        "authorization": `Bearer ${config.token}`,
+        "X-Correlation-ID": correlation_id
       }
     })
       .then(res => res.json()) // transform data to json
@@ -277,13 +282,11 @@ export class SettingsScreen extends Component<
   saveRemote = async () => {
     const { id, photo, remoteDay, start_date, end_date } = this.state;
     this.setState({ loadingSave: true });
-    console.log(start_date);
     var start_date2;
     var end_date2;
     if((typeof start_date==typeof 'string' && typeof end_date==typeof 'string' ) || start_date==null ||end_date==null || (end_date<start_date)){
        start_date2=null;
        end_date2=null;
-       console.log("je passe la ok !");
        
     }
     else{
@@ -304,7 +307,8 @@ export class SettingsScreen extends Component<
       body: JSON.stringify(payload),
       headers: {
         "Content-Type": "application/json",
-        "authorization": `Bearer ${config.token}`
+        "authorization": `Bearer ${config.token}`,
+        "X-Correlation-ID": correlation_id
       }
     })
       .then(res => res.json())
@@ -314,6 +318,27 @@ export class SettingsScreen extends Component<
       
     // Wait until the photo is uploaded to Cloudinary and the link is provided to perform request
     // Jan 06092019 : uploaded with a GET ? downloaded instead ?
+<<<<<<< HEAD
+    setTimeout(async () => {
+      fetch(`${server.address}users/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "authorization": `Bearer ${config.token}`,
+          "X-Correlation-ID": correlation_id
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          this.props.fetchPhoto(data.photo);
+          localStorage.setItem(
+            "USER",
+            JSON.stringify(
+              assoc(
+                "place",
+                data.id_place,
+                omit(["loadingSave"], assoc("photo", data.photo, this.state))
+=======
 
       setTimeout(async () => {
         fetch(`${server.address}users/${id}`, {
@@ -334,6 +359,7 @@ export class SettingsScreen extends Component<
                   data.id_place,
                   omit(["loadingSave"], assoc("photo", data.photo, this.state))
                 )
+>>>>>>> e2dca957aaf5ec620a8cd250bcb1679fb6aca113
               )
             );
 
@@ -359,7 +385,6 @@ verifyIfItPossible(start_date,end_date){
   
      
   if((start_date!==null && end_date !==null)&&(end_date>=start_date)){
-    console.log(start_date, end_date);
             this.setState({start_date:start_date});
             this.setState({end_date:end_date});
 
@@ -369,8 +394,6 @@ verifyIfItPossible(start_date,end_date){
       this.setState({start_date:null});
       this.setState({end_date:null});
       this.saveRemote();
-      
-      console.log("date pas enregistre");
     }
 }
 
