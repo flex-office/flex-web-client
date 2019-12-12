@@ -1,6 +1,6 @@
 {
     "buildingIndex": ["Joinville", "La Rapée"],
-    "buildingCodes": ["JO", "RA"],
+    "buildingCodes": ["JV", "LR"],
     "buildings": [
         {
             "zoneCodes": ["V", "B", "R"],

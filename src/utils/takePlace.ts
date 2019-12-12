@@ -12,10 +12,8 @@ export class PlaceError extends Error {
 }
 
 export default async function takePlace(id: string, place: string) {
-  console.log("coucou cette fois je vais la sans raison");
   var ListPlaces= JSON.parse(sessionStorage.getItem("PLACES"));
   ListPlaces=ListPlaces.filter(placeList=>placeList.id==place);
-  console.log(ListPlaces);
   if (place === "" || place.match(regex.placeRegex) === null || ListPlaces.length===0) {
     throw new PlaceError("WrongFormatPlace");
   }
@@ -40,6 +38,6 @@ export default async function takePlace(id: string, place: string) {
   } else if (res.status === 200) {
     return;
   } else {
-    throw new PlaceError("UnknownError");
+    throw new PlaceError("Cette place n'est pas disponible");
   }
 }

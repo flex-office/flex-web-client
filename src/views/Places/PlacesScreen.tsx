@@ -107,9 +107,8 @@ export class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScree
             (this.state.selectedSideIndex === 2 ? placesConfig.buildings[selectedBuildingIndex].sideIndexUpper[0] : placesConfig.buildings[selectedBuildingIndex].sideIndexUpper[selectedSideIndex]) : placesConfig.buildings[selectedBuildingIndex].sideIndexUpper[selectedSideIndex]
         
         
-        const reg = new RegExp(`${buildingCode}-${floor}-${zoneCode}-${side}\\d{2}`)
-
-        return places.filter(place => reg.test(place.id) && !place.using);
+        const reg = new RegExp(`${buildingCode}-${floor}-${zoneCode}-${side}`)
+        return places.filter(place => reg.test(place.id.substring(0,place.id.length-3)) && !place.using);
     };
 
     handleOnClickItem = place => {
@@ -146,6 +145,13 @@ export class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScree
                         onPress={this.updateFloorIndex}
                         selectedIndex={selectedFloorIndex}
                     />
+                    
+                    {/* Zone selector */}
+                    <PlacesSelector
+                        buttons={placesConfig.buildings[this.state.selectedBuildingIndex].zoneIndex}
+                        onPress={this.updateZoneIndex}
+                        selectedIndex={this.state.selectedBuildingIndex === 1 ? 0 : selectedZoneIndex}
+                    />
 
                     {/* Side selector */}
                     <PlacesSelector
@@ -157,12 +163,7 @@ export class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScree
                         }
                     />
 
-                    {/* Zone selector */}
-                    <PlacesSelector
-                        buttons={placesConfig.buildings[this.state.selectedBuildingIndex].zoneIndex}
-                        onPress={this.updateZoneIndex}
-                        selectedIndex={this.state.selectedBuildingIndex === 1 ? 0 : selectedZoneIndex}
-                    />
+
 
                     <FetchPlacesButton
                         onPress={() => this.getPlaces()}

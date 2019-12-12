@@ -171,7 +171,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                 case "AlreadyTaken":
                     alert(`Impossible, Place déjà utilisée par : ${err.user.fname} ${err.user.name}`); break
                 default:
-                    alert("Erreur inconnu"); break
+                    alert("Cette place n'est pas disponnible"); break
             }
             this.setState({ isScanning: false })
             return false

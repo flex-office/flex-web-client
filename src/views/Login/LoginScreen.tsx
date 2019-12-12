@@ -356,7 +356,7 @@ class CommonView extends React.Component<CommonViewProps, CommonViewState> {
           onClickOnX={this.onClickOnX}
           onChange={e => 
             {
-              this.setState({ value: e.target.value });
+              this.setState({ value: e.target.value.toLowerCase() });
             }
           }
           error={error}
@@ -449,7 +449,7 @@ class LoginScreen extends React.Component<LoginScreenProps, LoginScreenState> {
               marginTop: "5rem"
             }}
           >
-            Version O.4.6
+            Version O.4.7
           </div>
         </div>
       </div>
