@@ -12,7 +12,9 @@ export class PlaceError extends Error {
 }
 
 export default async function takePlace(id: string, place: string) {
-  if (place === "" || place.match(regex.placeRegex) === null) {
+  var ListPlaces= JSON.parse(sessionStorage.getItem("PLACES"));
+  ListPlaces=ListPlaces.filter(placeList=>placeList.id==place);
+  if (place === "" || place.match(regex.placeRegex) === null || ListPlaces.length===0) {
     throw new PlaceError("WrongFormatPlace");
   }
   const payload = {
@@ -21,6 +23,7 @@ export default async function takePlace(id: string, place: string) {
   };
 
   const res = await fetch(`${server.address}places/take`, {
+    
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -28,12 +31,13 @@ export default async function takePlace(id: string, place: string) {
     },
     body: JSON.stringify(payload)
   });
+  
   if (res.status === 500) {
     const user = await res.json();
     throw new PlaceError("AlreadyTaken", user);
   } else if (res.status === 200) {
     return;
   } else {
-    throw new PlaceError("UnknownError");
+    throw new PlaceError("Cette place n'est pas disponible");
   }
 }

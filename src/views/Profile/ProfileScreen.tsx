@@ -15,7 +15,12 @@ import NavElem from "../../components/Navigation/NavElem"
 import takePlace from "../../utils/takePlace";
 import isMobile from "../../utils/isMobile";
 import { Route, Switch } from 'react-router-dom'
+<<<<<<< HEAD
 import {logger, correlation_id} from "../../App";
+=======
+import { getDate } from "date-fns";
+import ListPlaces from "../../components/Users/ListPlaces.jsx";
+>>>>>>> e2dca957aaf5ec620a8cd250bcb1679fb6aca113
 
 interface LeaveComponentProps {
     place: string
@@ -134,6 +139,9 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
     redirect() {
         const { place, historical } = this.state
         const pathname = this.props.location.pathname
+        console.log("pathname : "+pathname);
+        console.log("place : "+place);
+        console.log("historical : "+historical);
 
         if (pathname !== "/home") return
         const goTo = x => (x !== pathname) && this.props.history.push(x)
@@ -167,7 +175,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                 case "AlreadyTaken":
                     alert(`Impossible, Place déjà utilisée par : ${err.user.fname} ${err.user.name}`); break
                 default:
-                    alert("Erreur inconnu"); break
+                    alert("Cette place n'est pas disponnible"); break
             }
             this.setState({ isScanning: false })
             return false
@@ -210,9 +218,57 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                     this.redirect()
                 }
                 else if (res.status === 400) {
-                    res.text().then(message => logger.error(message));
+                    res.text().then(message => console.log(message));
                 }
             });
+    }
+    /*
+    this function generate a list of free place and store it into the session storage.
+    if the session storage are already load and not to old he use it else this function update the list.
+    */
+    storeList=async()=>{  
+        if(localStorage.getItem("USER")!==null){ 
+            var history=Array.from(new Set((JSON.parse(localStorage.getItem("USER")).historical).map(x=>x.id_place))); 
+        
+
+            var doLoad=false;
+            var now= new Date();
+            if(sessionStorage.getItem("DATE")==null){
+                sessionStorage.setItem("DATE",JSON.stringify([now.getDate(),now.getHours(),now.getMinutes()]));
+                doLoad=true;
+            }
+            else{
+                var date =JSON.parse(sessionStorage.getItem("DATE"));
+                if(date[0]!==now.getDate() || date[1]!==now.getHours()){
+                    doLoad=true;
+                }
+            
+            }
+            if(sessionStorage.getItem("PLACES")==null){
+                sessionStorage.setItem("PLACES_USE",JSON.stringify([]));
+                sessionStorage.setItem("PLACES", JSON.stringify([]));
+                doLoad=true;
+            }
+            if(doLoad){
+                sessionStorage.setItem("DATE",JSON.stringify([now.getDate(),now.getHours(),now.getMinutes()]));
+                    fetch(`${server.address}places/`, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded",
+                            "authorization": `Bearer ${config.token}`
+                        }
+                    })
+                        .then(res => res.json())
+                        .then(async data => {
+                            
+                            var ListPlaces=(await (data));
+                            sessionStorage.setItem("PLACES_USE",JSON.stringify(ListPlaces.filter(place=>place.using)));
+                            var ListTemp=ListPlaces.filter(place => !place.using && (!place.semi_flex) && history.includes(place.id))
+                            ListPlaces=Array.from(new Set(ListTemp.concat(ListPlaces)))
+                            sessionStorage.setItem("PLACES", JSON.stringify(ListPlaces));
+                    });
+            }
+        }
     }
 
     render() {
@@ -226,6 +282,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             historical,
         } = this.state
 
+<<<<<<< HEAD
         logger.debug("STATE : " + this.state);
         logger.debug("PROPS : " + this.props);
         if(this.state.placeInput!='lol'){
@@ -246,6 +303,29 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             });
         }
 
+=======
+        console.log(this.state, this.props)
+
+        this.storeList();
+
+
+
+        /*
+        if (place){
+            const pathname = this.props.location.pathname
+            const goTo = x => (x !== pathname) && this.props.history.push(x)
+            goTo("/home/leave")
+        }*/
+        
+        /*
+        const pathname = this.props.location.pathname
+        const goTo = x => (x !== pathname) && this.props.history.push(x)
+        if (place) {
+            goTo("/home/leave")
+            return
+        }else{*/
+            
+>>>>>>> e2dca957aaf5ec620a8cd250bcb1679fb6aca113
             return (
                 <div style={styles.view}>
                     <Switch>
@@ -274,8 +354,18 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                             />
                             <Route path="/home/input" render={() =>
                                 <ManualInsertionCard
+<<<<<<< HEAD
                                     onChangeText={e =>{this.insertPlace(e.id.toUpperCase().trim())
                                                         this.setState({placeInput:'lol'})}}
+=======
+                                    onChangeText={e =>{this.insertPlace(e.id.toUpperCase().trim())}}
+                                    // onChangeText={e => this.setState({ placeInput:e.inputValue.toUpperCase() })}
+                                    // placeInput={placeInput}
+                                    // onSubmitEditing={() =>{this.insertPlace(this.state.placeInput)
+                                    // this.setState({placeInput:''})}}
+                                    // onPress={() => {this.insertPlace(this.state.placeInput)
+                                    // this.setState({placeInput:''})}}
+>>>>>>> e2dca957aaf5ec620a8cd250bcb1679fb6aca113
                                 />
                             }
                             />

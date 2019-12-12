@@ -362,7 +362,7 @@ class CommonView extends React.Component<CommonViewProps, CommonViewState> {
           onClickOnX={this.onClickOnX}
           onChange={e => 
             {
-              this.setState({ value: e.target.value });
+              this.setState({ value: e.target.value.toLowerCase() });
             }
           }
           error={error}

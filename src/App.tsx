@@ -34,7 +34,7 @@ logger.info("          >>>>> REACT_APP_LOG_LEVEL  is "+process.env.REACT_APP_LOG
 logger.info("          >>>>> REACT_APP_ADDRESS    is "+process.env.REACT_APP_ADDRESS);
 logger.info("          >>>>> REACT_APP_SOCKETS    is "+process.env.REACT_APP_SOCKETS);
 logger.info("          >>>>> LOG_LEVEL            is "+LOG_LEVEL);
-logger.info(" >>>>>>>>>  VERSION 0.4.0  <<<<<<<<<<<<<\n");
+logger.info(" >>>>>>>>>  VERSION 0.4.8  <<<<<<<<<<<<<\n");
 
 export default class App extends React.Component {
     

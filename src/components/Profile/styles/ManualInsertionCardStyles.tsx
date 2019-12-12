@@ -17,7 +17,7 @@ limitations under the License.
 export default {
   view: {
     alignItems: "center",
-    justifyContent: "space-around",
+    // justifyContent: "space-around",
     margin: "2rem",
     flexDirection: "column" as "column",
     display: "flex",
@@ -36,9 +36,22 @@ export default {
     fontSize: "1.1rem",
   },
   ul:{
-    margin:"Opx",
-    width: "300px", 
+    maxWidth:"300px",
+    width:"20rem",
+    padding:"0px",
+    alignItems: "center",
+    listStyleType:"none",
+    color:"#295CB3",
+    margin:"Opx", 
     height: "200px", 
     overflow: "auto", 
+  },
+  test:{
+    color:"black",
+  },
+  div:{
+    alignItems: "center",
+    borderRadius:".25rem",
+    border:"1px solid rgba(0,0,0,.15)"
   }
 }

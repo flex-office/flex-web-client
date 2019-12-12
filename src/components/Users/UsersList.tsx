@@ -33,7 +33,8 @@ export default class UsersList extends React.Component<UsersListProps> {
         if (search === "")
             return users
         const upper = x => x.toUpperCase()
-        return users.filter(e => upper(e.name).includes(upper(search)) || upper(e.fname).includes(upper(search)))
+        
+        return users.filter(e =>  upper(e.fname.concat(" ").concat(e.name).substr(0,search.length)).includes(upper(search)) || upper(e.name.concat(" ").concat(e.fname).substr(0,search.length)).includes(upper(search)) || upper(e.name.substr(0,search.length) ).includes(upper(search)) || upper(e.fname.substr(0,search.length)).includes(upper(search)))
     };
 
     WEEK_DAYS = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]

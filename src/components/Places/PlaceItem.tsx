@@ -22,8 +22,54 @@ interface PlaceItemProps {
 }
 
 class PlaceItem extends React.Component<PlaceItemProps> {
-	render() {
+	
+	 render() {
+		
 		const { place, onClick } = this.props;
+
+		
+		var placeUse=JSON.parse(sessionStorage.getItem("PLACES_USE")).map(x=>x.id);
+		if(placeUse.includes(place.id)){
+			return (
+				
+				<div
+					style={{
+						backgroundColor:"#a9a9a9",
+						borderRadius: 7,
+						flexDirection: "row",
+						justifyContent: "center",
+						alignItems: "center",
+						display: "flex",
+						padding: 4,
+						width: 130,
+						cursor: "default",
+						border: "solid" as "solid",
+						borderWidth: 1,
+						borderColor: "#7F8184"
+						
+					}}
+					onClick={w=>w}
+				>
+					<div style={{
+						
+						marginBottom: 0,
+						marginRight: 10,
+						color: "#7F8184",
+						fontFamily: "Raleway",
+						fontSize: "0.875rem",
+					}}>
+						{place.id}
+					</div>
+					<Icon
+						name="circle"
+						style={{
+							fontSize: 10,
+							color: place.id[5] === "V" ? "grey" : (place.id[5] === "B" ? "blue" : "red")
+						}}
+					/>
+				</div>
+			);
+		}
 		return (
 			<div
 				style={{
@@ -46,7 +92,7 @@ class PlaceItem extends React.Component<PlaceItemProps> {
 					marginRight: 10,
 					color: "#7F8184",
 					fontFamily: "Raleway",
-					fontSize: "0.9rem",
+					fontSize: "0.875rem",
 				}}>
 					{place.id}
 				</div>
