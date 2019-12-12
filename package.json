@@ -18,6 +18,7 @@
     "hex-to-css-filter": "^1.0.2",
     "moment": "^2.24.0",
     "node-fetch": "^2.6.0",
+    "node-uuid": "^1.4.8",
     "radium": "^0.25.2",
     "ramda": "^0.26.1",
     "react": "^16.8.6",
@@ -34,6 +35,7 @@
     "react-router-dom": "^5.0.1",
     "reactstrap": "^8.0.0",
     "redux": "^4.0.1",
+    "serialize-javascript": "^2.1.1",
     "socket.io-client": "^2.2.0",
     "winston": "^3.2.1"
   },

@@ -9,6 +9,7 @@ import PlacesSelector from "../../components/Places/PlacesSelector"
 import FetchPlacesButton from "../../components/Places/FetchPlacesButton"
 import { Spinner } from "reactstrap"
 import styles from "./PlacesScreenStyles"
+import {logger, correlation_id} from "../../App";
 
 type PlacesScreenState = {
     places: Array<any>,
@@ -53,7 +54,8 @@ export class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScree
                 method: "GET",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
-                    "authorization": `Bearer ${config.token}`
+                    "authorization": `Bearer ${config.token}`,
+                    "X-Correlation-ID": correlation_id
                 }
             }).then(res => res.json()) // transform data to json
             return user.start_date && user.end_date && moment().isBetween(user.start_date, user.end_date)
@@ -68,7 +70,8 @@ export class PlacesScreen extends React.Component<PlacesScreenProps, PlacesScree
             method: "GET",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "authorization": `Bearer ${config.token}`
+                "authorization": `Bearer ${config.token}`,
+                "X-Correlation-ID": correlation_id
             }
         })
             .then(res => res.json())

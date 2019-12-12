@@ -35,7 +35,6 @@ import DeconnectionButton from "../../components/Settings/DeconnectionButton";
 
 import Input from "../../components/General/Input";
 import FilePicker from "../../components/General/FilePicker";
-import {logger} from "../../App";
 
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
@@ -48,6 +47,7 @@ import {
 import { fetchPhoto, logOut } from "../../components/Navigation/reducer";
 
 import defaultProfile from "../../assets/profile.png";
+import {logger, correlation_id} from "../../App";
 
 const WEEK_DAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
 
@@ -200,7 +200,8 @@ export class SettingsScreen extends Component<
         method: "GET",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          "authorization": `Bearer ${config.token}`
+          "authorization": `Bearer ${config.token}`,
+          "X-Correlation-ID": correlation_id
         }
       });
       const json = await response.json();
@@ -230,7 +231,8 @@ export class SettingsScreen extends Component<
       method: "GET",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "authorization": `Bearer ${config.token}`
+        "authorization": `Bearer ${config.token}`,
+        "X-Correlation-ID": correlation_id
       }
     })
       .then(res => res.json()) // transform data to json
@@ -280,7 +282,8 @@ export class SettingsScreen extends Component<
       body: JSON.stringify(payload),
       headers: {
         "Content-Type": "application/json",
-        "authorization": `Bearer ${config.token}`
+        "authorization": `Bearer ${config.token}`,
+        "X-Correlation-ID": correlation_id
       }
     })
       .then(res => res.json())
@@ -295,7 +298,8 @@ export class SettingsScreen extends Component<
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "authorization": `Bearer ${config.token}`
+          "authorization": `Bearer ${config.token}`,
+          "X-Correlation-ID": correlation_id
         }
       })
         .then(res => res.json())

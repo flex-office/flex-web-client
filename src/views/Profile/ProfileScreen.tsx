@@ -15,7 +15,7 @@ import NavElem from "../../components/Navigation/NavElem"
 import takePlace from "../../utils/takePlace";
 import isMobile from "../../utils/isMobile";
 import { Route, Switch } from 'react-router-dom'
-import {logger} from "../../App";
+import {logger, correlation_id} from "../../App";
 
 interface LeaveComponentProps {
     place: string
@@ -184,6 +184,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
         const { id, place } = this.state;
 
         const payload = {
+            correlation_id: correlation_id,
             id_user: id,
             id_place: place
         };
@@ -193,7 +194,8 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             body: JSON.stringify(payload),
             headers: {
                 "Content-Type": "application/json",
-                "authorization": `Bearer ${config.token}`
+                "authorization": `Bearer ${config.token}`,
+                "X-Correlation-ID": correlation_id
             }
         })
             .then(res => {
@@ -231,7 +233,8 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                 method: "GET",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
-                    "authorization": `Bearer ${config.token}`
+                    "authorization": `Bearer ${config.token}`,
+                    "X-Correlation-ID": correlation_id
                 }
             })
             .then(res => res.json())
@@ -243,20 +246,6 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
             });
         }
 
-        /*
-        if (place){
-            const pathname = this.props.location.pathname
-            const goTo = x => (x !== pathname) && this.props.history.push(x)
-            goTo("/home/leave")
-        }*/
-        
-        /*
-        const pathname = this.props.location.pathname
-        const goTo = x => (x !== pathname) && this.props.history.push(x)
-        if (place) {
-            goTo("/home/leave")
-            return
-        }else{*/
             return (
                 <div style={styles.view}>
                     <Switch>
@@ -287,12 +276,6 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                                 <ManualInsertionCard
                                     onChangeText={e =>{this.insertPlace(e.id.toUpperCase().trim())
                                                         this.setState({placeInput:'lol'})}}
-                                    // onChangeText={e => this.setState({ placeInput:e.inputValue.toUpperCase() })}
-                                    // placeInput={placeInput}
-                                    // onSubmitEditing={() =>{this.insertPlace(this.state.placeInput)
-                                    // this.setState({placeInput:''})}}
-                                    // onPress={() => {this.insertPlace(this.state.placeInput)
-                                    // this.setState({placeInput:''})}}
                                 />
                             }
                             />
@@ -307,8 +290,6 @@ class ProfileScreen extends React.Component<ProfileScreenProps, ProfileScreenSta
                     </Switch>
                 </div>
                 )
-        //}
-
     }
 }
 
